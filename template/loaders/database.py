@@ -10,7 +10,7 @@ except:
 
 def load_template_source(template_name, template_dirs=None):
     """
-    Loader which gets the template content from the database depending on
+    Loader which fetches the template content from the database depending on
     the current ``Site``.
     """
     if site is not None:
