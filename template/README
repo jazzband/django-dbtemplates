@@ -30,15 +30,15 @@ How to use it in your own django application
             'myapp.template',
         )
     
-    # Add ``myapp.template.loaders.database.load_template_source```to the
-      ``TEMPLATE_LOADERS`` where "myapp" is the name of your django project
+    # Add ``myapp.template.loaders.database.load_template_source`` to the
+      ``TEMPLATE_LOADERS`` where "myapp" is the name of your Django project
 
       It should look something like this:
 
         TEMPLATE_LOADERS = (
             'django.template.loaders.filesystem.load_template_source',
             'django.template.loaders.app_directories.load_template_source',
-            'websushi.template.loaders.database.load_template_source',
+            'myapp.template.loaders.database.load_template_source',
         )
 
 3. Sync your database via shell (hint: "./manage.py syncdb" within project dir)
