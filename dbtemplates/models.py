@@ -47,7 +47,7 @@ __test__ = {'API_TESTS':"""
 [<Template: base.html>, <Template: sub.html>]
 >>> t2.sites.all()
 [<Site: example.com>]
->>> from django.contrib.dbtemplates.loader import load_template_source
+>>> from dbtemplates.loader import load_template_source
 >>> loader.template_source_loaders = [load_template_source]
 >>> loader.get_template("base.html").render(Context({'title':'MainPage'}))
 '<html><head></head><body>Welcome at MainPage</body></html>'

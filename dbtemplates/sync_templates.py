@@ -1,12 +1,7 @@
-"""
-Helper function for syncing templates in TEMPLATES_DIRS with the dbtemplates
-contrib app.
-"""
-
 from django.conf import settings
 from django.template import TemplateDoesNotExist
-from django.contrib.dbtemplates.models import Template
 from django.contrib.sites.models import Site
+from dbtemplates.models import Template
 
 import os
 import sys
@@ -76,5 +71,8 @@ def synctemplates(extension=".html", overwrite=False):
             for _tried in tried:
                 print _tried
 
-if __name__ == "__main__":
+def main():
     synctemplates()
+
+if __name__ == "__main__":
+    main()

@@ -1,7 +1,8 @@
 from django.conf import settings
 from django.template import TemplateDoesNotExist
-from django.contrib.dbtemplates.models import Template
 from django.contrib.sites.models import Site
+
+from dbtemplates.models import Template
 
 try:
     site = Site.objects.get_current()

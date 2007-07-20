@@ -1,14 +1,11 @@
-"""
-Creates the default database template objects.
-Don't know if it works.
-"""
+""" Creates the default database template objects. """
 
 from django.dispatch import dispatcher
 from django.db.models import signals
 from django.contrib.sites.models import Site
 
-from template.models import Template
-from template import models as template_app
+from dbtemplates.models import Template
+from dbtemplates import models as template_app
 
 def create_default_templates(app, created_models, verbosity):
     try:
