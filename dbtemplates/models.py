@@ -26,7 +26,7 @@ class Template(models.Model):
         list_filter = ('sites',)
         search_fields = ('name','content')
 
-    def __str__(self):
+    def __unicode__(self):
         return self.name
 
 __test__ = {'API_TESTS':"""
