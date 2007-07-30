@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from django.conf import settings
 from django.template import TemplateDoesNotExist
 from django.contrib.sites.models import Site
