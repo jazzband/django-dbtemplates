@@ -18,15 +18,25 @@ def create_default_templates(app, created_models, verbosity):
             if verbosity >= 2:
                 print "Creating example database templates for error 404 and error 500"
 
-            template404 = Template(name="404.html",content="""
-            {% load i18n %}<h2>{% trans 'Page not found' %}</h2>
-            <p>{% trans "We're sorry, but the requested page could not be found." %}</p>""")
+            template404 = Template(name="404.html", content="""
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <h2>{% trans 'Page not found' %}</h2>
+    <p>{% trans "We're sorry, but the requested page could not be found." %}</p>
+{% endblock %}
+""")
             template404.save()
             template404.sites.add(site)
 
-            template500 = Template(name="500.html",content="""{% load i18n %}
-            <h1>{% trans 'Server Error <em>(500)</em>' %}</h1>
-            <p>{% trans "There's been an error." %}</p>""")
+            template500 = Template(name="500.html",content="""
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+    <h1>{% trans 'Server Error <em>(500)</em>' %}</h1>
+    <p>{% trans "There's been an error." %}</p>
+{% endblock %}
+""")
             template500.save()
             template500.sites.add(site)
 
