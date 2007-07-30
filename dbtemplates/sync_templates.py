@@ -1,26 +1,39 @@
 #!/usr/bin/env python
-from django.conf import settings
-from django.template import TemplateDoesNotExist
-from django.contrib.sites.models import Site
-from dbtemplates.models import Template
-
 import os
 import sys
 
-try:
-    site = Site.objects.get_current()
-except:
-    site = None
+def setup_environ():
+    """
+    Configure the runtime environment.
+    """
+    project_directory = os.getcwd()
+    project_name = os.path.basename(project_directory)
+    sys.path.append(os.path.join(project_directory, '..'))
+    project_module = __import__(project_name, {}, {}, [''])
+    sys.path.pop()
+
+    # Set DJANGO_SETTINGS_MODULE appropriately.
+    os.environ['DJANGO_SETTINGS_MODULE'] = '%s.settings' % project_name
+    return project_name
 
 def synctemplates(extension=".html", overwrite=False):
     """
     Helper function for syncing templates in TEMPLATES_DIRS with the
     dbtemplates contrib app.
     """
+    from django.contrib.sites.models import Site
+    from django.template import TemplateDoesNotExist
+    from dbtemplates.models import Template
+    
     tried = []
     synced = []
     existing = []
     overwritten = []
+    
+    try:
+        site = Site.objects.get_current()
+    except:
+        site = None
     
     if site is not None:
         for template_dir in settings.TEMPLATE_DIRS:
@@ -73,7 +86,19 @@ def synctemplates(extension=".html", overwrite=False):
                 print _tried
 
 def main():
-    synctemplates()
+    try:
+        project_name = setup_environ()
+        print "Loading settings from project '%s'.. done." % project_name
+        synctemplates()
+    except ImportError, e:
+        print "Please make sure a settings.py file exists in the current directory."
+        print e
+        sys.exit(0)
+    except OSError, e:
+        print e
+        sys.exit(0)
+    except:
+        sys.exit(0)
 
 if __name__ == "__main__":
     main()
