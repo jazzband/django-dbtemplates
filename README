@@ -5,7 +5,7 @@ Database template loader for Django
 This is a basic database template loader for Django which uses a m2m
 relationship to provide a site centric template loading.
 
-How to use it in your own django application
+How to use it in your own Django application
 ============================================
 
 0. Get the source from the subversion repository
