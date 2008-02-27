@@ -10,7 +10,7 @@ class Template(models.Model):
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
     """
-    name = models.CharField(_('name'), unique=True, maxlength=100, help_text=_("Example: 'flatpages/default.html'"))
+    name = models.CharField(_('name'), unique=True, max_length=100, help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'))
     sites = models.ManyToManyField(Site)
     creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
@@ -28,6 +28,17 @@ class Template(models.Model):
 
     def __unicode__(self):
         return self.name
+
+try:
+    from django.contrib.admin import ModelAdmin, site
+    class TemplateOptions(ModelAdmin):
+        field_sets = ((None, {'fields': ('name', 'content', 'sites')}),)
+        list_display = ('name', 'creation_date', 'last_changed')
+        list_filter = ('sites',)
+        search_fields = ('name','content')
+    site.register(Template, TemplateOptions)
+except ImportError:
+    pass
 
 __test__ = {'API_TESTS':"""
 >>> test_site = Site.objects.get(pk=1)
