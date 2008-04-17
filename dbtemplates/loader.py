@@ -41,7 +41,13 @@ def load_template_source(template_name, template_dirs=None):
                         f.write(t.content)
                         f.close()
                     except IOError:
-                            pass
+                            try:
+                                head, tail = os.path.split(filepath)
+                                if head and not os.path.isdir(head):
+                                    os.makedirs(head)
+                            except Exception:
+                                pass
+                            
                     return (t.content, 'db:%s:%s' % (settings.DATABASE_ENGINE, template_name))
                 except:
                     pass
@@ -57,7 +63,7 @@ load_template_source.is_usable = True
 def remove_cached_template(instance):
     """
     Called via django's signals to remove cached templates, if the template in the
-    database was changed.
+    database was changed or deleted.
     """
     if cache_dir is not None:
         try:
