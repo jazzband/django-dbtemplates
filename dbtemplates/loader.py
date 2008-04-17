@@ -21,23 +21,33 @@ except:
     
 def load_template_source(template_name, template_dirs=None):
     """
-    Loads templates from the database by querying the database field ``name``
-    with a template path and ``sites`` with the current site.
+    Tries to load the template from DBTEMPLATES_CACHE_DIR. If it does not exist 
+    loads templates from the database by querying the database field ``name``
+    with a template path and ``sites`` with the current site,
+    and tries to save the template as DBTEMPLATES_CACHE_DIR/``name`` for subsequent
+    requests.
+    If DBTEMPLATES_CACHE_DIR is not configured falls back to database-only operation.
     """
     if site is not None:
         if cache_dir is not None:
             filepath = os.path.join(cache_dir, template_name)
-        try:
-            return (open(filepath).read(), filepath)
-        except IOError:
+            try:
+                return (open(filepath).read(), filepath)
+            except IOError:
+                try:
+                    t = Template.objects.get(name__exact=template_name, sites__pk=site.id)
+                    try:
+                        f = open(filepath, 'w')
+                        f.write(t.content)
+                        f.close()
+                    except IOError:
+                            pass
+                    return (t.content, 'db:%s:%s' % (settings.DATABASE_ENGINE, template_name))
+                except:
+                    pass
+        else:
             try:
                 t = Template.objects.get(name__exact=template_name, sites__pk=site.id)
-                try:
-                    f = open(filepath, 'w')
-                    f.write(t.content)
-                    f.close()
-                except IOError:
-                        pass
                 return (t.content, 'db:%s:%s' % (settings.DATABASE_ENGINE, template_name))
             except:
                 pass
@@ -45,11 +55,16 @@ def load_template_source(template_name, template_dirs=None):
 load_template_source.is_usable = True
 
 def remove_cached_template(instance):
-    try:
-        filepath = os.path.join(cache_dir, instance.name)
-        os.remove(filepath)
-    except OSError:
-        pass
+    """
+    Called via django's signals to remove cached templates, if the template in the
+    database was changed.
+    """
+    if cache_dir is not None:
+        try:
+            filepath = os.path.join(cache_dir, instance.name)
+            os.remove(filepath)
+        except OSError:
+            pass
 
 dispatcher.connect(remove_cached_template, sender=Template, signal=signals.post_save)
 dispatcher.connect(remove_cached_template, sender=Template, signal=signals.pre_delete)
