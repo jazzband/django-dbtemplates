@@ -53,7 +53,7 @@ class Command(NoArgsCommand):
                         confirm = raw_input(
                             "\nA '%s' template doesn't exist in the database.\n"
                             "Create it with '%s'?"
-                                " (y/n): """ % (name, path))
+                                " (y/[n]): """ % (name, path))
                         if confirm.lower().startswith('y'):
                             t = Template(name=name,
                                 content=open(path, "r").read())
@@ -75,6 +75,5 @@ class Command(NoArgsCommand):
                                     t.save()
                                     t.sites.add(site)
                                 elif confirm == '2':
-                                    _f = open(path, 'w').write(t.content)
-                                    _f.close()
+                                    open(path, 'w').write(t.content)
                                 break
