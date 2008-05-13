@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from django.db import models
 from django.template import loader, Context
 from django.core import validators
@@ -13,29 +14,50 @@ class Template(models.Model):
     name = models.CharField(_('name'), unique=True, max_length=100, help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'))
     sites = models.ManyToManyField(Site)
-    creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
-    last_changed = models.DateTimeField(_('last changed'), auto_now=True)
+    creation_date = models.DateTimeField(_('creation date'), default=datetime.now)
+    last_changed = models.DateTimeField(_('last changed'), default=datetime.now)
+
     class Meta:
         db_table = 'django_template'
         verbose_name = _('template')
         verbose_name_plural = _('templates')
         ordering = ('name',)
+
     class Admin:
-        fields = ((None, {'fields': ('name', 'content', 'sites')}),)
+        fields = (
+            (None, {
+                    'fields': (
+                        'name',
+                        'content',
+                        'sites'
+                    )
+                }
+            ),
+            (_('Date information'), {
+                    'fields': (
+                        'creation_date',
+                        'last_changed'
+                    ),
+                    'classes': 'collapse'
+                }
+            ),
+        )
         list_display = ('name', 'creation_date', 'last_changed')
-        list_filter = ('sites',)
-        search_fields = ('name','content')
+        search_fields = ('name', 'content')
 
     def __unicode__(self):
         return self.name
+    
+    def save(self):
+        self.last_changed = datetime.now()
+        super(Template, self).save()
 
 try:
     from django.contrib.admin import ModelAdmin, site
     class TemplateOptions(ModelAdmin):
         field_sets = ((None, {'fields': ('name', 'content', 'sites')}),)
         list_display = ('name', 'creation_date', 'last_changed')
-        list_filter = ('sites',)
-        search_fields = ('name','content')
+        search_fields = ('name', 'content')
     site.register(Template, TemplateOptions)
 except ImportError:
     pass
