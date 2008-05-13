@@ -8,7 +8,11 @@ setup(
     author_email='jannis@leidel.info',
     url='http://code.google.com/p/django-databasetemplateloader/',
     scripts=['dbtemplates/sync_templates.py',],
-    packages=['dbtemplates'],
+    packages=[
+        'dbtemplates',
+        'dbtemplates.management',
+        'dbtemplates.management.commands'
+    ],
     package_dir={'dbtemplates': 'dbtemplates'},
     classifiers=[
         'Development Status :: 4 - Beta',
