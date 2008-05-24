@@ -77,13 +77,13 @@ __test__ = {'API_TESTS':"""
 >>> t2
 <Template: sub.html>
 >>> Template.objects.filter(sites=test_site)
-[<Template: base.html>, <Template: sub.html>]
+[<Template: 404.html>, <Template: 500.html>, <Template: base.html>, <Template: sub.html>]
 >>> t2.sites.all()
 [<Site: example.com>]
 >>> from dbtemplates.loader import load_template_source
 >>> loader.template_source_loaders = [load_template_source]
 >>> loader.get_template("base.html").render(Context({'title':'MainPage'}))
-'<html><head></head><body>Welcome at MainPage</body></html>'
+u'<html><head></head><body>Welcome at MainPage</body></html>'
 >>> loader.get_template("sub.html").render(Context({'title':'SubPage'}))
-'<html><head></head><body>This is SubPage</body></html>'
+u'<html><head></head><body>This is SubPage</body></html>'
 """}
