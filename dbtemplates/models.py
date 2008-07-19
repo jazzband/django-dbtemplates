@@ -23,28 +23,6 @@ class Template(models.Model):
         verbose_name_plural = _('templates')
         ordering = ('name',)
 
-    class Admin:
-        fields = (
-            (None, {
-                    'fields': (
-                        'name',
-                        'content',
-                        'sites'
-                    )
-                }
-            ),
-            (_('Date information'), {
-                    'fields': (
-                        'creation_date',
-                        'last_changed'
-                    ),
-                    'classes': 'collapse'
-                }
-            ),
-        )
-        list_display = ('name', 'creation_date', 'last_changed')
-        search_fields = ('name', 'content')
-
     def __unicode__(self):
         return self.name
     
@@ -52,15 +30,6 @@ class Template(models.Model):
         self.last_changed = datetime.now()
         super(Template, self).save()
 
-try:
-    from django.contrib.admin import ModelAdmin, site
-    class TemplateOptions(ModelAdmin):
-        field_sets = ((None, {'fields': ('name', 'content', 'sites')}),)
-        list_display = ('name', 'creation_date', 'last_changed')
-        search_fields = ('name', 'content')
-    site.register(Template, TemplateOptions)
-except ImportError:
-    pass
 
 __test__ = {'API_TESTS':"""
 >>> test_site = Site.objects.get(pk=1)
