@@ -1,6 +1,5 @@
 import os
 from django.conf import settings
-from django.dispatch import dispatcher
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
 from django.contrib.sites.models import Site
@@ -60,7 +59,7 @@ def load_template_source(template_name, template_dirs=None):
     raise TemplateDoesNotExist, template_name
 load_template_source.is_usable = True
 
-def remove_cached_template(instance):
+def remove_cached_template(instance, **kwargs):
     """
     Called via django's signals to remove cached templates, if the template in the
     database was changed or deleted.
@@ -72,6 +71,5 @@ def remove_cached_template(instance):
         except OSError:
             pass
 
-dispatcher.connect(remove_cached_template, sender=Template, signal=signals.post_save)
-dispatcher.connect(remove_cached_template, sender=Template, signal=signals.pre_delete)
-
+signals.post_save.connect(remove_cached_template, sender=Template)
+signals.pre_delete.connect(remove_cached_template, sender=Template)

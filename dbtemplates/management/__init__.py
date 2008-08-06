@@ -1,11 +1,10 @@
-from django.dispatch import dispatcher
 from django.db.models import signals
 from django.contrib.sites.models import Site
 
 from dbtemplates.models import Template
 from dbtemplates import models as template_app
 
-def create_default_templates(app, created_models, verbosity):
+def create_default_templates(app, created_models, verbosity, **kwargs):
     """Creates the default database template objects."""
     try:
         site = Site.objects.get_current()
@@ -45,4 +44,4 @@ def create_default_templates(app, created_models, verbosity):
                 template500.save()
                 template500.sites.add(site)
 
-dispatcher.connect(create_default_templates, sender=template_app, signal=signals.post_syncdb)
+signals.post_syncdb.connect(create_default_templates, sender=template_app)
