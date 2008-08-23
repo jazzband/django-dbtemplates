@@ -12,13 +12,13 @@ How to use it in your own Django application
 1. Follow the instructions in the INSTALL file
 2. Edit the settings.py of your Django project:
 
-    # Add ``dbtemplates`` to the ``INSTALLED_APPS`` of your django project
+    Add ``dbtemplates`` to the ``INSTALLED_APPS`` of your django project
 
-    # Check if ``django.contrib.sites`` and ``django.contrib.admin`` are in
-      ``INSTALLED_APPS`` and add if necessary
-        
-      It should look something like this:
+    Check if ``django.contrib.sites`` and ``django.contrib.admin`` are in
+    ``INSTALLED_APPS`` and add if necessary.
     
+    It should look something like this::
+
         INSTALLED_APPS = (
             'django.contrib.auth',
             'django.contrib.contenttypes',
@@ -29,11 +29,11 @@ How to use it in your own Django application
             'dbtemplates',
             'myapp.blog',
         )
-    
-    # Add ``dbtemplates.loader.load_template_source`` to the
-      ``TEMPLATE_LOADERS`` list in the settings.py of your Django project
 
-      It should look something like this:
+    Add ``dbtemplates.loader.load_template_source`` to the
+    ``TEMPLATE_LOADERS`` list in the settings.py of your Django project
+
+    It should look something like this::
 
         TEMPLATE_LOADERS = (
             'django.template.loaders.filesystem.load_template_source',
@@ -44,7 +44,7 @@ How to use it in your own Django application
 3. Sync your database via shell (hint: "./manage.py syncdb" within project dir)
 4. Restart your Django server
 5. Go to the admin interface and add templates by filling the ``name`` field
-with filename like identifiers, for example "blog/entry_list.html"
+   with filename like identifiers, for example "blog/entry_list.html"
 6. Use it with ``Flatpages``, ``Generic views`` and your own custom views
 
 What? Hm, doesn't work here. || Aaah nice, BUT...
