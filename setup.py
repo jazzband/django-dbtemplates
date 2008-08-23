@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='dbtemplates',
-    version='0.4.1',
+    version='0.4.2',
     description='Template loader for database stored templates',
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
