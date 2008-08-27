@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from django.db import models
-from django.template import loader, Context
-from django.core import validators
 from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
 
@@ -32,6 +30,7 @@ class Template(models.Model):
 
 
 __test__ = {'API_TESTS':"""
+>>> from django.template import loader, Context
 >>> test_site = Site.objects.get(pk=1)
 >>> test_site
 <Site: example.com>
