@@ -21,10 +21,10 @@ class Command(NoArgsCommand):
     def handle_noargs(self, **options):
         extension = options.get('ext')
         force = options.get('force')
-    
+
         if not extension.startswith("."):
             extension = ".%s" % extension
-    
+
         try:
             site = Site.objects.get_current()
         except:
@@ -38,23 +38,24 @@ class Command(NoArgsCommand):
             raise CommandError("Please make sure settings.TEMPLATE_DIRS is a "
                                "list or tuple.")
 
-        templatedirs = [d for d in 
+        templatedirs = [d for d in
             settings.TEMPLATE_DIRS + app_template_dirs if os.path.isdir(d)]
 
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
-                for f in [f for f in filenames if f.endswith(extension) 
+                for f in [f for f in filenames if f.endswith(extension)
                     and not f.startswith(".")]:
                     path = os.path.join(dirpath, f)
                     name = path.split(templatedir)[1][1:]
                     try:
                         t = Template.objects.get(name__exact=name)
                     except Template.DoesNotExist:
-                        confirm = raw_input(
-                            "\nA '%s' template doesn't exist in the database.\n"
-                            "Create it with '%s'?"
-                                " (y/[n]): """ % (name, path))
-                        if confirm.lower().startswith('y'):
+                        if force == False:
+                            confirm = raw_input(
+                                "\nA '%s' template doesn't exist in the database.\n"
+                                "Create it with '%s'?"
+                                    " (y/[n]): """ % (name, path))
+                        if confirm.lower().startswith('y') or force:
                             t = Template(name=name,
                                 content=open(path, "r").read())
                             t.save()
@@ -66,7 +67,7 @@ class Command(NoArgsCommand):
                                 "(1) Overwrite %s with '%s'\n"
                                 "(2) Overwrite '%s' with %s\n"
                                 "Type 1 or 2 or press <Enter> to skip: "
-                                    % (t.__repr__(), 
+                                    % (t.__repr__(),
                                         t.__repr__(), path,
                                         path, t.__repr__()))
                             if confirm == '' or confirm in ('1', '2'):
