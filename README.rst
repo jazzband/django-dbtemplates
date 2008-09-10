@@ -52,4 +52,4 @@ Support
 
 Please leave your questions and messages on the designated Google Code site:
 
-http://code.google.com/p/django-databasetemplateloader/
+http://code.google.com/p/django-dbtemplates/

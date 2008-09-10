@@ -7,7 +7,7 @@ setup(
     long_description=open('README.rst').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
-    url='http://code.google.com/p/django-databasetemplateloader/',
+    url='http://code.google.com/p/django-dbtemplates/',
     scripts=['dbtemplates/sync_templates.py',],
     packages=[
         'dbtemplates',
