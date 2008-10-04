@@ -24,9 +24,9 @@ class Template(models.Model):
     def __unicode__(self):
         return self.name
     
-    def save(self, force_insert=False, force_update=False):
+    def save(self, *args, **kwargs):
         self.last_changed = datetime.now()
-        super(Template, self).save(force_insert, force_update)
+        super(Template, self).save(*args, **kwargs)
 
 
 __test__ = {'API_TESTS':"""
