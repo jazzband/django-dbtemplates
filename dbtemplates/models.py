@@ -3,6 +3,9 @@ from datetime import datetime
 from django.db import models
 from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
+from django.template import TemplateDoesNotExist
+from django.template.loader import find_template_source
+
 
 class Template(models.Model):
     """
@@ -10,7 +13,7 @@ class Template(models.Model):
     The field ``name`` is the equivalent to the filename of a static template.
     """
     name = models.CharField(_('name'), unique=True, max_length=100, help_text=_("Example: 'flatpages/default.html'"))
-    content = models.TextField(_('content'))
+    content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site)
     creation_date = models.DateTimeField(_('creation date'), default=datetime.now)
     last_changed = models.DateTimeField(_('last changed'), default=datetime.now)
@@ -26,6 +29,13 @@ class Template(models.Model):
     
     def save(self, *args, **kwargs):
         self.last_changed = datetime.now()
+        if not self.content:
+            try:
+                source, origin = find_template_source(self.name)
+                if source:
+                    self.content = source
+            except TemplateDoesNotExist:
+                pass
         super(Template, self).save(*args, **kwargs)
 
 
