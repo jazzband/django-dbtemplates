@@ -2,8 +2,12 @@
 django-dbtemplates
 ==================
 
-This is a basic database template loader for Django which uses a m2m
-relationship to provide a site centric template loading.
+``dbtemplates`` is a Django app that comes with to parts: It allows you to
+create templates that are saved in your database, and it provides a so called
+`template loader`_, a function that enables Django to find the templates you
+created in the database.
+
+.. _template loader: http://docs.djangoproject.com/en/dev/ref/templates/api/#loading-templates
 
 Contents:
 

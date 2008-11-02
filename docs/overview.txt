@@ -2,47 +2,185 @@
 Database template loader for Django
 ===================================
 
-How to use it in your own Django application
-============================================
+``dbtemplates`` is a Django app that comes with to parts: It allows you to
+create templates that are saved in your database, and it provides a so called
+`template loader`_, a function that enables Django to find the templates you
+created in the database.
 
-0. Get the source from the subversion repository
-1. Follow the instructions in the INSTALL file
-2. Edit the settings.py of your Django project:
+It also includes a extensible caching mechanism and supports version control
+of the templates saved in the database.
 
-   Add ``dbtemplates`` to the ``INSTALLED_APPS`` of your django project
- 
-   Check if ``django.contrib.sites`` and ``django.contrib.admin`` are in
-   ``INSTALLED_APPS`` and add if necessary.
- 
-   It should look something like this::
- 
-       INSTALLED_APPS = (
-           'django.contrib.auth',
-           'django.contrib.contenttypes',
-           'django.contrib.sessions',
-           'django.contrib.sites',
-           'django.contrib.admin',
-           'django.contrib.flatpages',
-           'dbtemplates',
-           'myapp.blog',
-       )
- 
-   Add ``dbtemplates.loader.load_template_source`` to the
-   ``TEMPLATE_LOADERS`` list in the settings.py of your Django project
- 
-   It should look something like this::
- 
+.. _template loader: http://docs.djangoproject.com/en/dev/ref/templates/api/#loading-templates
+
+Setup
+=====
+
+1. Get the source from the subversion repository
+2. Follow the instructions in the INSTALL file
+3. Edit the settings.py of your Django site:
+
+   * Add ``dbtemplates`` to the ``INSTALLED_APPS`` setting
+
+     Check if ``django.contrib.sites`` and ``django.contrib.admin`` are in
+     ``INSTALLED_APPS`` and add if necessary.
+
+     It should look something like this::
+
+         INSTALLED_APPS = (
+             'django.contrib.auth',
+             'django.contrib.contenttypes',
+             'django.contrib.sessions',
+             'django.contrib.sites',
+             'django.contrib.admin',
+             'django.contrib.flatpages',
+             # ..
+             'dbtemplates',
+         )
+
+   * Add ``dbtemplates.loader.load_template_source`` to the
+     ``TEMPLATE_LOADERS`` list in the settings.py of your Django project
+
+     It should look something like this::
+
        TEMPLATE_LOADERS = (
            'django.template.loaders.filesystem.load_template_source',
            'django.template.loaders.app_directories.load_template_source',
            'dbtemplates.loader.load_template_source',
        )
 
-3. Sync your database via shell (hint: "./manage.py syncdb" within project dir)
-4. Restart your Django server
-5. Go to the admin interface and add templates by filling the ``name`` field
-   with filename like identifiers, for example "blog/entry_list.html"
-6. Use it with ``Flatpages``, ``Generic views`` and your own custom views
+4. Sync your database ``python manage.py syncdb``
+5. Restart your Django server
+
+Usage
+=====
+
+Creating database templates is pretty simple: Just open the admin interface
+of your Django-based site in your browser and click on "Templates" in the
+"Dbtemplates" section.
+
+There you only need to fill in the ``name`` field with the identifier, Django
+is supposed to use while searching for templates, e.g.
+``blog/entry_list.html``. The ``content`` field should be filled with the
+content of your template.
+
+Optionally, by leaving the ``content`` field empty you are able to tell
+``dbtemplates`` to look for a template with the ``name`` by using Django's
+other template loaders. For example, if you have a template called
+``blog/entry_list.html`` on your file system and want to save the templates
+contents in the database, you just need to leave the content field empty to
+automatically populate it. That's especially useful if you don't want to
+copy and paste its content manually to the textarea.
+
+Caching
+=======
+
+Using the default caching
+-------------------------
+
+Dbtemplates comes with different backends for caching that are automatically
+created, updated and deleted when templates are saved in the database by
+using Django's signal framework.
+
+To enable one of them you need to specify a setting called
+``DBTEMPLATES_CACHE_BACKEND`` to one of the following values:
+
+* ``dbtemplates.cache.FileSystemBackend`` -- File system caching
+
+  The ``FileSystemBackend`` is a simple way to store the templates you have
+  in the database on the filesystem. That's especially useful if you don't
+  use a full caching framework like Django is providing.
+
+  To use this backend you need additionally create a setting
+  ``DBTEMPLATES_CACHE_DIR`` that contains the full file system path to the
+  directory where ``dbtemplates`` should create the cache files in.
+
+* ``dbtemplates.cache.DjangoCacheBackend`` -- Django cache
+
+  The ``DjangoCacheBackend`` is a thin wrapper around Django's caching
+  framework that enables you to use advanced caching solutions like
+  memcached or database caching. Please see the `cache documentation`_ if
+  you want to know more about it.
+
+.. _cache documentation: http://docs.djangoproject.com/en/dev/topics/cache/#setting-up-the-cache
+
+Writing your own caching backends
+---------------------------------
+
+Writing your own cache backends is perfectly easy since ``dbtemplates``
+includes a easy-to-use base class in ``dbtemplates.cache.BaseCacheBackend``.
+
+Just subclass that base backend somewhere in your own code and provide the
+follwing three reuqired methods:
+
+* ``load``
+
+  Loads a template from the cache with the given name and returns its
+  contents. Return None if nothing found.
+  
+  Arguments:
+    
+  * ``name`` - name of the template
+
+* ``save``
+  
+  Saves the passed template contents with the passed name in the cache.
+
+  Arguments:
+
+  * ``name`` - name of the template
+  * ``content`` - contents of the template
+
+* ``remove``
+
+  Removes the template with the passed name from the cache.
+
+  Arguments:
+    
+  * ``name`` - name of the template
+
+Please see also the `source of the default backends`_ to see how it works.
+
+.. _source of the default backends: http://code.google.com/p/django-dbtemplates/source/browse/trunk/dbtemplates/cache.py
+
+Versionizing your templates
+===========================
+
+``dbtemplates`` comes prepared to use the third party Django app
+`django-reversion`_, that once installed besides ``dbtemplates`` allows you
+to jump back to old versions of your templates. It automatically saves every
+state when you save the template in your database and provides an easy to use
+interface.
+
+Please refer to `django-reversion's documentation`_ for more information
+about how it works. ``dbtemplates`` automatically recognizes if
+``django-reversion`` is installed and works out of the box. Just visit the
+"History" section of each template instance and browse its history.
+
+Short installation howto
+------------------------
+
+1. Get the source from the `django-reversion`_ project site.
+2. Edit the settings.py of your Django project:
+
+   * Add ``reversion`` to the ``INSTALLED_APPS`` of your django site
+
+   * Add ``reversion.middleware.RevisionMiddleware`` to the end of the
+     ``MIDDLEWARE_CLASSES`` list.
+ 
+     It should look something like this::
+ 
+         MIDDLEWARE_CLASSES = (
+             'django.contrib.sessions.middleware.SessionMiddleware',
+             'django.middleware.common.CommonMiddleware',
+             'django.middleware.cache.CacheMiddleware',
+             # ..
+             'reversion.middleware.RevisionMiddleware',
+         )
+
+3. Sync your database with ``python manage.py syncdb``
+
+.. _django-reversion: http://code.google.com/p/django-reversion/
+.. _django-reversion's documentation: http://code.google.com/p/django-reversion/wiki/GettingStarted
 
 Support
 =======
