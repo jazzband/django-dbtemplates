@@ -7,12 +7,10 @@ from dbtemplates.models import Template, backend
 
 def load_template_source(template_name, template_dirs=None):
     """
-    Tries to load the template from DBTEMPLATES_CACHE_DIR. If it does not
-    exist loads templates from the database by querying the database field
-    ``name`` with a template path and ``sites`` with the current site,
-    and tries to save the template as DBTEMPLATES_CACHE_DIR/``name`` for
-    subsequent requests. If DBTEMPLATES_CACHE_DIR is not configured falls
-    back to database-only operation.
+    Tries to load the template from the dbtemplates cache backend specified
+    by the DBTEMPLATES_CACHE_BACKEND setting. If it does not find a template
+    it falls back to query the database field ``name`` with the template path
+    and ``sites`` with the current site.
     """
     display_name = 'db:%s:%s' % (settings.DATABASE_ENGINE, template_name)
     if backend:

@@ -62,7 +62,7 @@ class FileSystemBackend(BaseCacheBackend):
             self.cache_dir = getattr(settings, 'DBTEMPLATES_CACHE_DIR', None)
             self.cache_dir = os.path.normpath(self.cache_dir)
             if not os.path.isdir(self.cache_dir):
-                raise Exception
+                pass
         except:
             raise ImproperlyConfigured('You\'re using the dbtemplates\' file system cache backend without having set the DBTEMPLATES_CACHE_DIR setting to a valid value. Make sure the directory exists and is writeable for the user your Django instance is running with.')
         super(FileSystemBackend, self).__init__()
@@ -75,7 +75,7 @@ class FileSystemBackend(BaseCacheBackend):
             filepath = self._filepath(name)
             return open(filepath).read().decode('utf-8')
         except:
-            raise None
+            return None
 
     def save(self, name, content, retry=False):
         try:
