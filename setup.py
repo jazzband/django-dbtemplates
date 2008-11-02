@@ -2,7 +2,7 @@ from distutils.core import setup
 
 setup(
     name='django-dbtemplates',
-    version='0.4.7',
+    version='0.5.0',
     description='Template loader for database stored templates',
     long_description=open('README.rst').read(),
     author='Jannis Leidel',

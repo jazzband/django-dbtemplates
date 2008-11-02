@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the PACKAGE package.
 # <>, 2008.
 # , fuzzy
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-08-24 00:09+0200\n"
+"POT-Creation-Date: 2008-11-01 23:47+0100\n"
 "PO-Revision-Date: 2008-08-21 12:31+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team: \n"
@@ -17,34 +17,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:9
+#: admin.py:23
+msgid ""
+"Leaving this empty causes Django to look for a template with the given name "
+"and populate this field with its content."
+msgstr "אם זה ריק אז ג'נגו מחפש תבנית עם שם סיפק וממלא את השדה עם תוכנו"
+
+#: admin.py:37
 msgid "Date information"
 msgstr "תאריכים"
 
-#: models.py:14
+#: models.py:17
 msgid "name"
 msgstr "שם"
 
-#: models.py:14
+#: models.py:17
 msgid "Example: 'flatpages/default.html'"
 msgstr "דוגמא: 'flatpages/default.html'"
 
-#: models.py:15
+#: models.py:18
 msgid "content"
 msgstr "תוכן"
 
-#: models.py:17
+#: models.py:20
 msgid "creation date"
 msgstr "נוצר ב"
 
-#: models.py:18
+#: models.py:21
 msgid "last changed"
 msgstr "שונה ב"
 
-#: models.py:22
+#: models.py:25
 msgid "template"
 msgstr "תבנית"
 
-#: models.py:23
+#: models.py:26
 msgid "templates"
 msgstr "תבניות"
