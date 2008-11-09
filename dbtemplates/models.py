@@ -42,15 +42,6 @@ class Template(models.Model):
                 pass
         super(Template, self).save(*args, **kwargs)
 
-# Check if django-reversion is installed and register the model with it if yes
-try:
-    models.get_app('reversion')
-except ImproperlyConfigured:
-    pass
-else:
-    import reversion
-    reversion.register(Template)
-
 def get_cache_backend():
     path = getattr(settings, 'DBTEMPLATES_CACHE_BACKEND', False)
     if path:

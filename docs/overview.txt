@@ -140,7 +140,7 @@ follwing three reuqired methods:
 
 Please see also the `source of the default backends`_ to see how it works.
 
-.. _source of the default backends: http://code.google.com/p/django-dbtemplates/source/browse/trunk/dbtemplates/cache.py
+.. _source of the default backends: http://www.bitbucket.org/jezdez/django-dbtemplates/src/tip/dbtemplates/cache.py
 
 Versionizing your templates
 ===========================
@@ -159,24 +159,9 @@ about how it works. ``dbtemplates`` automatically recognizes if
 Short installation howto
 ------------------------
 
-1. Get the source from the `django-reversion`_ project site.
-2. Edit the settings.py of your Django project:
-
-   * Add ``reversion`` to the ``INSTALLED_APPS`` of your django site
-
-   * Add ``reversion.middleware.RevisionMiddleware`` to the end of the
-     ``MIDDLEWARE_CLASSES`` list.
- 
-     It should look something like this::
- 
-         MIDDLEWARE_CLASSES = (
-             'django.contrib.sessions.middleware.SessionMiddleware',
-             'django.middleware.common.CommonMiddleware',
-             'django.middleware.cache.CacheMiddleware',
-             # ..
-             'reversion.middleware.RevisionMiddleware',
-         )
-
+1. Get the source from the `django-reversion`_ project site and put it
+   somewhere on your `PYTHONPATH`.
+2. Add ``reversion`` to the ``INSTALLED_APPS`` setting of your Django project
 3. Sync your database with ``python manage.py syncdb``
 
 .. _django-reversion: http://code.google.com/p/django-reversion/

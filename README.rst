@@ -50,6 +50,6 @@ How to use it in your own Django application
 Support
 =======
 
-Please leave your questions and messages on the designated Google Code site:
+Please leave your questions and messages on the designated site:
 
-http://code.google.com/p/django-dbtemplates/
+http://www.bitbucket.org/jezdez/django-dbtemplates/issues/
