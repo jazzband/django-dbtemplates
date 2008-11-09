@@ -4,7 +4,7 @@ setup(
     name='django-dbtemplates',
     version='0.5.1',
     description='Template loader for database stored templates',
-    long_description=open('README.rst').read(),
+    long_description=open('docs/overview.txt').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
     url='http://www.bitbucket.org/jezdez/django-dbtemplates/wiki/',
