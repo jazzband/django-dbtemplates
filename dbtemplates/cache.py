@@ -1,7 +1,6 @@
 import os
 from django.conf import settings
 from django.core.cache import cache
-from django.contrib.sites.models import Site
 from django.template import TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.encoding import smart_unicode, force_unicode
@@ -13,8 +12,10 @@ class BaseCacheBackend(object):
 
     Set DBTEMPLATES_CACHE_BACKEND setting to the Python path to that subclass.
     """
-    def __init__(self):
-        self.site = Site.objects.get_current()
+    def _site(self):
+        from django.contrib.sites.models import Site
+        return Site.objects.get_current()
+    site = property(_site)
 
     def load(self, name):
         """
