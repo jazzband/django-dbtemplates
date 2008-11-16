@@ -34,7 +34,7 @@ class TemplateAdmin(TemplateModelAdmin):
             'fields': ('name', 'content', 'sites'),
             'classes': ('monospace',),
         }),
-        (_('Date information'), {
+        (_('Date/time'), {
             'fields': (('creation_date', 'last_changed'),),
             'classes': ('collapse',),
         }),

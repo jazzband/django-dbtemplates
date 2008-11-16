@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 23:47+0100\n"
+"POT-Creation-Date: 2008-11-16 01:56+0100\n"
 "PO-Revision-Date: 2008-08-21 12:31+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team: \n"
@@ -24,8 +24,8 @@ msgid ""
 msgstr "אם זה ריק אז ג'נגו מחפש תבנית עם שם סיפק וממלא את השדה עם תוכנו"
 
 #: admin.py:37
-msgid "Date information"
-msgstr "תאריכים"
+msgid "Date/time"
+msgstr ""
 
 #: models.py:17
 msgid "name"

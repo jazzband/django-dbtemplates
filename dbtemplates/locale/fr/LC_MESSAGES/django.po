@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-07-29 13:19+0200\n"
+"POT-Creation-Date: 2008-11-16 01:56+0100\n"
 "PO-Revision-Date: 2008-08-09 21:39+0100\n"
 "Last-Translator: Roland Frédéric <frederic.roland@creativeconvergence.be>\n"
 "Language-Team: Frédéric Roland <frederic.roland@creativeconvergence.be>\n"
@@ -11,35 +11,40 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: French\n"
 
-#: admin.py:9
-msgid "Date information"
-msgstr "Date"
+#: admin.py:23
+msgid ""
+"Leaving this empty causes Django to look for a template with the given name "
+"and populate this field with its content."
+msgstr ""
 
-#: models.py:14
+#: admin.py:37
+msgid "Date/time"
+msgstr ""
+
+#: models.py:17
 msgid "name"
 msgstr "nom"
 
-#: models.py:14
+#: models.py:17
 msgid "Example: 'flatpages/default.html'"
 msgstr "Exemple: 'flatpages/default.html'"
 
-#: models.py:15
+#: models.py:18
 msgid "content"
 msgstr "contenu"
 
-#: models.py:17
+#: models.py:20
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:18
+#: models.py:21
 msgid "last changed"
 msgstr "dernier changement"
 
-#: models.py:22
+#: models.py:25
 msgid "template"
 msgstr "modèle"
 
-#: models.py:23
+#: models.py:26
 msgid "templates"
 msgstr "modèles"
-

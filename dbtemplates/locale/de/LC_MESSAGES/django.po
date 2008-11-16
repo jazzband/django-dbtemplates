@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-01 23:45+0100\n"
+"POT-Creation-Date: 2008-11-16 01:56+0100\n"
 "PO-Revision-Date: 2008-08-19 17:11+0100\n"
 "Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Jannis Leidel <jannis@leidel.info>\n"
@@ -20,8 +20,8 @@ msgstr ""
 "dem angegebenen Namen zu finden und mit dessen Inhalt das Feld zu füllen."
 
 #: admin.py:37
-msgid "Date information"
-msgstr "Datum"
+msgid "Date/time"
+msgstr ""
 
 #: models.py:17
 msgid "name"
