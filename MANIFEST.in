@@ -1,4 +1,6 @@
 include INSTALL
 include LICENSE
 include MANIFEST.in
+recursive-include docs *
+recursive-include example *
 recursive-include dbtemplates/locale *
