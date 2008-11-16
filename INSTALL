@@ -5,7 +5,9 @@ To install it, run the following command inside this directory:
 Or if you'd prefer you can simply place the included ``dbtemplates``
 directory somewhere on your Python path, or symlink to it from
 somewhere on your Python path; this is useful if you're working from a
-Subversion checkout.
+Subversion checkout. Since ``dbtemplates`` is registered in the
+Python Package Index you can also run ``easy_install django-dbtemplates``
+or ``pip django-dbtemplates`` optionally.
 
 Note that this application requires Python 2.3 or later, and a recent
 Subversion checkout of Django. You can obtain Python from
