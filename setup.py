@@ -2,8 +2,8 @@ from distutils.core import setup
 
 setup(
     name='django-dbtemplates',
-    version='0.5.2',
-    description='Template loader for database stored templates with pluggable cache backend',
+    version=__import__('dbtemplates').__version__,
+    description='Template loader for database stored templates with extensible cache backend',
     long_description=open('docs/overview.txt').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
