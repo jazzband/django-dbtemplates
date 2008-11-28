@@ -1,5 +1,4 @@
 import os
-import re
 from optparse import make_option
 
 from django.conf import settings
@@ -28,9 +27,6 @@ class Command(NoArgsCommand):
         try:
             site = Site.objects.get_current()
         except:
-            site = None
-
-        if site is None:
             raise CommandError("Please make sure to have the sites contrib "
                                "app installed and setup with a site object")
 
