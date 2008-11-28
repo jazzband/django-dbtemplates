@@ -7,8 +7,8 @@ setup(
     long_description=open('docs/overview.txt').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
-    url='http://www.bitbucket.org/jezdez/django-dbtemplates/wiki/',
-    download_url='http://www.bitbucket.org/jezdez/django-dbtemplates/get/v0.5.2.gz',
+    url='http://github.com/jezdez/django-dbtemplates/wikis/',
+    download_url='http://github.com/jezdez/django-dbtemplates/tarball/0.5.3',
     packages=[
         'dbtemplates',
         'dbtemplates.management',

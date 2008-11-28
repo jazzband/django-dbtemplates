@@ -18,7 +18,7 @@ of the templates saved in the database.
 Setup
 =====
 
-1. Get the source from the `Mercurial repository`_ or install it from the
+1. Get the source from the `Git repository`_ or install it from the
    Python Package Index by running ``easy_install django-dbtemplates`` or
    ``pip django-dbtemplates``.
 2. Follow the instructions in the INSTALL file
@@ -56,7 +56,7 @@ Setup
 4. Sync your database ``python manage.py syncdb``
 5. Restart your Django server
 
-.. _Mercurial repository: http://bitbucket.org/jezdez/django-dbtemplates/
+.. _Git repository: http://github.com/jezdez/django-dbtemplates/
 
 Usage
 =====
@@ -187,7 +187,7 @@ follwing three reuqired methods:
 
 Please see also the `source of the default backends`_ to see how it works.
 
-.. _source of the default backends: http://www.bitbucket.org/jezdez/django-dbtemplates/src/tip/dbtemplates/cache.py
+.. _source of the default backends: http://github.com/jezdez/django-dbtemplates/tree/master/dbtemplates/cache.py
 
 Versionizing your templates
 ===========================
@@ -214,9 +214,26 @@ Short installation howto
 .. _django-reversion: http://code.google.com/p/django-reversion/
 .. _django-reversion's documentation: http://code.google.com/p/django-reversion/wiki/GettingStarted
 
+Management commands
+===================
+
+``dbtemplates`` comes with two `management commands`_ to be used with ``django-admin.py`` or ``manage.py``:
+
+* ``sync_templates``
+
+  Enables you to sync your already existing file systems templates with the
+  database. It will guide you through the whole process.
+
+* ``create_error_templates``
+
+  Tries to add the two templates ``404.html`` and ``500.html`` that are used
+  by Django when a error occurs.
+
+.. _management commands: http://docs.djangoproject.com/en/dev/ref/django-admin/
+
 Support
 =======
 
 Please leave your questions and messages on the designated site:
 
-http://www.bitbucket.org/jezdez/django-dbtemplates/issues/
+http://code.google.com/p/django-dbtemplates/source/list
