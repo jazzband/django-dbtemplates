@@ -44,7 +44,7 @@ class Command(NoArgsCommand):
                     path = os.path.join(dirpath, f)
                     name = path.split(templatedir)[1][1:]
                     try:
-                        t = Template.objects.get(name__exact=name)
+                        t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
                         if force == False:
                             confirm = raw_input(

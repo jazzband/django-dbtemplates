@@ -1,5 +1,6 @@
 import os
 from django.conf import settings
+from django.contrib.sites.models import Site
 from django.template import TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
 
@@ -12,17 +13,21 @@ def load_template_source(template_name, template_dirs=None):
     it falls back to query the database field ``name`` with the template path
     and ``sites`` with the current site.
     """
-    display_name = 'db:%s:%s' % (settings.DATABASE_ENGINE, template_name)
+    site = Site.objects.get_current()
+    display_name = 'db:%s:%s:%s' % (settings.DATABASE_ENGINE,
+                                    template_name, site.domain)
     if backend:
         try:
             backend_template = backend.load(template_name)
-            if backend_template is not None:
+            if backend_template:
                 return backend_template, template_name
         except:
             pass
     try:
-        template = Template.objects.get(name__exact=template_name,
-                                        sites__pk=settings.SITE_ID)
+        template = Template.on_site.get(name__exact=template_name)
+        # Save in cache backend explicitly if manually deleted or invalidated
+        if backend:
+            backend.save(template_name, template.content)
         return (template.content, display_name)
     except:
         pass

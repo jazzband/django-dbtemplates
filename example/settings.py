@@ -82,3 +82,8 @@ INSTALLED_APPS = (
     'django.contrib.flatpages',
     'dbtemplates',
 )
+
+# Uncomment the following two settings to use the file system cache backend.
+# It will cache in the directory "cache" inside the example project directory.
+# DBTEMPLATES_CACHE_BACKEND = "dbtemplates.cache.FileSystemBackend"
+# DBTEMPLATES_CACHE_DIR = "cache"

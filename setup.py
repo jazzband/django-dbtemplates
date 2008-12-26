@@ -8,7 +8,7 @@ setup(
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
     url='http://github.com/jezdez/django-dbtemplates/wikis/',
-    download_url='http://github.com/jezdez/django-dbtemplates/zipball/0.5.3',
+    download_url='http://github.com/jezdez/django-dbtemplates/zipball/0.5.4',
     packages=[
         'dbtemplates',
         'dbtemplates.management',

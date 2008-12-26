@@ -40,7 +40,7 @@ class DjangoCacheBackend(BaseCacheBackend):
     A cache backend that uses Django's cache mechanism.
     """
     def _cache_key(self, name):
-        return 'dbtemplates::%s' % name
+        return 'dbtemplates::%s::%s' % (name, self.site.pk)
 
     def load(self, name):
         cache_key = self._cache_key(name)
@@ -65,11 +65,11 @@ class FileSystemBackend(BaseCacheBackend):
             if not os.path.isdir(self.cache_dir):
                 pass
         except:
-            raise ImproperlyConfigured('You\'re using the dbtemplates\' file system cache backend without having set the DBTEMPLATES_CACHE_DIR setting to a valid value. Make sure the directory exists and is writeable for the user your Django instance is running with.')
+            raise ImproperlyConfigured("You're using the dbtemplates file system cache backend without having set the DBTEMPLATES_CACHE_DIR setting to a valid value. Make sure the directory exists and is writeable for the user your Django instance is running with.")
         super(FileSystemBackend, self).__init__()
 
     def _filepath(self, name):
-        return os.path.join(self.cache_dir, name)
+        return os.path.join(self.cache_dir, self.site.domain, name)
 
     def load(self, name):
         try:

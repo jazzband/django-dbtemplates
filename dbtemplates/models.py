@@ -4,6 +4,7 @@ from django.db import models
 from django.conf import settings
 from django.db.models import signals
 from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
 from django.utils.translation import gettext_lazy as _
 from django.template import TemplateDoesNotExist
 from django.template.loader import find_template_source
@@ -19,6 +20,9 @@ class Template(models.Model):
     sites = models.ManyToManyField(Site, default=[settings.SITE_ID])
     creation_date = models.DateTimeField(_('creation date'), default=datetime.now)
     last_changed = models.DateTimeField(_('last changed'), default=datetime.now)
+
+    objects = models.Manager()
+    on_site = CurrentSiteManager('sites')
 
     class Meta:
         db_table = 'django_template'
