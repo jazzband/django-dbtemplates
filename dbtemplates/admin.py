@@ -39,8 +39,12 @@ class TemplateAdmin(TemplateModelAdmin):
             'classes': ('collapse',),
         }),
     )
-    list_display = ('name', 'creation_date', 'last_changed')
+    list_display = ('name', 'creation_date', 'last_changed', 'site_list')
     list_filter = ('sites',)
     search_fields = ('name', 'content')
+
+    def site_list(self, template):
+          return ", ".join([site.name for site in template.sites.all()])
+    site_list.short_description = _('sites')
 
 admin.site.register(Template, TemplateAdmin)
