@@ -1,8 +1,6 @@
-import os
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.template import TemplateDoesNotExist
-from django.core.exceptions import ImproperlyConfigured
 
 from dbtemplates.models import Template, backend
 
