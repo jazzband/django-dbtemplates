@@ -1,17 +1,15 @@
 from django import forms
+from django.conf import settings
 from django.contrib import admin
-from django.db.models import get_app
 from django.utils.translation import gettext_lazy as _
-from django.core.exceptions import ImproperlyConfigured
 
 from dbtemplates.models import Template
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
-try:
-    get_app('reversion')
+if 'reversion'in settings.INSTALLED_APS:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
-except ImproperlyConfigured:
+else:
     from django.contrib.admin import ModelAdmin as TemplateModelAdmin
 
 class TemplateAdminForm(forms.ModelForm):
