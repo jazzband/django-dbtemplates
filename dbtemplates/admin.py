@@ -7,7 +7,7 @@ from dbtemplates.models import Template
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
-if 'reversion'in settings.INSTALLED_APS:
+if 'reversion'in settings.INSTALLED_APPS:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
 else:
     from django.contrib.admin import ModelAdmin as TemplateModelAdmin
