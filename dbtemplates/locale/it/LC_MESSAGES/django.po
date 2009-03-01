@@ -3,8 +3,8 @@ msgstr ""
 "Project-Id-Version: 0.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-03-01 00:56+0100\n"
-"PO-Revision-Date: 2008-08-19 17:11+0100\n"
-"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
+"PO-Revision-Date: 2009-01-22 01:27+0100\n"
+"Last-Translator: Marco Beri <marcoberi@gmail.com>\n"
 "Language-Team: Jannis Leidel <jannis@leidel.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -16,8 +16,8 @@ msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
 msgstr ""
-"Wenn Sie dieses Feld leer lassen, wird Django versuchen, das Template mit "
-"dem angegebenen Namen zu finden und mit dessen Inhalt das Feld zu füllen."
+"Lasciandolo vuoto, Django cercherà un template con lo stesso nome che avete "
+"indicato sopra e userà il suo contenuto per riempire questo campo."
 
 #: admin.py:35
 msgid "Date/time"
@@ -29,28 +29,28 @@ msgstr ""
 
 #: models.py:18
 msgid "name"
-msgstr "Name"
+msgstr "nome"
 
 #: models.py:18
 msgid "Example: 'flatpages/default.html'"
-msgstr "Zum Beispiel: 'flatpages/default.html'"
+msgstr "Esempio: 'flatpages/default.html'"
 
 #: models.py:19
 msgid "content"
-msgstr "Inhalt"
+msgstr "contenuto"
 
 #: models.py:21
 msgid "creation date"
-msgstr "Erstellt"
+msgstr "data di creazione"
 
 #: models.py:22
 msgid "last changed"
-msgstr "Geändert"
+msgstr "ultimo cambiamento"
 
 #: models.py:29
 msgid "template"
-msgstr "Template"
+msgstr "template"
 
 #: models.py:30
 msgid "templates"
-msgstr "Templates"
+msgstr "template"

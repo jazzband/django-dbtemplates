@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-11-16 01:56+0100\n"
+"POT-Creation-Date: 2009-03-01 00:56+0100\n"
 "PO-Revision-Date: 2008-08-21 12:31+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team: \n"
@@ -17,40 +17,44 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:23
+#: admin.py:21
 msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
 msgstr "אם זה ריק אז ג'נגו מחפש תבנית עם שם סיפק וממלא את השדה עם תוכנו"
 
-#: admin.py:37
+#: admin.py:35
 msgid "Date/time"
 msgstr ""
 
-#: models.py:17
+#: admin.py:46
+msgid "sites"
+msgstr ""
+
+#: models.py:18
 msgid "name"
 msgstr "שם"
 
-#: models.py:17
+#: models.py:18
 msgid "Example: 'flatpages/default.html'"
 msgstr "דוגמא: 'flatpages/default.html'"
 
-#: models.py:18
+#: models.py:19
 msgid "content"
 msgstr "תוכן"
 
-#: models.py:20
+#: models.py:21
 msgid "creation date"
 msgstr "נוצר ב"
 
-#: models.py:21
+#: models.py:22
 msgid "last changed"
 msgstr "שונה ב"
 
-#: models.py:25
+#: models.py:29
 msgid "template"
 msgstr "תבנית"
 
-#: models.py:26
+#: models.py:30
 msgid "templates"
 msgstr "תבניות"
