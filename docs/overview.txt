@@ -217,7 +217,7 @@ Short installation howto
 Management commands
 ===================
 
-``dbtemplates`` comes with two `management commands`_ to be used with ``django-admin.py`` or ``manage.py``:
+``dbtemplates`` comes with two `Django management commands`_ to be used with ``django-admin.py`` or ``manage.py``:
 
 * ``sync_templates``
 
@@ -229,7 +229,7 @@ Management commands
   Tries to add the two templates ``404.html`` and ``500.html`` that are used
   by Django when a error occurs.
 
-.. _management commands: http://docs.djangoproject.com/en/dev/ref/django-admin/
+.. _Django management commands: http://docs.djangoproject.com/en/dev/ref/django-admin/
 
 Support
 =======
