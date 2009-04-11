@@ -3,3 +3,4 @@
 MANIFEST
 build
 dist
+django_dbtemplates.egg-info/
