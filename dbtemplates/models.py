@@ -15,11 +15,14 @@ class Template(models.Model):
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
     """
-    name = models.CharField(_('name'), unique=True, max_length=100, help_text=_("Example: 'flatpages/default.html'"))
+    name = models.CharField(_('name'), unique=True, max_length=100,
+                            help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, default=[settings.SITE_ID])
-    creation_date = models.DateTimeField(_('creation date'), default=datetime.now)
-    last_changed = models.DateTimeField(_('last changed'), default=datetime.now)
+    creation_date = models.DateTimeField(_('creation date'),
+                                         default=datetime.now)
+    last_changed = models.DateTimeField(_('last changed'),
+                                        default=datetime.now)
 
     objects = models.Manager()
     on_site = CurrentSiteManager('sites')
@@ -82,30 +85,3 @@ if backend:
     signals.post_save.connect(remove_cached_template, sender=Template)
     signals.post_save.connect(add_template_to_cache, sender=Template)
     signals.pre_delete.connect(remove_cached_template, sender=Template)
-
-__test__ = {'API_TESTS':"""
->>> from django.template import loader, Context
->>> test_site = Site.objects.get(pk=1)
->>> test_site
-<Site: example.com>
->>> t1 = Template(name='base.html', content="<html><head></head><body>{% block content %}Welcome at {{ title }}{% endblock %}</body></html>")
->>> t1.save()
->>> t1.sites.add(test_site)
->>> t1
-<Template: base.html>
->>> t2 = Template(name='sub.html', content='{% extends "base.html" %}{% block content %}This is {{ title }}{% endblock %}')
->>> t2.save()
->>> t2.sites.add(test_site)
->>> t2
-<Template: sub.html>
->>> Template.objects.filter(sites=test_site)
-[<Template: 404.html>, <Template: 500.html>, <Template: base.html>, <Template: sub.html>]
->>> t2.sites.all()
-[<Site: example.com>]
->>> from dbtemplates.loader import load_template_source
->>> loader.template_source_loaders = [load_template_source]
->>> loader.get_template("base.html").render(Context({'title':'MainPage'}))
-u'<html><head></head><body>Welcome at MainPage</body></html>'
->>> loader.get_template("sub.html").render(Context({'title':'SubPage'}))
-u'<html><head></head><body>This is SubPage</body></html>'
-"""}
