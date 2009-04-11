@@ -8,7 +8,7 @@ setup(
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
     url='http://github.com/jezdez/django-dbtemplates/wikis/',
-    download_url='http://cloud.github.com/downloads/jezdez/django-dbtemplates/django-dbtemplates-0.5.5.tar.gz',
+    download_url='http://github.com/jezdez/django-dbtemplates/downloads',
     packages=find_packages(),
     zip_safe=False,
     package_data = {
