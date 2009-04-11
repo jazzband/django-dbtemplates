@@ -28,7 +28,7 @@ class Command(NoArgsCommand):
     help = "Creates the 404.html and 500.html error templates as database template objects."
     option_list = NoArgsCommand.option_list + (
         make_option("-f", "--force", action="store_true", dest="force",
-            default=False, help="overwrite existing database templates")
+            default=False, help="overwrite existing database templates"),
     )
     def handle_noargs(self, **options):
         force = options.get('force')
