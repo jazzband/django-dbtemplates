@@ -12,3 +12,5 @@ It also includes a extensible caching mechanism and supports version control
 of the templates saved in the database.
 
 Please see ``docs/overview.txt`` for more details.
+
+.. _template loader: http://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
