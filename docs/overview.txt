@@ -18,7 +18,7 @@ of the templates saved in the database.
 Setup
 =====
 
-1. Get the source from the `Git repository`_ or install it from the
+1. Get the source from the `Mercurial repository`_ or install it from the
    Python Package Index by running ``easy_install django-dbtemplates`` or
    ``pip django-dbtemplates``.
 2. Follow the instructions in the INSTALL file
@@ -56,7 +56,7 @@ Setup
 4. Sync your database ``python manage.py syncdb``
 5. Restart your Django server
 
-.. _Git repository: http://github.com/jezdez/django-dbtemplates/
+.. _Mercurial repository: http://bitbucket.org/jezdez/django-dbtemplates/
 
 Usage
 =====
@@ -187,7 +187,7 @@ follwing three reuqired methods:
 
 Please see also the `source of the default backends`_ to see how it works.
 
-.. _source of the default backends: http://github.com/jezdez/django-dbtemplates/tree/master/dbtemplates/cache.py
+.. _source of the default backends: http://bitbucket.org/jezdez/django-dbtemplates/src/tip/dbtemplates/cache.py
 
 Versionizing your templates
 ===========================
