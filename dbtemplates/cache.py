@@ -83,7 +83,7 @@ class FileSystemBackend(BaseCacheBackend):
             filepath = self._filepath(name)
             dirname = os.path.dirname(filepath)
             if not os.path.exists(dirname):
-                os.makedirs(dirname)            
+                os.makedirs(dirname)
             cache_file = open(filepath, 'w')
             cache_file.write(force_unicode(content).encode('utf-8'))
             cache_file.close()
