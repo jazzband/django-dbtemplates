@@ -72,6 +72,7 @@ def add_template_to_cache(instance, **kwargs):
     Called via Django's signals to cache the templates, if the template
     in the database was added or changed.
     """
+    remove_cached_template(instance)
     backend.save(instance.name, instance.content)
 
 def remove_cached_template(instance, **kwargs):
@@ -82,6 +83,5 @@ def remove_cached_template(instance, **kwargs):
     backend.remove(instance.name)
 
 if backend:
-    signals.post_save.connect(remove_cached_template, sender=Template)
     signals.post_save.connect(add_template_to_cache, sender=Template)
     signals.pre_delete.connect(remove_cached_template, sender=Template)
