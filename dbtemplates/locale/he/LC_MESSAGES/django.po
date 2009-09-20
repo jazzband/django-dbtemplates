@@ -2,34 +2,24 @@
 # Copyright (C) 2008 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 # <>, 2008.
-# , fuzzy
-#
-#
+#, fuzzy
+# 
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-09-20 16:50+0200\n"
 "PO-Revision-Date: 2008-08-21 12:31+0300\n"
-"Last-Translator:  <>\n"
+"Last-Translator: <>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: admin.py:21
-msgid ""
-"Leaving this empty causes Django to look for a template with the given name "
-"and populate this field with its content."
+msgid "Leaving this empty causes Django to look for a template with the given name and populate this field with its content."
 msgstr "אם זה ריק אז ג'נגו מחפש תבנית עם שם סיפק וממלא את השדה עם תוכנו"
-
-#: admin.py:35
-msgid "Date/time"
-msgstr ""
-
-#: admin.py:46
-msgid "sites"
-msgstr ""
 
 #: models.py:18
 msgid "name"
@@ -58,3 +48,11 @@ msgstr "תבנית"
 #: models.py:33
 msgid "templates"
 msgstr "תבניות"
+
+#: admin.py:46
+msgid "sites"
+msgstr "אתרים"
+
+#: admin.py:35
+msgid "Date/time"
+msgstr "תאריך / זמן"

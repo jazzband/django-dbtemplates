@@ -1,0 +1,52 @@
+# Diego Búrigo Zacarão <diegobz@fedoraproject.org> 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: 0.4\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-31 11:45-0300\n"
+"PO-Revision-Date: 2008-08-31 11:45-0300\n"
+"Last-Translator: Diego Búrigo Zacarão <diegobz@fedoraproject.org>\n"
+"Language-Team: Brazilian Portuguese <fedora-trans-pt_br@redhat.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:21
+msgid "Leaving this empty causes Django to look for a template with the given name and populate this field with its content."
+msgstr "Manter isto vazio faz com que o Django procure por um modelo (template) com o dado nome e preencha este campo com o seu conteúdo"
+
+#: models.py:18
+msgid "name"
+msgstr "Name"
+
+#: models.py:18
+msgid "Example: 'flatpages/default.html'"
+msgstr "Exemplo: 'flatpages/default.html'"
+
+#: models.py:19
+msgid "content"
+msgstr "conteúdo"
+
+#: models.py:21
+msgid "creation date"
+msgstr "Data de criação"
+
+#: models.py:22
+msgid "last changed"
+msgstr "ultima modificação"
+
+#: models.py:29
+msgid "template"
+msgstr "modelo"
+
+#: models.py:30
+msgid "templates"
+msgstr "modelos"
+
+#: admin.py:46
+msgid "sites"
+msgstr "sites"
+
+#: admin.py:35
+msgid "Date/time"
+msgstr "Data/hora"
