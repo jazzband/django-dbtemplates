@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-01 00:56+0100\n"
+"POT-Creation-Date: 2009-09-20 16:50+0200\n"
 "PO-Revision-Date: 2008-08-21 12:31+0300\n"
 "Last-Translator:  <>\n"
 "Language-Team: \n"
@@ -35,26 +35,26 @@ msgstr ""
 msgid "name"
 msgstr "שם"
 
-#: models.py:18
+#: models.py:19
 msgid "Example: 'flatpages/default.html'"
 msgstr "דוגמא: 'flatpages/default.html'"
 
-#: models.py:19
+#: models.py:20
 msgid "content"
 msgstr "תוכן"
 
-#: models.py:21
+#: models.py:22
 msgid "creation date"
 msgstr "נוצר ב"
 
-#: models.py:22
+#: models.py:24
 msgid "last changed"
 msgstr "שונה ב"
 
-#: models.py:29
+#: models.py:32
 msgid "template"
 msgstr "תבנית"
 
-#: models.py:30
+#: models.py:33
 msgid "templates"
 msgstr "תבניות"

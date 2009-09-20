@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-01 00:56+0100\n"
+"POT-Creation-Date: 2009-09-20 16:50+0200\n"
 "PO-Revision-Date: 2008-08-19 17:11+0100\n"
 "Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
 "Language-Team: Jannis Leidel <jannis@leidel.info>\n"
@@ -31,26 +31,26 @@ msgstr ""
 msgid "name"
 msgstr "Name"
 
-#: models.py:18
+#: models.py:19
 msgid "Example: 'flatpages/default.html'"
 msgstr "Zum Beispiel: 'flatpages/default.html'"
 
-#: models.py:19
+#: models.py:20
 msgid "content"
 msgstr "Inhalt"
 
-#: models.py:21
+#: models.py:22
 msgid "creation date"
 msgstr "Erstellt"
 
-#: models.py:22
+#: models.py:24
 msgid "last changed"
 msgstr "Geändert"
 
-#: models.py:29
+#: models.py:32
 msgid "template"
 msgstr "Template"
 
-#: models.py:30
+#: models.py:33
 msgid "templates"
 msgstr "Templates"

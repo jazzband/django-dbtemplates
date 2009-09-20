@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.4\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-03-01 00:56+0100\n"
+"POT-Creation-Date: 2009-09-20 16:50+0200\n"
 "PO-Revision-Date: 2008-08-09 21:39+0100\n"
 "Last-Translator: Roland Frédéric <frederic.roland@creativeconvergence.be>\n"
 "Language-Team: Frédéric Roland <frederic.roland@creativeconvergence.be>\n"
@@ -29,26 +29,26 @@ msgstr ""
 msgid "name"
 msgstr "nom"
 
-#: models.py:18
+#: models.py:19
 msgid "Example: 'flatpages/default.html'"
 msgstr "Exemple: 'flatpages/default.html'"
 
-#: models.py:19
+#: models.py:20
 msgid "content"
 msgstr "contenu"
 
-#: models.py:21
+#: models.py:22
 msgid "creation date"
 msgstr "date de création"
 
-#: models.py:22
+#: models.py:24
 msgid "last changed"
 msgstr "dernier changement"
 
-#: models.py:29
+#: models.py:32
 msgid "template"
 msgstr "modèle"
 
-#: models.py:30
+#: models.py:33
 msgid "templates"
 msgstr "modèles"
