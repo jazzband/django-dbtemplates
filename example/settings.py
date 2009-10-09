@@ -54,7 +54,7 @@ SECRET_KEY = 'e-%(1e1f8ar2v)_8d!%-75a2ag(w(ht*l%n-wts5$li!5=97)8'
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.load_template_source',
     'django.template.loaders.app_directories.load_template_source',
-#     'django.template.loaders.eggs.load_template_source',
+    'django.template.loaders.eggs.load_template_source',
     'dbtemplates.loader.load_template_source',
 )
 
@@ -81,9 +81,10 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.flatpages',
     'dbtemplates',
+    #'reversion',
 )
 
 # Uncomment the following two settings to use the file system cache backend.
 # It will cache in the directory "cache" inside the example project directory.
-# DBTEMPLATES_CACHE_BACKEND = "dbtemplates.cache.FileSystemBackend"
-# DBTEMPLATES_CACHE_DIR = "cache"
+#DBTEMPLATES_CACHE_BACKEND = "dbtemplates.cache.FileSystemBackend"
+#DBTEMPLATES_CACHE_DIR = "cache"
