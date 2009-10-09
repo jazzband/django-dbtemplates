@@ -373,7 +373,7 @@ Changelog
 0.4.1
 -----
 
-* added French (by Roland Frédéric) and German locale
+* added French (by Roland Frederic) and German locale
 
 0.4.0
 -----
