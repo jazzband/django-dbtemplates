@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-09-04 11:44+0200\n"
+"POT-Creation-Date: 2009-10-09 13:45+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,19 +17,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:21
+#: admin.py:29
 msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
 msgstr ""
-"Hvis du efterlader dette felt tomt, så vil Django søge efter en template med det givne navn "
-"og udfylde dette felt med dets indhold."
+"Hvis du efterlader dette felt tomt, så vil Django søge efter en template med "
+"det givne navn og udfylde dette felt med dets indhold."
 
-#: admin.py:35
+#: admin.py:43
 msgid "Date/time"
 msgstr "Dato/tid"
 
-#: admin.py:46
+#: admin.py:61
+#, python-format
+msgid "Cache of one template successfully invalidated."
+msgid_plural "Cache of %(count)d templates successfully invalidated."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin.py:65
+msgid "Invalidate cache of selected templates"
+msgstr ""
+
+#: admin.py:74
+#, python-format
+msgid "Cache successfully repopulated with one template."
+msgid_plural "Cache successfully repopulated with %(count)d templates."
+msgstr[0] ""
+msgstr[1] ""
+
+#: admin.py:78
+msgid "Repopulate cache with selected templates"
+msgstr ""
+
+#: admin.py:82
 msgid "sites"
 msgstr "websider"
 
