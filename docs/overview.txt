@@ -249,11 +249,11 @@ Admin actions
 
 .. _admin actions: http://docs.djangoproject.com/en/1.1/ref/contrib/admin/actions/#ref-contrib-admin-actions
 
-Changelog:
-==========
+Changelog
+=========
 
-v0.6 (10-09-09):
-----------------
+0.6.0 (10-09-09):
+-----------------
 
 * Updated and added locales (Danish, Brazilian Portuguese)
 
@@ -262,6 +262,138 @@ v0.6 (10-09-09):
 * Added ``invalidate_cache`` and ``repopulate_cache`` admin actions
 
 * Added Sphinx documentation
+
+0.5.7
+-----
+
+* Updates to the docs
+
+* switch back to Bitbucket
+
+* fixed tests
+
+* Added Italian translation
+
+* list of sites the template is used on
+
+* fixed bug in ``create_error_template`` command.
+
+0.5.4
+-----
+
+* Made loader and cache backends site-aware.
+
+* The filesystem cache backend now saves the files under
+  ``<dir>/<site_domain>/<file_name>``.
+
+* The Django cache backend the Site id in the cache key
+
+* Template is now saved explicitly to backend if not existent in cache
+  (e.g. if deleted manually or invalidated).
+
+0.5.3
+-----
+
+* Removed automatic creation of 404.html and 500.html templates and added a
+  new management command for those cases called ``create_error_templates``
+
+* Also reverted move to Bitbucket
+
+0.5.2
+-----
+
+* Fixed a problem with ``django.contrib.sites`` when its table hasn't been
+  populated yet on initialization of dbtemplates. Thanks for the report,
+  Kevin Fricovsky
+
+* Added an example Django project and docs for it
+
+0.5.1
+-----
+
+* Removed unneeded code that registered the model with reversion.
+
+* Updated docs a bit.
+
+* Moved codebase to Bitbucket.
+
+* Removed legacy ``sync_templates.py`` script, use ``django-admin.py
+  sync_templates`` from now on.
+
+0.5.0
+-----
+
+* Added support for `django-reversion`_
+
+* added feature that populates the content field automatically when left
+  empty by using Django's other template loaders
+
+* added caching backend system with two default backends:
+  
+  * ``FileSystemBackend``
+  * ``DjangoCacheBackend``
+  
+  More about it in the `blog post`_ and in the docs.
+
+.. _django-reversion: http://code.google.com/p/django-reversion/
+.. _blog post: http://jannisleidel.com/2008/11/updates-to-django-dbtemplates-and-half-assed-promise/
+
+0.4.7
+-----
+
+* Minor bugfix
+
+0.4.6
+-----
+
+* Minor doc change and PyPI support
+
+0.4.5
+-----
+
+* fixed the --force option of the sync_templates command
+
+0.4.4
+-----
+
+* fixed error in custom model save() after changes in Django `r8670`_.
+
+.. _r8670: http://code.djangoproject.com/changeset/8670
+
+0.4.3
+-----
+
+* removed oldforms code
+
+0.4.2
+-----
+
+* added Hebrew translation (by mkriheli)
+
+0.4.1
+-----
+
+* added French (by Roland Frédéric) and German locale
+
+0.4.0
+-----
+
+* adds better support for newforms-admin
+
+* don't forget to load the dbtemplates.admin, e.g. by using
+  django.contrib.admin.autodiscover() in you urls.py
+
+0.3.1
+-----
+
+* adds a new management command *sync_templates* for bidirectional syncing
+  between filesystem and database (backwards-compatible) and
+  FilesystemCaching (thanks, Arne Brodowski!)
+
+0.2.5
+-----
+
+* adds support for newforms-admin
 
 Support
 =======
