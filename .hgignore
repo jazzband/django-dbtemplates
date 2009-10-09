@@ -6,3 +6,4 @@ build
 dist
 django_dbtemplates.egg-info/
 example/example.db
+docs/_build

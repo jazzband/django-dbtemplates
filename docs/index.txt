@@ -1,4 +1,3 @@
-==================
 django-dbtemplates
 ==================
 
@@ -12,5 +11,6 @@ created in the database.
 Contents:
 
 .. toctree::
+   :maxdepth: 2
 
-   overview.txt
+   overview
