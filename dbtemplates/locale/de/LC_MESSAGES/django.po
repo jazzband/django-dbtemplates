@@ -28,23 +28,23 @@ msgstr "Datum/Uhrzeit"
 #, python-format
 msgid "Cache of one template successfully invalidated."
 msgid_plural "Cache of %(count)d templates successfully invalidated."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Der Cache eines Templates wurde erfolgreich geleert."
+msgstr[1] "Der Cache von %(count)d Templates wurde erfolgreich geleert."
 
 #: admin.py:65
 msgid "Invalidate cache of selected templates"
-msgstr ""
+msgstr "Cache der ausgewählten Templates leeren"
 
 #: admin.py:74
 #, python-format
 msgid "Cache successfully repopulated with one template."
 msgid_plural "Cache successfully repopulated with %(count)d templates."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Der Cache eines Templates wurde erfolgreich geleert und neu gefüllt."
+msgstr[1] "Der Cache von %(count)d Templates wurde erfolgreich geleert und neu gefüllt."
 
 #: admin.py:78
 msgid "Repopulate cache with selected templates"
-msgstr ""
+msgstr "Cache der ausgewählten Templates neu füllen"
 
 #: admin.py:82
 msgid "sites"
