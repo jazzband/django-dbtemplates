@@ -1,9 +1,10 @@
 from django import forms
 from django.conf import settings
 from django.contrib import admin
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ungettext, ugettext_lazy as _
 
-from dbtemplates.models import Template
+from dbtemplates.models import Template, backend, remove_cached_template, \
+    add_template_to_cache
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
@@ -40,6 +41,34 @@ class TemplateAdmin(TemplateModelAdmin):
     list_display = ('name', 'creation_date', 'last_changed', 'site_list')
     list_filter = ('sites',)
     search_fields = ('name', 'content')
+    if backend:
+        actions = ['invalidate_cache', 'repopulate_cache']
+
+    def invalidate_cache(self, request, queryset):
+        if not backend:
+            self.message_user(request, ("There is no active cache backend."))
+            return
+        for template in queryset:
+            remove_cached_template(template)
+        message = ungettext(
+            "Cache of one template successfully invalidated.",
+            "Cache of %(count)d templates successfully invalidated.",
+            len(queryset))
+        self.message_user(request, message % {'count': len(queryset)})
+    invalidate_cache.short_description = _("Invalidate cache of selected templates")
+
+    def repopulate_cache(self, request, queryset):
+        if not backend:
+            self.message_user(request, ("There is no active cache backend."))
+            return
+        for template in queryset:
+            add_template_to_cache(template)
+        message = ungettext(
+            "Cache successfully repopulated with one template.",
+            "Cache successfully repopulated with %(count)d templates.",
+            len(queryset))
+        self.message_user(request, message % {'count': len(queryset)})
+    repopulate_cache.short_description = _("Repopulate cache with selected templates")
 
     def site_list(self, template):
           return ", ".join([site.name for site in template.sites.all()])
