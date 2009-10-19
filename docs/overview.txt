@@ -120,6 +120,25 @@ Here is how it works:
 
 .. _flatpages app: http://docs.djangoproject.com/en/dev/ref/contrib/flatpages/
 
+Settings
+========
+
+* ``DBTEMPLATES_ADD_DEFAULT_SITE``
+
+  ``dbtemplates`` adds the current site (``settings.SITE_ID``) to the database  
+  template when it is created by default. You can disable this feature by   
+  setting ``DBTEMPLATES_ADD_DEFAULT_SITE`` to ``False``.
+
+* ``DBTEMPLATES_CACHE_BACKEND``
+
+  The dotted Python path to the cache backend class. See `Caching`_ for 
+  details.
+
+* ``DBTEMPLATES_CACHE_DIR``
+
+  A directory path that is used by the cache ``FileSystemBackend`` to store 
+  the cached templates. See `Caching`_ for details.
+
 Caching
 =======
 
@@ -253,6 +272,12 @@ Admin actions
 
 Changelog
 =========
+
+0.6.1 (10-19-09):
+-----------------
+
+* Fixed issue with default site of a template, added ability to disable
+  default site (``DBTEMPLATES_ADD_DEFAULT_SITE``).
 
 0.6.0 (10-09-09):
 -----------------
