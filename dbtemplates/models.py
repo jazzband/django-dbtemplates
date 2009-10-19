@@ -18,7 +18,7 @@ class Template(models.Model):
     name = models.CharField(_('name'), unique=True, max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
-    sites = models.ManyToManyField(Site, default=[settings.SITE_ID])
+    sites = models.ManyToManyField(Site)
     creation_date = models.DateTimeField(_('creation date'),
                                          default=datetime.now)
     last_changed = models.DateTimeField(_('last changed'),
@@ -66,6 +66,19 @@ def get_cache_backend():
     return False
 
 backend = get_cache_backend()
+
+def add_default_site(instance, **kwargs):
+    """
+    Called via Django's signals to cache the templates, if the template
+    in the database was added or changed, only if DBTEMPLATES_ADD_DEFAULT_SITE
+    setting is set.
+    """
+    if getattr(settings, 'DBTEMPLATES_ADD_DEFAULT_SITE', True):
+        current_site = Site.objects.get_current()
+        if current_site not in instance.sites.all():
+            instance.sites.add(current_site)
+
+signals.post_save.connect(add_default_site, sender=Template)
 
 def add_template_to_cache(instance, **kwargs):
     """
