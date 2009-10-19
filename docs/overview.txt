@@ -95,9 +95,7 @@ Here is how it works:
    address http://127.0.0.1:8000/admin/.
 4. Next add a new `Template` object in the ``dbtemplates`` section and use
    ``flatpages/default.html`` as the value for the ``name`` field. For the
-   ``content`` field use this example:
-
-   .. code-block:: html+django
+   ``content`` field use this example::
 
         <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
             "http://www.w3.org/TR/REC-html40/loose.dtd">
