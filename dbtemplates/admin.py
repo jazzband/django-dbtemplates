@@ -18,7 +18,7 @@ class TemplateAdminForm(forms.ModelForm):
     Custom AdminForm to make the content textarea wider.
     """
     content = forms.CharField(
-        widget=forms.Textarea({'cols': '80', 'rows': '24'}),
+        widget=forms.Textarea({'rows': '24'}),
         help_text=_("Leaving this empty causes Django to look for a template "
             "with the given name and populate this field with its content."),
         required=False)
