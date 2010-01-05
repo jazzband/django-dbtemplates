@@ -1,0 +1,75 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-10-09 13:45+0200\n"
+"PO-Revision-Date: 2010-01-05 17:23+0800\n"
+"Last-Translator: 张昆 <zhangkun@web916.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:29
+msgid "Leaving this empty causes Django to look for a template with the given name and populate this field with its content."
+msgstr "此项目留空将使系统用指定的名称寻找模板并应用到该项目。"
+
+#: admin.py:43
+msgid "Date/time"
+msgstr "日期/时间"
+
+#: admin.py:61
+#, python-format
+msgid "Cache of one template successfully invalidated."
+msgstr "该模板的缓存已经成功撤销。"
+
+#: admin.py:65
+msgid "Invalidate cache of selected templates"
+msgstr "撤销选中模板的缓存"
+
+#: admin.py:74
+#, python-format
+msgid "Cache successfully repopulated with one template."
+msgstr "该模板的缓存已经成功启用。"
+
+#: admin.py:78
+msgid "Repopulate cache with selected templates"
+msgstr "重新启用选中模板的缓存"
+
+#: admin.py:82
+msgid "sites"
+msgstr "站点"
+
+#: models.py:18
+msgid "name"
+msgstr "名称"
+
+#: models.py:19
+msgid "Example: 'flatpages/default.html'"
+msgstr "例如： 'flatpages/default.html'"
+
+#: models.py:20
+msgid "content"
+msgstr "内容"
+
+#: models.py:22
+msgid "creation date"
+msgstr "创建日期"
+
+#: models.py:24
+msgid "last changed"
+msgstr "最新变更"
+
+#: models.py:32
+msgid "template"
+msgstr "模板"
+
+#: models.py:33
+msgid "templates"
+msgstr "模板"
+
