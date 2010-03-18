@@ -1,4 +1,3 @@
--*- restructuredtext -*-
 ===================================
 Database template loader for Django
 ===================================
