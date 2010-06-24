@@ -1,4 +1,5 @@
-from django.conf.urls.defaults import patterns
+from django.conf import settings
+from django.conf.urls.defaults import patterns, include
 
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -15,3 +16,9 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/(.*)', admin.site.root),
 )
+
+# the following is used to serve up local media files like images
+if settings.DEBUG:
+    urlpatterns += patterns("",
+        (r"", include("staticfiles.urls")),
+    )

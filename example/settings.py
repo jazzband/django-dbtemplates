@@ -1,4 +1,7 @@
 # Django settings for example project.
+import os, posixpath
+
+PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -35,17 +38,25 @@ USE_I18N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(PROJECT_ROOT, "site_media", "media")
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
-MEDIA_URL = ''
+MEDIA_URL = "/site_media/media/"
+
+# Absolute path to the directory that holds static files like app media.
+# Example: "/home/media/media.lawrence.com/apps/"
+STATIC_ROOT = os.path.join(PROJECT_ROOT, "site_media", "static")
+
+# URL that handles the static files like app media.
+# Example: "http://media.lawrence.com"
+STATIC_URL = "/site_media/static/"
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
 # Examples: "http://foo.com/media/", "/media/".
-ADMIN_MEDIA_PREFIX = '/media/'
+ADMIN_MEDIA_PREFIX = posixpath.join(STATIC_URL, "admin/")
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = 'e-%(1e1f8ar2v)_8d!%-75a2ag(w(ht*l%n-wts5$li!5=97)8'
@@ -81,6 +92,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.flatpages',
     'dbtemplates',
+    'staticfiles',
     #'reversion',
 )
 
