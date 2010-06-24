@@ -65,8 +65,12 @@ class TemplateAdmin(TemplateModelAdmin):
     form = TemplateAdminForm
     fieldsets = (
         (None, {
-            'fields': ('name', 'content', 'sites'),
+            'fields': ('name', 'content'),
             'classes': ('monospace',),
+        }),
+        (_('Advanced'), {
+            'fields': (('sites'),),
+            'classes': ('collapse',),
         }),
         (_('Date/time'), {
             'fields': (('creation_date', 'last_changed'),),
