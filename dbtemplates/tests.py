@@ -1,51 +1,57 @@
-__test__ = {"doctest": """
+from django import VERSION
+from django.test import TestCase
+from django.contrib.sites.models import Site
+from django.template import loader, Context
+from django.core.management import call_command
 
->>> from django.contrib.sites.models import Site
->>> from django.conf import settings
->>> from dbtemplates.models import Template
->>> Site(domain="example.com", name="example.com").save()
->>> Template(name="test_template.html")
-<Template: test_template.html>
->>> from django.template import loader, Context
->>> t1 = Template(name='base.html', content="<html><head></head><body>{% block content %}Welcome at {{ title }}{% endblock %}</body></html>")
->>> t1.save()
->>> Site.objects.get_current()
-<Site: example.com>
->>> t1.sites.all()
-[<Site: example.com>]
->>> t1
-<Template: base.html>
->>> "Welcome at" in t1.content
-True
->>> t2 = Template(name='sub.html', content='{% extends "base.html" %}{% block content %}This is {{ title }}{% endblock %}')
->>> t2.save()
->>> test_site2 = Site(domain="example.org", name="example.org")
->>> test_site2.save()
->>> t2.sites.add(test_site2)
->>> t2
-<Template: sub.html>
->>> test_site = Site.objects.get_current()
->>> Template.objects.filter(sites=test_site)
-[<Template: base.html>, <Template: sub.html>]
->>> t2.sites.all()
-[<Site: example.com>, <Site: example.org>]
->>> from dbtemplates.loader import load_template_source
->>> loader.template_source_loaders = [load_template_source]
->>> loader.get_template("base.html").render(Context({'title':'MainPage'}))
-u'<html><head></head><body>Welcome at MainPage</body></html>'
->>> loader.get_template("sub.html").render(Context({'title':'SubPage'}))
-u'<html><head></head><body>This is SubPage</body></html>'
->>> from django.core.management import call_command
->>> call_command('create_error_templates', force=True)
-Created database template for 404 errors.
-Created database template for 500 errors.
->>> Template.objects.filter(sites=test_site)
-[<Template: 404.html>, <Template: 500.html>, <Template: base.html>, <Template: sub.html>]
->>> settings.DBTEMPLATES_ADD_DEFAULT_SITE = False
->>> t3 = Template(name='footer.html', content='ohai')
->>> t3.save()
->>> t3
-<Template: footer.html>
->>> t3.sites.all()
-[]
-"""}
+from dbtemplates import settings
+from dbtemplates.loader import load_template_source
+from dbtemplates.models import Template
+
+class DbTemplatesTestCase(TestCase):
+    def setUp(self):
+        self.site1, created1 = Site.objects.get_or_create(domain="example.com", name="example.com")
+        self.site2, created2 = Site.objects.get_or_create(domain="example.org", name="example.org")
+
+    def test_basiscs(self):
+        t1 = Template(name='base.html', content='<html><head></head><body>{% block content %}Welcome at {{ title }}{% endblock %}</body></html>')
+        t1.save()
+        self.assertEqual(Site.objects.get_current(), t1.sites.all()[0])
+        self.assertTrue("Welcome at" in t1.content)
+
+        t2 = Template(name='sub.html', content='{% extends "base.html" %}{% block content %}This is {{ title }}{% endblock %}')
+        t2.save()
+        t2.sites.add(self.site2)
+
+        self.assertEqual(list(Template.objects.filter(sites=self.site1)), [t1, t2])
+        self.assertEqual(list(t2.sites.all()), [self.site1, self.site2])
+
+    def test_load_templates(self):
+        self.test_basiscs()
+        loader.template_source_loaders = [load_template_source]
+        result1 = loader.get_template("base.html").render(Context({'title':'MainPage'}))
+        self.assertEqual(result1, u'<html><head></head><body>Welcome at MainPage</body></html>')
+
+        result2 = loader.get_template("sub.html").render(Context({'title':'SubPage'}))
+        self.assertEqual(result2, u'<html><head></head><body>This is SubPage</body></html>')
+
+        if VERSION[:2] >= (1, 2):
+            from dbtemplates.loader import Loader
+            dbloader = Loader()
+            loader.template_source_loaders = [dbloader.load_template_source]
+            result = loader.get_template("base.html").render(Context({'title':'MainPage'}))
+            self.assertEqual(result, u'<html><head></head><body>Welcome at MainPage</body></html>')
+            result2 = loader.get_template("sub.html").render(Context({'title':'SubPage'}))
+            self.assertEqual(result2, u'<html><head></head><body>This is SubPage</body></html>')
+
+    def test_error_templates_creation(self):
+        call_command('create_error_templates', force=True, verbosity=0)
+        self.assertEqual(list(Template.objects.filter(sites=self.site1)),
+            list(Template.objects.filter()))
+
+    def test_disabling_default_site(self):
+        old_add_default_site = settings.ADD_DEFAULT_SITE
+        settings.ADD_DEFAULT_SITE = False
+        t3 = Template.objects.create(name='footer.html', content='ohai')
+        self.assertEqual(list(t3.sites.all()), [])
+        settings.ADD_DEFAULT_SITE = old_add_default_site
