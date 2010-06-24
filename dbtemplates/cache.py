@@ -1,9 +1,8 @@
 import os
 from django.conf import settings
 from django.core.cache import cache
-from django.template import TemplateDoesNotExist
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.encoding import smart_unicode, force_unicode
+from django.utils.encoding import force_unicode
 
 class BaseCacheBackend(object):
     """
@@ -65,7 +64,12 @@ class FileSystemBackend(BaseCacheBackend):
             if not os.path.isdir(self.cache_dir):
                 pass
         except:
-            raise ImproperlyConfigured("You're using the dbtemplates file system cache backend without having set the DBTEMPLATES_CACHE_DIR setting to a valid value. Make sure the directory exists and is writeable for the user your Django instance is running with.")
+            raise ImproperlyConfigured(
+                "You're using the dbtemplates file system cache backend "
+                "without having set the DBTEMPLATES_CACHE_DIR setting to a "
+                "valid value. Make sure the directory exists and is writeable "
+                "for the user your Django instance is running with."
+            )
         super(FileSystemBackend, self).__init__()
 
     def _filepath(self, name):
