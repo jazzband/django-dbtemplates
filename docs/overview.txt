@@ -146,6 +146,14 @@ Settings
 
   A boolean, if enabled triggers the use of ``django-reversion``.
 
+* ``DBTEMPLATES_MEDIA_PREFIX``
+
+  The URL prefix for ``dbtemplates``' media -- CSS and JavaScript used by
+  the CodeMirror based editor. Make sure to use a trailing
+  slash, and to have this be different from the ``MEDIA_URL`` setting
+  (since the same URL cannot be mapped onto two different sets of
+  files).
+
 Caching
 =======
 
