@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 from django.db import models
-from django.conf import settings
 from django.db.models import signals
-from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
 from django.utils.translation import gettext_lazy as _
 from django.template import TemplateDoesNotExist
 from django.template.loader import find_template_source
 from django.core.exceptions import ImproperlyConfigured
 
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+
+from dbtemplates import settings
 class Template(models.Model):
     """
     Defines a template model for use with the database template loader.
@@ -50,18 +51,22 @@ class Template(models.Model):
         super(Template, self).save(*args, **kwargs)
 
 def get_cache_backend():
-    path = getattr(settings, 'DBTEMPLATES_CACHE_BACKEND', False)
+    path = settings.CACHE_BACKEND
     if path:
         i = path.rfind('.')
         module, attr = path[:i], path[i+1:]
         try:
             mod = __import__(module, {}, {}, [attr])
         except ImportError, e:
-            raise ImproperlyConfigured, 'Error importing dbtemplates cache backend %s: "%s"' % (module, e)
+            raise ImproperlyConfigured(
+                'Error importing dbtemplates cache backend %s: "%s"' %
+                (module, e))
         try:
             cls = getattr(mod, attr)
         except AttributeError:
-            raise ImproperlyConfigured, 'Module "%s" does not define a "%s" cache backend' % (module, attr)
+            raise ImproperlyConfigured(
+                'Module "%s" does not define a "%s" cache backend' %
+                (module, attr))
         return cls()
     return False
 
@@ -73,7 +78,7 @@ def add_default_site(instance, **kwargs):
     in the database was added or changed, only if DBTEMPLATES_ADD_DEFAULT_SITE
     setting is set.
     """
-    if getattr(settings, 'DBTEMPLATES_ADD_DEFAULT_SITE', True):
+    if settings.ADD_DEFAULT_SITE:
         current_site = Site.objects.get_current()
         if current_site not in instance.sites.all():
             instance.sites.add(current_site)
