@@ -137,6 +137,15 @@ Settings
   A directory path that is used by the cache ``FileSystemBackend`` to store 
   the cached templates. See `Caching`_ for details.
 
+* ``DBTEMPLATES_USE_CODEMIRROR``
+
+  A boolean, if enabled triggers the use of the CodeMirror based editor.
+  Set to ``False`` by default.
+
+* ``DBTEMPLATES_USE_REVERSION``
+
+  A boolean, if enabled triggers the use of ``django-reversion``.
+
 Caching
 =======
 
@@ -218,8 +227,8 @@ state when you save the template in your database and provides an easy to use
 interface.
 
 Please refer to `django-reversion's documentation`_ for more information
-about how it works. ``dbtemplates`` automatically recognizes if
-``django-reversion`` is installed and works out of the box. Just visit the
+about how it works. ``dbtemplates`` uses ``django-reversion`` if the 
+``DBTEMPLATES_USE_REVERSION`` setting is ``True``. Just visit the
 "History" section of each template instance and browse its history.
 
 Short installation howto
@@ -270,6 +279,28 @@ Admin actions
 
 Changelog
 =========
+
+0.7.0 (06-24-10)
+----------------
+
+* Added CodeMirror_-based syntax highlighting textarea, based on the amaxing
+  work_ by `Nic Pottier`_. Set the ``DBTEMPLATES_USE_CODEMIRROR`` setting
+  to ``True`` to enable it.
+
+* Make use of the full width in plain textarea mode.
+
+* Added Chinese translation
+
+* Added support for Django 1.2
+
+* Updated French translation
+
+* Added ``DBTEMPLATES_USE_REVERSION`` setting to be able to explicitely enable
+  reversion support. (Default: ``False``)
+
+.. _CodeMirror: http://marijn.haverbeke.nl/codemirror/
+.. _work: https://gist.github.com/368758/86bcafe53c438e2e2a0e3442c3b30f2c6011fbba
+.. _`Nic Pottier`: http://github.com/nicpottier
 
 0.6.1 (10-19-09):
 -----------------
