@@ -100,3 +100,6 @@ INSTALLED_APPS = (
 # It will cache in the directory "cache" inside the example project directory.
 #DBTEMPLATES_CACHE_BACKEND = "dbtemplates.cache.FileSystemBackend"
 #DBTEMPLATES_CACHE_DIR = "cache"
+
+DBTEMPLATES_MEDIA_PREFIX = posixpath.join(STATIC_URL, "dbtemplates/")
+DBTEMPLATES_ENABLE_CODEMIRROR = True

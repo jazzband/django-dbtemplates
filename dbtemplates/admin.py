@@ -1,30 +1,65 @@
+import posixpath
 from django import forms
 from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ungettext, ugettext_lazy as _
+from django.utils.safestring import mark_safe
 
+from dbtemplates.settings import MEDIA_PREFIX, USE_REVERSION, USE_CODEMIRROR
 from dbtemplates.models import Template, backend, remove_cached_template, \
     add_template_to_cache
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
-if 'reversion'in settings.INSTALLED_APPS:
+if USE_REVERSION:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
 else:
     from django.contrib.admin import ModelAdmin as TemplateModelAdmin
+
+class CodeMirrorTextArea(forms.Textarea):
+    """
+    A custom widget for the CodeMirror browser editor to be used with the 
+    content field of the Template model.
+    """
+    class Media:
+        css = dict(screen=[posixpath.join(MEDIA_PREFIX, 'css/editor.css')])
+        js = [posixpath.join(MEDIA_PREFIX, 'js/codemirror.js')]
+
+    def render(self, name, value, attrs=None):
+        result = []
+        result.append(
+            super(CodeMirrorTextArea, self).render(name, value, attrs))
+        if USE_CODEMIRROR:
+            result.append(u"""
+<script type="text/javascript">
+  var editor = CodeMirror.fromTextArea('id_%(name)s', {
+    path: "%(media_prefix)sjs/",
+    parserfile: "parsedjango.js",
+    stylesheet: "%(media_prefix)scss/django.css",
+    continuousScanning: 500,
+    height: "40.2em",
+    tabMode: "shift",
+    indentUnit: 4,
+    lineNumbers: true
+  });
+</script>
+""" % dict(media_prefix=MEDIA_PREFIX, name=name))
+        return mark_safe(u"".join(result))
+
 
 class TemplateAdminForm(forms.ModelForm):
     """
     Custom AdminForm to make the content textarea wider.
     """
     content = forms.CharField(
-        widget=forms.Textarea({'rows': '24'}),
+        widget=CodeMirrorTextArea({'rows': '24'}),
         help_text=_("Leaving this empty causes Django to look for a template "
             "with the given name and populate this field with its content."),
         required=False)
 
     class Meta:
         model = Template
+
 
 class TemplateAdmin(TemplateModelAdmin):
     form = TemplateAdminForm

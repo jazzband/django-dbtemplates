@@ -1,0 +1,19 @@
+.dbtemplates-template div.content {
+    white-space: nowrap;
+    margin-right: 0.6em;
+}
+.dbtemplates-template #id_content {
+    height: 40.2em;
+    width: 85%;
+}
+.CodeMirror-line-numbers {
+  width: 2.2em;
+  text-align: right;
+  margin: .4em;
+  margin-left: 6em;
+  padding: 0;
+  font-family: monospace;
+  font-size: 10pt;
+  color: #999;
+}
+
