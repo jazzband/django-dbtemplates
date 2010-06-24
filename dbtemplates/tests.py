@@ -6,6 +6,7 @@ from django.core.management import call_command
 
 from dbtemplates import settings
 from dbtemplates.loader import load_template_source
+
 from dbtemplates.models import Template
 
 class DbTemplatesTestCase(TestCase):
@@ -55,3 +56,8 @@ class DbTemplatesTestCase(TestCase):
         t3 = Template.objects.create(name='footer.html', content='ohai')
         self.assertEqual(list(t3.sites.all()), [])
         settings.ADD_DEFAULT_SITE = old_add_default_site
+
+    def test_automatic_sync(self):
+        admin_base_template, origin = loader.find_template_source('admin/base.html')
+        template = Template.objects.create(name='admin/base.html')
+        self.assertEqual(admin_base_template, template.content)
