@@ -29,8 +29,7 @@ class CodeMirrorTextArea(forms.Textarea):
         result = []
         result.append(
             super(CodeMirrorTextArea, self).render(name, value, attrs))
-        if USE_CODEMIRROR:
-            result.append(u"""
+        result.append(u"""
 <script type="text/javascript">
   var editor = CodeMirror.fromTextArea('id_%(name)s', {
     path: "%(media_prefix)sjs/",
@@ -46,13 +45,18 @@ class CodeMirrorTextArea(forms.Textarea):
 """ % dict(media_prefix=MEDIA_PREFIX, name=name))
         return mark_safe(u"".join(result))
 
+if USE_CODEMIRROR:
+    TemplateContentTextArea = CodeMirrorTextArea
+else:
+    TemplateContentTextArea = forms.Textarea
+
 
 class TemplateAdminForm(forms.ModelForm):
     """
     Custom AdminForm to make the content textarea wider.
     """
     content = forms.CharField(
-        widget=CodeMirrorTextArea({'rows': '24'}),
+        widget=TemplateContentTextArea({'rows': '24'}),
         help_text=_("Leaving this empty causes Django to look for a template "
             "with the given name and populate this field with its content."),
         required=False)
