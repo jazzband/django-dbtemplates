@@ -1,3 +1,4 @@
+import os
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
@@ -5,7 +6,8 @@ CACHE_BACKEND = getattr(settings, 'DBTEMPLATES_CACHE_BACKEND', None)
 
 ADD_DEFAULT_SITE = getattr(settings, 'DBTEMPLATES_ADD_DEFAULT_SITE', True)
 
-MEDIA_PREFIX = getattr(settings, 'DBTEMPLATES_MEDIA_PREFIX', None)
+MEDIA_PREFIX = getattr(settings, 'DBTEMPLATES_MEDIA_PREFIX',
+    os.path.join(settings.MEDIA_ROOT, 'dbtemplates'))
 
 USE_REVERSION = getattr(settings, 'DBTEMPLATES_USE_REVERSION', False)
 
