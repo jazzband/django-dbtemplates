@@ -288,6 +288,19 @@ Admin actions
 Changelog
 =========
 
+0.7.1 (07-07-10)
+----------------
+
+* Fixed problem with the CodeMirror textarea, which wasn't completely
+  disabled before.
+
+* Fixed problem with the ``DBTEMPLATES_MEDIA_PREFIX`` setting, which defaults
+  now to ``os.path.join(settings.MEDIA_ROOT, 'dbtemplates')`` now.
+  
+  In other words, if you don't specify a ``DBTEMPLATES_MEDIA_PREFIX`` setting
+  and have the CodeMirror textarea enabled, dbtemplates will look in a
+  subdirectory of your site's ``MEDIA_ROOT`` for the CodeMirror media files.
+
 0.7.0 (06-24-10)
 ----------------
 
