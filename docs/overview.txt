@@ -288,6 +288,11 @@ Admin actions
 Changelog
 =========
 
+0.7.2 (09-04-10)
+----------------
+
+* Moved to Github again. Sigh.
+
 0.7.1 (07-07-10)
 ----------------
 
@@ -477,4 +482,4 @@ Support
 
 Please leave your questions and messages on the designated site:
 
-http://bitbucket.org/jezdez/django-dbtemplates/issues/
+http://github.com/jezdez/django-dbtemplates/issues/

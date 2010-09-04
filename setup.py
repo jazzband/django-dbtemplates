@@ -7,8 +7,7 @@ setup(
     long_description=open('docs/overview.txt').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
-    url='http://bitbucket.org/jezdez/django-dbtemplates/',
-    download_url='http://bitbucket.org/jezdez/django-dbtemplates/downloads/',
+    url='http://packages.python.org/django-dbtemplates/',
     packages=find_packages(exclude=['example']),
     zip_safe=False,
     package_data = {
