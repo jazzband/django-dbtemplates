@@ -13,7 +13,6 @@ from django.contrib.sites.managers import CurrentSiteManager
 
 from dbtemplates import settings
 
-print VERSION, VERSION[:2] < (1, 2)
 if VERSION[:2] >= (1, 2):
     from django.template.loader import find_template
 else:
