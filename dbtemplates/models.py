@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
+from django import VERSION
 from django.db import models
 from django.db.models import signals
 from django.utils.translation import gettext_lazy as _
 from django.template import TemplateDoesNotExist
-from django.template.loader import find_template_source
 from django.core.exceptions import ImproperlyConfigured
 
 from django.contrib.sites.models import Site
@@ -13,6 +13,11 @@ from django.contrib.sites.managers import CurrentSiteManager
 
 from dbtemplates import settings
 
+print VERSION, VERSION[:2] < (1, 2)
+if VERSION[:2] >= (1, 2):
+    from django.template.loader import find_template
+else:
+    from django.template.loader import find_template_source  as find_template
 
 class Template(models.Model):
     """
@@ -39,18 +44,27 @@ class Template(models.Model):
 
     def __unicode__(self):
         return self.name
-    
+
+    def populate(self, name=None):
+        """
+        Tries to find a template with the same name and populates
+        the content field if found.
+        """
+        if name is None:
+            name = self.name
+        try:
+            source, origin = find_template(name)
+            if source:
+                self.content = source
+        except TemplateDoesNotExist:
+            pass
+
     def save(self, *args, **kwargs):
         self.last_changed = datetime.now()
         # If content is empty look for a template with the given name and
         # populate the template instance with its content.
         if not self.content:
-            try:
-                source, origin = find_template_source(self.name)
-                if source:
-                    self.content = source
-            except TemplateDoesNotExist:
-                pass
+            self.populate()
         super(Template, self).save(*args, **kwargs)
 
 def get_cache_backend():
