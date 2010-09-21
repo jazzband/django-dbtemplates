@@ -63,7 +63,7 @@ class Template(models.Model):
         self.last_changed = datetime.now()
         # If content is empty look for a template with the given name and
         # populate the template instance with its content.
-        if not self.content:
+        if settings.AUTO_POPULATE_CONTENT and not self.content:
             self.populate()
         super(Template, self).save(*args, **kwargs)
 

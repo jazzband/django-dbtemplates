@@ -49,6 +49,11 @@ if settings.USE_CODEMIRROR:
 else:
     TemplateContentTextArea = forms.Textarea
 
+if settings.AUTO_POPULATE_CONTENT:
+    content_help_text = _("Leaving this empty causes Django to look for a "
+        "template with the given name and populate this field with its content.")
+else:
+    content_help_text = ""
 
 class TemplateAdminForm(forms.ModelForm):
     """
@@ -56,9 +61,7 @@ class TemplateAdminForm(forms.ModelForm):
     """
     content = forms.CharField(
         widget=TemplateContentTextArea({'rows': '24'}),
-        help_text=_("Leaving this empty causes Django to look for a template "
-            "with the given name and populate this field with its content."),
-        required=False)
+        help_text=content_help_text, required=False)
 
     class Meta:
         model = Template
