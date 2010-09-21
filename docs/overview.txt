@@ -127,6 +127,13 @@ Settings
   template when it is created by default. You can disable this feature by   
   setting ``DBTEMPLATES_ADD_DEFAULT_SITE`` to ``False``.
 
+* ``DBTEMPLATES_AUTO_POPULATE_CONTENT``
+
+  ``dbtemplates`` auto-populates the content of a newly created template with
+  the content of a template with the same name the other template loader.
+  To disable this feature set ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` to
+  ``False``.
+
 * ``DBTEMPLATES_CACHE_BACKEND``
 
   The dotted Python path to the cache backend class. See `Caching`_ for 
@@ -287,6 +294,13 @@ Admin actions
 
 Changelog
 =========
+
+0.7.3 (09-21-10)
+----------------
+
+* Added ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` setting.
+
+* Fixed cosmetic issue in admin with collapsable fields.
 
 0.7.2 (09-04-10)
 ----------------
