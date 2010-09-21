@@ -1,17 +1,16 @@
 import posixpath
 from django import forms
-from django.conf import settings
 from django.contrib import admin
 from django.utils.translation import ungettext, ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
-from dbtemplates.settings import MEDIA_PREFIX, USE_REVERSION, USE_CODEMIRROR
-from dbtemplates.models import Template, backend, remove_cached_template, \
-    add_template_to_cache
+from dbtemplates import settings
+from dbtemplates.models import (Template, backend, remove_cached_template,
+        add_template_to_cache)
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
-if USE_REVERSION:
+if settings.USE_REVERSION:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
 else:
     from django.contrib.admin import ModelAdmin as TemplateModelAdmin
@@ -22,8 +21,8 @@ class CodeMirrorTextArea(forms.Textarea):
     content field of the Template model.
     """
     class Media:
-        css = dict(screen=[posixpath.join(MEDIA_PREFIX, 'css/editor.css')])
-        js = [posixpath.join(MEDIA_PREFIX, 'js/codemirror.js')]
+        css = dict(screen=[posixpath.join(settings.MEDIA_PREFIX, 'css/editor.css')])
+        js = [posixpath.join(settings.MEDIA_PREFIX, 'js/codemirror.js')]
 
     def render(self, name, value, attrs=None):
         result = []
@@ -42,10 +41,10 @@ class CodeMirrorTextArea(forms.Textarea):
     lineNumbers: true
   });
 </script>
-""" % dict(media_prefix=MEDIA_PREFIX, name=name))
+""" % dict(media_prefix=settings.MEDIA_PREFIX, name=name))
         return mark_safe(u"".join(result))
 
-if USE_CODEMIRROR:
+if settings.USE_CODEMIRROR:
     TemplateContentTextArea = CodeMirrorTextArea
 else:
     TemplateContentTextArea = forms.Textarea
