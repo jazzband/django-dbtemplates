@@ -298,7 +298,8 @@ Changelog
 0.7.3 (09-21-10)
 ----------------
 
-* Added ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` setting.
+* Added ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` setting to be able to disable
+  to auto-populating of template content.
 
 * Fixed cosmetic issue in admin with collapsable fields.
 
