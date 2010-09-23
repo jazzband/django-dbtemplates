@@ -29,21 +29,24 @@ class DbTemplatesTestCase(TestCase):
 
     def test_load_templates(self):
         self.test_basiscs()
+        original_template_source_loaders = loader.template_source_loaders
         loader.template_source_loaders = [load_template_source]
-        result1 = loader.get_template("base.html").render(Context({'title':'MainPage'}))
-        self.assertEqual(result1, u'<html><head></head><body>Welcome at MainPage</body></html>')
-
-        result2 = loader.get_template("sub.html").render(Context({'title':'SubPage'}))
-        self.assertEqual(result2, u'<html><head></head><body>This is SubPage</body></html>')
-
-        if VERSION[:2] >= (1, 2):
-            from dbtemplates.loader import Loader
-            dbloader = Loader()
-            loader.template_source_loaders = [dbloader.load_template_source]
-            result = loader.get_template("base.html").render(Context({'title':'MainPage'}))
-            self.assertEqual(result, u'<html><head></head><body>Welcome at MainPage</body></html>')
+        try:
+            result1 = loader.get_template("base.html").render(Context({'title':'MainPage'}))
+            self.assertEqual(result1, u'<html><head></head><body>Welcome at MainPage</body></html>')
             result2 = loader.get_template("sub.html").render(Context({'title':'SubPage'}))
             self.assertEqual(result2, u'<html><head></head><body>This is SubPage</body></html>')
+
+            if VERSION[:2] >= (1, 2):
+                from dbtemplates.loader import Loader
+                dbloader = Loader()
+                loader.template_source_loaders = [dbloader.load_template_source]
+                result = loader.get_template("base.html").render(Context({'title':'MainPage'}))
+                self.assertEqual(result, u'<html><head></head><body>Welcome at MainPage</body></html>')
+                result2 = loader.get_template("sub.html").render(Context({'title':'SubPage'}))
+                self.assertEqual(result2, u'<html><head></head><body>This is SubPage</body></html>')
+        finally:
+            loader.template_source_loaders = original_template_source_loaders
 
     def test_error_templates_creation(self):
         call_command('create_error_templates', force=True, verbosity=0)
