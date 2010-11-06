@@ -8,6 +8,8 @@ from django.template.loaders.app_directories import app_template_dirs
 
 from dbtemplates.models import Template
 
+ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
+
 class Command(NoArgsCommand):
     help = "Syncs file system templates with the database bidirectionally."
     option_list = NoArgsCommand.option_list + (
@@ -17,10 +19,11 @@ class Command(NoArgsCommand):
         make_option("-f", "--force", action="store_true", dest="force",
             default=False, help="overwrite existing database templates"),
         make_option("-o", "--overwrite", action="store", dest="overwrite",
-            default='0', help="0 - ask allways, 1 - overwrite database templates from template files, 2 - overwrite template files from database templates"),
-        make_option("-a", "--app_first", action="store_true", dest="app_first",
-            default=False, help="if it is used project templates will be loaded after templates in applications directories"),
+            default='0', help="'0' - ask always, '1' - overwrite database templates from template files, '2' - overwrite template files from database templates"),
+        make_option("-a", "--app-first", action="store_true", dest="app_first",
+            default=False, help="look for templates in applications directories before project templates"),
     )
+
     def handle_noargs(self, **options):
         extension = options.get('ext')
         force = options.get('force')
@@ -39,7 +42,7 @@ class Command(NoArgsCommand):
         if not type(settings.TEMPLATE_DIRS) in (tuple, list):
             raise CommandError("Please make sure settings.TEMPLATE_DIRS is a "
                                "list or tuple.")
-        
+
         if app_first:
             tpl_dirs = app_template_dirs + settings.TEMPLATE_DIRS
         else:
@@ -55,7 +58,7 @@ class Command(NoArgsCommand):
                     try:
                         t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
-                        if force == False:
+                        if not force:
                             confirm = raw_input(
                                 "\nA '%s' template doesn't exist in the database.\n"
                                 "Create it with '%s'?"
@@ -67,7 +70,7 @@ class Command(NoArgsCommand):
                             t.sites.add(site)
                     else:
                         while 1:
-                            if overwrite == '0':
+                            if overwrite == ALWAYS_ASK:
                                 confirm = raw_input(
                                     "\n%s exists in the database.\n"
                                     "(1) Overwrite %s with '%s'\n"
@@ -78,11 +81,15 @@ class Command(NoArgsCommand):
                                            path, t.__repr__()))
                             else:
                                 confirm = overwrite
-                            if confirm == '' or confirm in ('1', '2'):
-                                if confirm == '1':
+                            if confirm == '' or confirm in (FILES_TO_DATABASE, DATABASE_TO_FILES):
+                                if confirm == FILES_TO_DATABASE:
                                     t.content = open(path, 'r').read()
                                     t.save()
                                     t.sites.add(site)
-                                elif confirm == '2':
-                                    open(path, 'w').write(t.content)
+                                elif confirm == DATABASE_TO_FILES:
+                                    try:
+                                        f = open(path, 'w')
+                                        f.write(t.content)
+                                    finally:
+                                        f.close()
                                 break
