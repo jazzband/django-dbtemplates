@@ -1,0 +1,89 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+# Finnish translation provided by holster@iki.fi
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2010-11-05 11:32+0200\n"
+"PO-Revision-Date: 2010-11-05 11:32+0200\n"
+"Last-Translator: Jaakko Holster <holster@iki.fi>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: admin.py:53
+msgid ""
+"Leaving this empty causes Django to look for a template with the given name "
+"and populate this field with its content."
+msgstr ""
+"Mikäli kenttä on tyhjä, Django etsii samannimistä sivupohjaa ja täyttää "
+"kentän sen sisällöllä."
+
+#: admin.py:77
+msgid "Advanced"
+msgstr "Lisäasetukset"
+
+#: admin.py:80
+msgid "Date/time"
+msgstr "Päiväys/aika"
+
+#: admin.py:98
+#, python-format
+msgid "Cache of one template successfully invalidated."
+msgid_plural "Cache of %(count)d templates successfully invalidated."
+msgstr[0] "Sivupohja poistettu välimuistista."
+msgstr[1] "%(count)d sivupohjaa poistettu välimuistista."
+
+#: admin.py:102
+msgid "Invalidate cache of selected templates"
+msgstr "Poista valitut sivupohjat välimuistista."
+
+#: admin.py:111
+#, python-format
+msgid "Cache successfully repopulated with one template."
+msgid_plural "Cache successfully repopulated with %(count)d templates."
+msgstr[0] "Sivupohja lisätty välimuistiin."
+msgstr[1] "%(count)d sivupohjaa lisätty välimuistiin."
+
+#: admin.py:115
+msgid "Repopulate cache with selected templates"
+msgstr "Lisää valitut sivupohjat välimuistiin."
+
+#: admin.py:119
+msgid "sites"
+msgstr "sivustot"
+
+#: models.py:26
+msgid "name"
+msgstr "nimi"
+
+#: models.py:27
+msgid "Example: 'flatpages/default.html'"
+msgstr "Esimerkki: 'flatpages/default.html'"
+
+#: models.py:28
+msgid "content"
+msgstr "sisältö"
+
+#: models.py:30
+msgid "creation date"
+msgstr "luotu"
+
+#: models.py:32
+msgid "last changed"
+msgstr "muokattu"
+
+#: models.py:40
+msgid "template"
+msgstr "sivupohja"
+
+#: models.py:41
+msgid "templates"
+msgstr "sivupohjat"
