@@ -8,6 +8,8 @@ from django.template.loaders.app_directories import app_template_dirs
 
 from dbtemplates.models import Template
 
+ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
+
 class Command(NoArgsCommand):
     help = "Syncs file system templates with the database bidirectionally."
     option_list = NoArgsCommand.option_list + (
@@ -15,11 +17,18 @@ class Command(NoArgsCommand):
             help="extension of the files you want to sync with the database "
                  "[default: %default]"),
         make_option("-f", "--force", action="store_true", dest="force",
-            default=False, help="overwrite existing database templates")
+            default=False, help="overwrite existing database templates"),
+        make_option("-o", "--overwrite", action="store", dest="overwrite",
+            default='0', help="'0' - ask always, '1' - overwrite database templates from template files, '2' - overwrite template files from database templates"),
+        make_option("-a", "--app-first", action="store_true", dest="app_first",
+            default=False, help="look for templates in applications directories before project templates"),
     )
+
     def handle_noargs(self, **options):
         extension = options.get('ext')
         force = options.get('force')
+        overwrite = options.get('overwrite')
+        app_first = options.get('app_first')
 
         if not extension.startswith("."):
             extension = ".%s" % extension
@@ -34,8 +43,11 @@ class Command(NoArgsCommand):
             raise CommandError("Please make sure settings.TEMPLATE_DIRS is a "
                                "list or tuple.")
 
-        templatedirs = [d for d in
-            settings.TEMPLATE_DIRS + app_template_dirs if os.path.isdir(d)]
+        if app_first:
+            tpl_dirs = app_template_dirs + settings.TEMPLATE_DIRS
+        else:
+            tpl_dirs = settings.TEMPLATE_DIRS + app_template_dirs
+        templatedirs = [d for d in tpl_dirs if os.path.isdir(d)]
 
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
@@ -46,31 +58,38 @@ class Command(NoArgsCommand):
                     try:
                         t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
-                        if force == False:
+                        if not force:
                             confirm = raw_input(
                                 "\nA '%s' template doesn't exist in the database.\n"
                                 "Create it with '%s'?"
                                     " (y/[n]): """ % (name, path))
-                        if confirm.lower().startswith('y') or force:
+                        if force or confirm.lower().startswith('y'):
                             t = Template(name=name,
                                 content=open(path, "r").read())
                             t.save()
                             t.sites.add(site)
                     else:
                         while 1:
-                            confirm = raw_input(
-                                "\n%s exists in the database.\n"
-                                "(1) Overwrite %s with '%s'\n"
-                                "(2) Overwrite '%s' with %s\n"
-                                "Type 1 or 2 or press <Enter> to skip: "
-                                    % (t.__repr__(),
-                                        t.__repr__(), path,
-                                        path, t.__repr__()))
-                            if confirm == '' or confirm in ('1', '2'):
-                                if confirm == '1':
+                            if overwrite == ALWAYS_ASK:
+                                confirm = raw_input(
+                                    "\n%s exists in the database.\n"
+                                    "(1) Overwrite %s with '%s'\n"
+                                    "(2) Overwrite '%s' with %s\n"
+                                    "Type 1 or 2 or press <Enter> to skip: "
+                                        % (t.__repr__(),
+                                           t.__repr__(), path,
+                                           path, t.__repr__()))
+                            else:
+                                confirm = overwrite
+                            if confirm == '' or confirm in (FILES_TO_DATABASE, DATABASE_TO_FILES):
+                                if confirm == FILES_TO_DATABASE:
                                     t.content = open(path, 'r').read()
                                     t.save()
                                     t.sites.add(site)
-                                elif confirm == '2':
-                                    open(path, 'w').write(t.content)
+                                elif confirm == DATABASE_TO_FILES:
+                                    try:
+                                        f = open(path, 'w')
+                                        f.write(t.content)
+                                    finally:
+                                        f.close()
                                 break
