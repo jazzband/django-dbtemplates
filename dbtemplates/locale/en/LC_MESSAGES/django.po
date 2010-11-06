@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-09 13:45+0200\n"
+"POT-Creation-Date: 2010-11-07 00:02+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,66 +16,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: admin.py:29
+#: admin.py:53
 msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
 msgstr ""
 
-#: admin.py:43
+#: admin.py:77
+msgid "Advanced"
+msgstr ""
+
+#: admin.py:80
 msgid "Date/time"
 msgstr ""
 
-#: admin.py:61
+#: admin.py:98
 #, python-format
 msgid "Cache of one template successfully invalidated."
 msgid_plural "Cache of %(count)d templates successfully invalidated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.py:65
+#: admin.py:102
 msgid "Invalidate cache of selected templates"
 msgstr ""
 
-#: admin.py:74
+#: admin.py:111
 #, python-format
 msgid "Cache successfully repopulated with one template."
 msgid_plural "Cache successfully repopulated with %(count)d templates."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.py:78
+#: admin.py:115
 msgid "Repopulate cache with selected templates"
 msgstr ""
 
-#: admin.py:82
+#: admin.py:119 models.py:29
 msgid "sites"
 msgstr ""
 
-#: models.py:18
+#: models.py:26
 msgid "name"
 msgstr ""
 
-#: models.py:19
+#: models.py:27
 msgid "Example: 'flatpages/default.html'"
 msgstr ""
 
-#: models.py:20
+#: models.py:28
 msgid "content"
 msgstr ""
 
-#: models.py:22
+#: models.py:30
 msgid "creation date"
 msgstr ""
 
-#: models.py:24
+#: models.py:32
 msgid "last changed"
 msgstr ""
 
-#: models.py:32
+#: models.py:40
 msgid "template"
 msgstr ""
 
-#: models.py:33
+#: models.py:41
 msgid "templates"
 msgstr ""
