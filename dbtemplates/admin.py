@@ -86,6 +86,7 @@ class TemplateAdmin(TemplateModelAdmin):
             'classes': ('collapse',),
         }),
     )
+    filter_horizontal = ('sites',)
     list_display = ('name', 'creation_date', 'last_changed', 'site_list')
     list_filter = ('sites',)
     search_fields = ('name', 'content')
