@@ -26,7 +26,7 @@ MEDIA_PREFIX = getattr(settings, 'DBTEMPLATES_MEDIA_PREFIX',
 
 USE_REVERSION = getattr(settings, 'DBTEMPLATES_USE_REVERSION', False)
 
-if USE_REVERSION and 'reversion'not in settings.INSTALLED_APPS:
+if USE_REVERSION and 'reversion' not in settings.INSTALLED_APPS:
     raise ImproperlyConfigured("Please add reversion to your "
         "INSTALLED_APPS setting to make use of it in dbtemplates.")
 
