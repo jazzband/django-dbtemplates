@@ -89,6 +89,7 @@ class TemplateAdmin(TemplateModelAdmin):
     filter_horizontal = ('sites',)
     list_display = ('name', 'creation_date', 'last_changed', 'site_list')
     list_filter = ('sites',)
+    save_as = True
     search_fields = ('name', 'content')
     actions = ['invalidate_cache', 'repopulate_cache']
 
