@@ -22,7 +22,8 @@ class Template(models.Model):
     name = models.CharField(_('name'), max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
-    sites = models.ManyToManyField(Site, verbose_name=_('sites'))
+    sites = models.ManyToManyField(Site, verbose_name=_('sites'), blank=True,
+            null=True)
     creation_date = models.DateTimeField(_('creation date'),
                                          default=datetime.now)
     last_changed = models.DateTimeField(_('last changed'),
