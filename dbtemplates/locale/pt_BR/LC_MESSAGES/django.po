@@ -7,17 +7,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: django-dbtemplates\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-10-09 13:45+0200\n"
-"PO-Revision-Date: 2008-08-31 11:45-0300\n"
 "Last-Translator: Diego Búrigo Zacarão <diegobz@fedoraproject.org>\n"
 "Language-Team: Brazilian Portuguese <fedora-trans-pt_br@redhat.com>\n"
+"POT-Creation-Date: 2011-01-31 11:10+0100\n"
+"PO-Revision-Date: 2011-01-31 10:08+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: pt_BR\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: admin.py:29
+#: admin.py:53
 msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
@@ -25,60 +25,64 @@ msgstr ""
 "Manter isto vazio faz com que o Django procure por um modelo (template) com "
 "o dado nome e preencha este campo com o seu conteúdo"
 
-#: admin.py:43
+#: admin.py:77
+msgid "Advanced"
+msgstr ""
+
+#: admin.py:80
 msgid "Date/time"
 msgstr "Data/hora"
 
-#: admin.py:61
+#: admin.py:98
 #, python-format
 msgid "Cache of one template successfully invalidated."
 msgid_plural "Cache of %(count)d templates successfully invalidated."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.py:65
+#: admin.py:102
 msgid "Invalidate cache of selected templates"
 msgstr ""
 
-#: admin.py:74
+#: admin.py:111
 #, python-format
 msgid "Cache successfully repopulated with one template."
 msgid_plural "Cache successfully repopulated with %(count)d templates."
 msgstr[0] ""
 msgstr[1] ""
 
-#: admin.py:78
+#: admin.py:115
 msgid "Repopulate cache with selected templates"
 msgstr ""
 
-#: admin.py:82
+#: admin.py:119 models.py:29
 msgid "sites"
 msgstr "sites"
 
-#: models.py:18
+#: models.py:26
 msgid "name"
 msgstr "Name"
 
-#: models.py:19
+#: models.py:27
 msgid "Example: 'flatpages/default.html'"
 msgstr "Exemplo: 'flatpages/default.html'"
 
-#: models.py:20
+#: models.py:28
 msgid "content"
 msgstr "conteúdo"
 
-#: models.py:22
+#: models.py:30
 msgid "creation date"
 msgstr "Data de criação"
 
-#: models.py:24
+#: models.py:32
 msgid "last changed"
 msgstr "ultima modificação"
 
-#: models.py:32
+#: models.py:40
 msgid "template"
 msgstr "modelo"
 
-#: models.py:33
+#: models.py:41
 msgid "templates"
 msgstr "modelos"
