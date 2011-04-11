@@ -16,7 +16,8 @@ CACHE_BACKEND = cache
 
 ADD_DEFAULT_SITE = getattr(settings, 'DBTEMPLATES_ADD_DEFAULT_SITE', True)
 
-AUTO_POPULATE_CONTENT = getattr(settings, 'DBTEMPLATES_AUTO_POPULATE_CONTENT', True)
+AUTO_POPULATE_CONTENT = getattr(
+    settings, 'DBTEMPLATES_AUTO_POPULATE_CONTENT', True)
 
 base_url = getattr(settings, "STATIC_URL", None)
 if base_url is None:

@@ -1,3 +1,4 @@
+import warnings
 from django import VERSION
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -5,6 +6,7 @@ from django.template import TemplateDoesNotExist
 
 from dbtemplates.models import Template
 from dbtemplates.utils import cache, get_cache_key
+
 
 def load_template_source(template_name, template_dirs=None, annoy=True):
     """
@@ -17,12 +19,9 @@ def load_template_source(template_name, template_dirs=None, annoy=True):
     """
     if VERSION[:2] >= (1, 2) and annoy:
         # For backward compatibility
-        import warnings
         warnings.warn(
             "`dbtemplates.loader.load_template_source` is deprecated; "
-            "use `dbtemplates.loader.Loader` instead.",
-            DeprecationWarning
-        )
+            "use `dbtemplates.loader.Loader` instead.", DeprecationWarning)
     site = Site.objects.get_current()
     display_name = 'db:%s:%s:%s' % (settings.DATABASE_ENGINE,
                                     template_name, site.domain)
@@ -56,5 +55,5 @@ if VERSION[:2] >= (1, 2):
         is_usable = True
 
         def load_template_source(self, template_name, template_dirs=None):
-            return load_template_source(template_name, template_dirs, annoy=False)
-
+            return load_template_source(
+                template_name, template_dirs, annoy=False)

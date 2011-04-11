@@ -15,13 +15,15 @@ if settings.USE_REVERSION:
 else:
     from django.contrib.admin import ModelAdmin as TemplateModelAdmin
 
+
 class CodeMirrorTextArea(forms.Textarea):
     """
-    A custom widget for the CodeMirror browser editor to be used with the 
+    A custom widget for the CodeMirror browser editor to be used with the
     content field of the Template model.
     """
     class Media:
-        css = dict(screen=[posixpath.join(settings.MEDIA_PREFIX, 'css/editor.css')])
+        css = dict(screen=[
+            posixpath.join(settings.MEDIA_PREFIX, 'css/editor.css')])
         js = [posixpath.join(settings.MEDIA_PREFIX, 'js/codemirror.js')]
 
     def render(self, name, value, attrs=None):
@@ -51,9 +53,11 @@ else:
 
 if settings.AUTO_POPULATE_CONTENT:
     content_help_text = _("Leaving this empty causes Django to look for a "
-        "template with the given name and populate this field with its content.")
+        "template with the given name and populate this field with its "
+        "content.")
 else:
     content_help_text = ""
+
 
 class TemplateAdminForm(forms.ModelForm):
     """
@@ -95,7 +99,8 @@ class TemplateAdmin(TemplateModelAdmin):
             "Cache of %(count)d templates successfully invalidated.",
             len(queryset))
         self.message_user(request, message % {'count': len(queryset)})
-    invalidate_cache.short_description = _("Invalidate cache of selected templates")
+    invalidate_cache.short_description = _("Invalidate cache of "
+                                           "selected templates")
 
     def repopulate_cache(self, request, queryset):
         for template in queryset:
@@ -105,10 +110,11 @@ class TemplateAdmin(TemplateModelAdmin):
             "Cache successfully repopulated with %(count)d templates.",
             len(queryset))
         self.message_user(request, message % {'count': len(queryset)})
-    repopulate_cache.short_description = _("Repopulate cache with selected templates")
+    repopulate_cache.short_description = _("Repopulate cache with "
+                                           "selected templates")
 
     def site_list(self, template):
-          return ", ".join([site.name for site in template.sites.all()])
+        return ", ".join([site.name for site in template.sites.all()])
     site_list.short_description = _('sites')
 
 admin.site.register(Template, TemplateAdmin)

@@ -7,6 +7,7 @@ from django.contrib.sites.models import Site
 
 from dbtemplates import settings
 
+
 def get_cache_backend():
     if "://" in settings.CACHE_BACKEND:
         cache = get_cache(settings.CACHE_BACKEND)
@@ -15,6 +16,7 @@ def get_cache_backend():
     return cache
 
 cache = get_cache_backend()
+
 
 def add_default_site(instance, **kwargs):
     """

@@ -1,3 +1,4 @@
+import sys
 from optparse import make_option
 
 from django.core.management.base import CommandError, NoArgsCommand
@@ -24,12 +25,13 @@ TEMPLATES = {
 """,
 }
 
+
 class Command(NoArgsCommand):
-    help = "Creates the 404.html and 500.html error templates as database template objects."
+    help = "Creates the default error templates as database template objects."
     option_list = NoArgsCommand.option_list + (
         make_option("-f", "--force", action="store_true", dest="force",
-            default=False, help="overwrite existing database templates"),
-    )
+            default=False, help="overwrite existing database templates"),)
+
     def handle_noargs(self, **options):
         force = options.get('force')
         try:
@@ -47,7 +49,9 @@ class Command(NoArgsCommand):
                 template.save()
                 template.sites.add(site)
                 if verbosity >= 1:
-                    self.stdout.write("Created database template for %s errors.\n" % error_code)
+                    sys.stdout.write("Created database template "
+                                     "for %s errors.\n" % error_code)
             else:
                 if verbosity >= 1:
-                    self.stderr.write("A template for %s errors already exists.\n" % error_code)
+                    sys.stderr.write("A template for %s errors "
+                                     "already exists.\n" % error_code)

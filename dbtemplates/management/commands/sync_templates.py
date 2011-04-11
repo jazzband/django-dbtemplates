@@ -19,10 +19,12 @@ class Command(NoArgsCommand):
         make_option("-f", "--force", action="store_true", dest="force",
             default=False, help="overwrite existing database templates"),
         make_option("-o", "--overwrite", action="store", dest="overwrite",
-            default='0', help="'0' - ask always, '1' - overwrite database templates from template files, '2' - overwrite template files from database templates"),
+            default='0', help="'0' - ask always, '1' - overwrite database "
+                "templates from template files, '2' - overwrite template "
+                "files from database templates"),
         make_option("-a", "--app-first", action="store_true", dest="app_first",
-            default=False, help="look for templates in applications directories before project templates"),
-    )
+            default=False, help="look for templates in applications "
+                                "directories before project templates"))
 
     def handle_noargs(self, **options):
         extension = options.get('ext')
@@ -60,8 +62,8 @@ class Command(NoArgsCommand):
                     except Template.DoesNotExist:
                         if not force:
                             confirm = raw_input(
-                                "\nA '%s' template doesn't exist in the database.\n"
-                                "Create it with '%s'?"
+                                "\nA '%s' template doesn't exist in the "
+                                "database.\nCreate it with '%s'?"
                                     " (y/[n]): """ % (name, path))
                         if force or confirm.lower().startswith('y'):
                             t = Template(name=name,
@@ -81,7 +83,8 @@ class Command(NoArgsCommand):
                                            path, t.__repr__()))
                             else:
                                 confirm = overwrite
-                            if confirm == '' or confirm in (FILES_TO_DATABASE, DATABASE_TO_FILES):
+                            if confirm == '' or confirm in (
+                                    FILES_TO_DATABASE, DATABASE_TO_FILES):
                                 if confirm == FILES_TO_DATABASE:
                                     t.content = open(path, 'r').read()
                                     t.save()
