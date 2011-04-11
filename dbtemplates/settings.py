@@ -18,8 +18,11 @@ ADD_DEFAULT_SITE = getattr(settings, 'DBTEMPLATES_ADD_DEFAULT_SITE', True)
 
 AUTO_POPULATE_CONTENT = getattr(settings, 'DBTEMPLATES_AUTO_POPULATE_CONTENT', True)
 
+base_url = getattr(settings, "STATIC_URL", None)
+if base_url is None:
+    base_url = settings.MEDIA_URL
 MEDIA_PREFIX = getattr(settings, 'DBTEMPLATES_MEDIA_PREFIX',
-    posixpath.join(settings.STATIC_URL, "dbtemplates/"))
+                       posixpath.join(base_url, "dbtemplates/"))
 
 USE_REVERSION = getattr(settings, 'DBTEMPLATES_USE_REVERSION', False)
 

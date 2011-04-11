@@ -43,7 +43,7 @@ slash, and to have this be different from the ``STATIC_URL`` setting
 files).
 
 .. warning::
-    Starting in version 1.0 dbtemplates uses the ``STATIC_URL`` setting,
+    Starting in version 1.0, ``dbtemplates`` uses the ``STATIC_URL`` setting,
     originally introduced by the django-staticfiles_ app. The app has since
     been added to Django itself and isn't needed if you use Django 1.3 or
     higher. Please refer to the `contrib docs`_ in that case.
