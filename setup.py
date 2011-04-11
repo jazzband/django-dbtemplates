@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 setup(
     name='django-dbtemplates',
     version=__import__('dbtemplates').__version__,
-    description='Template loader for database stored templates with extensible cache backend',
+    description='Template loader for templates stored in the database',
     long_description=open('docs/overview.txt').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
@@ -13,8 +13,8 @@ setup(
     package_data = {
         'dbtemplates': [
             'locale/*/LC_MESSAGES/*',
-            'media/dbtemplates/css/*.css',
-            'media/dbtemplates/js/*.js',
+            'static/dbtemplates/css/*.css',
+            'static/dbtemplates/js/*.js',
         ],
     },
     classifiers=[
@@ -25,5 +25,5 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Framework :: Django',
-    ]
+    ],
 )
