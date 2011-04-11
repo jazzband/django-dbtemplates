@@ -6,3 +6,5 @@ dist
 *.egg-info
 example/example.db
 docs/_build
+.tox/
+*.egg/
