@@ -1,6 +1,30 @@
 Changelog
 =========
 
+1.0.0 (04-11-11)
+----------------
+
+.. warning::
+    This is the first stable release of django-dbtemplates which comes with a
+    series of backwards incompatible changes.
+
+* Removed own caching mechanism in favor of Django based caching mechanism.
+  The ``DBTEMPLATES_CACHE_BACKEND`` is expected to be a valid cache backend
+  URI, just like Django's own ``CACHE_BACKEND`` setting. In Django >= 1.3
+  an ``'dbtemplates'`` entry in the ``CACHES`` setting is also considered
+  valid.
+
+* Added tox configuration to test ``dbtemplates`` on Python 2.5, 2.6 and 2.7
+  with Django 1.1.X, 1.2.X and 1.3.X.
+
+* Added Transifex configuration.
+
+* Use ``STATIC_URL`` setting instead of ``MEDIA_URL`` for the media prefix.
+  Also moved files from media/* to static/* to follow convention introduced
+  in Django 1.3.
+
+* Use ReadTheDocs for documentation hosting.
+
 0.8.0 (11-07-10)
 ----------------
 
