@@ -1,22 +1,18 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 
-from django import VERSION
 from django.db import models
 from django.db.models import signals
-from django.utils.translation import gettext_lazy as _
 from django.template import TemplateDoesNotExist
-from django.core.exceptions import ImproperlyConfigured
+from django.utils.translation import gettext_lazy as _
 
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 
 from dbtemplates import settings
+from dbtemplates.utils import (add_default_site, add_template_to_cache,
+    remove_cached_template, get_template_source)
 
-if VERSION[:2] >= (1, 2):
-    from django.template.loader import find_template
-else:
-    from django.template.loader import find_template_source  as find_template
 
 class Template(models.Model):
     """
@@ -52,7 +48,7 @@ class Template(models.Model):
         if name is None:
             name = self.name
         try:
-            source, origin = find_template(name)
+            source = get_template_source(name)
             if source:
                 self.content = source
         except TemplateDoesNotExist:
@@ -66,56 +62,7 @@ class Template(models.Model):
             self.populate()
         super(Template, self).save(*args, **kwargs)
 
-def get_cache_backend():
-    path = settings.CACHE_BACKEND
-    if path:
-        i = path.rfind('.')
-        module, attr = path[:i], path[i+1:]
-        try:
-            mod = __import__(module, {}, {}, [attr])
-        except ImportError, e:
-            raise ImproperlyConfigured(
-                'Error importing dbtemplates cache backend %s: "%s"' %
-                (module, e))
-        try:
-            cls = getattr(mod, attr)
-        except AttributeError:
-            raise ImproperlyConfigured(
-                'Module "%s" does not define a "%s" cache backend' %
-                (module, attr))
-        return cls()
-    return False
-
-backend = get_cache_backend()
-
-def add_default_site(instance, **kwargs):
-    """
-    Called via Django's signals to cache the templates, if the template
-    in the database was added or changed, only if DBTEMPLATES_ADD_DEFAULT_SITE
-    setting is set.
-    """
-    if settings.ADD_DEFAULT_SITE:
-        current_site = Site.objects.get_current()
-        if current_site not in instance.sites.all():
-            instance.sites.add(current_site)
 
 signals.post_save.connect(add_default_site, sender=Template)
-
-def add_template_to_cache(instance, **kwargs):
-    """
-    Called via Django's signals to cache the templates, if the template
-    in the database was added or changed.
-    """
-    remove_cached_template(instance)
-    backend.save(instance.name, instance.content)
-
-def remove_cached_template(instance, **kwargs):
-    """
-    Called via Django's signals to remove cached templates, if the template
-    in the database was changed or deleted.
-    """
-    backend.remove(instance.name)
-
-if backend:
-    signals.post_save.connect(add_template_to_cache, sender=Template)
-    signals.pre_delete.connect(remove_cached_template, sender=Template)
+signals.post_save.connect(add_template_to_cache, sender=Template)
+signals.pre_delete.connect(remove_cached_template, sender=Template)

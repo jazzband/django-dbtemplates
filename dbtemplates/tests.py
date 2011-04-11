@@ -1,13 +1,13 @@
 from django import VERSION
-from django.test import TestCase
-from django.contrib.sites.models import Site
-from django.template import loader, Context
 from django.core.management import call_command
+from django.template import loader, Context
+from django.test import TestCase
+
+from django.contrib.sites.models import Site
 
 from dbtemplates import settings
 from dbtemplates.loader import load_template_source
-
-from dbtemplates.models import Template
+from dbtemplates.models import Template, get_template_source
 
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
@@ -61,6 +61,6 @@ class DbTemplatesTestCase(TestCase):
         settings.ADD_DEFAULT_SITE = old_add_default_site
 
     def test_automatic_sync(self):
-        admin_base_template, origin = loader.find_template_source('admin/base.html')
+        admin_base_template = get_template_source('admin/base.html')
         template = Template.objects.create(name='admin/base.html')
         self.assertEqual(admin_base_template, template.content)

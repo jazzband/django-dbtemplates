@@ -98,8 +98,7 @@ INSTALLED_APPS = (
 
 # Uncomment the following two settings to use the file system cache backend.
 # It will cache in the directory "cache" inside the example project directory.
-#DBTEMPLATES_CACHE_BACKEND = "dbtemplates.cache.FileSystemBackend"
-#DBTEMPLATES_CACHE_DIR = "cache"
+DBTEMPLATES_CACHE_BACKEND = "locmem://"
 
 DBTEMPLATES_MEDIA_PREFIX = posixpath.join(STATIC_URL, "dbtemplates/")
 DBTEMPLATES_USE_CODEMIRROR = True
