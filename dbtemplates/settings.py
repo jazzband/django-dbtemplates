@@ -1,4 +1,4 @@
-import os, posixpath
+import posixpath
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
