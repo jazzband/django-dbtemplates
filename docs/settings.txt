@@ -1,0 +1,52 @@
+Settings
+========
+
+``DBTEMPLATES_ADD_DEFAULT_SITE``
+--------------------------------
+
+``dbtemplates`` adds the current site (``settings.SITE_ID``) to the database  
+template when it is created by default. You can disable this feature by   
+setting ``DBTEMPLATES_ADD_DEFAULT_SITE`` to ``False``.
+
+``DBTEMPLATES_AUTO_POPULATE_CONTENT``
+-------------------------------------
+
+``dbtemplates`` auto-populates the content of a newly created template with
+the content of a template with the same name the other template loader.
+To disable this feature set ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` to
+``False``.
+
+``DBTEMPLATES_CACHE_BACKEND``
+-----------------------------
+
+The dotted Python path to the cache backend class. See
+:ref:`Caching <caching>` for details.
+
+``DBTEMPLATES_USE_CODEMIRROR``
+------------------------------
+
+A boolean, if enabled triggers the use of the CodeMirror based editor.
+Set to ``False`` by default.
+
+``DBTEMPLATES_USE_REVERSION``
+-----------------------------
+
+A boolean, if enabled triggers the use of ``django-reversion``.
+
+``DBTEMPLATES_MEDIA_PREFIX``
+----------------------------
+
+The URL prefix for ``dbtemplates``' media -- CSS and JavaScript used by
+the CodeMirror based editor. Make sure to use a trailing
+slash, and to have this be different from the ``STATIC_URL`` setting
+(since the same URL cannot be mapped onto two different sets of
+files).
+
+.. warning::
+    Starting in version 1.0 dbtemplates uses the ``STATIC_URL`` setting,
+    originally introduced by the django-staticfiles_ app. The app has since
+    been added to Django itself and isn't needed if you use Django 1.3 or
+    higher. Please refer to the `contrib docs`_ in that case.
+
+.. _django-staticfiles: http://pypi.python.org/pypi/django-staticfiles
+.. _contrib docs: http://docs.djangoproject.com/en/dev/ref/staticfiles/

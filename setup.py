@@ -4,10 +4,10 @@ setup(
     name='django-dbtemplates',
     version=__import__('dbtemplates').__version__,
     description='Template loader for templates stored in the database',
-    long_description=open('docs/overview.txt').read(),
+    long_description=open('README.rst').read(),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
-    url='http://packages.python.org/django-dbtemplates/',
+    url='http://django-dbtemplates.readthedocs.org/',
     packages=find_packages(exclude=['example']),
     zip_safe=False,
     package_data = {

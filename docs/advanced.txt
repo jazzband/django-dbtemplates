@@ -1,0 +1,104 @@
+=================
+Advanced features
+=================
+
+.. _caching:
+
+Caching
+=======
+
+``dbtemplates`` uses Django's default caching infrastructure for caching, and
+operates automatically when creating, updating or deleting templates in
+the database.
+
+To enable one of them you need to specify a setting called
+``DBTEMPLATES_CACHE_BACKEND`` to one of the valid values Django's
+``CACHE_BACKEND`` can be set to. E.g.::
+
+    DBTEMPLATES_CACHE_BACKEND = 'memcached://127.0.0.1:11211/'
+
+.. note::
+    Starting in version 1.0 ``dbtemplates`` allows you also to set the new
+    dict-based ``CACHES`` setting, which was introduced in Django 1.3.
+    
+    All you have to do is to provide a new entry in the ``CACHES`` dict
+    named ``'dbtemplates'``, e.g.::
+
+        CACHES = {
+            'dbtemplates': {
+                'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
+                'LOCATION': '127.0.0.1:11211',
+            }
+        }
+
+Please see the `cache documentation`_ if you want to know more about it.
+
+.. _cache documentation: http://docs.djangoproject.com/en/dev/topics/cache/#setting-up-the-cache
+
+.. _versioned:
+
+Versioned storage
+=================
+
+``dbtemplates`` comes prepared to use the third party Django app
+`django-reversion`_, that once installed besides ``dbtemplates`` allows you
+to jump back to old versions of your templates. It automatically saves every
+state when you save the template in your database and provides an easy to use
+interface.
+
+Please refer to `django-reversion's documentation`_ for more information
+about how it works.
+
+.. hint::
+    Just visit the "History" section of each template instance and browse its history.
+
+Short installation howto
+------------------------
+
+1. Get the source from the `django-reversion`_ project site and put it
+   somewhere on your `PYTHONPATH`.
+2. Add ``reversion`` to the ``INSTALLED_APPS`` setting of your Django project
+3. Sync your database with ``python manage.py syncdb``
+4. Set ``DBTEMPLATES_USE_REVERSION`` setting to ``True``
+
+.. _django-reversion: https://github.com/etianen/django-reversion
+.. _django-reversion's documentation: https://github.com/etianen/django-reversion/wiki/getting-started
+
+.. _commands:
+
+Management commands
+===================
+
+``dbtemplates`` comes with two `Django management commands`_ to be used with
+``django-admin.py`` or ``manage.py``:
+
+* ``sync_templates``
+
+  Enables you to sync your already existing file systems templates with the
+  database. It will guide you through the whole process.
+
+* ``create_error_templates``
+
+  Tries to add the two templates ``404.html`` and ``500.html`` that are used
+  by Django when a error occurs.
+
+.. _Django management commands: http://docs.djangoproject.com/en/dev/ref/django-admin/
+
+.. _admin_actions:
+
+Admin actions
+=============
+
+``dbtemplates`` provides two `admin actions`_ to be used with Django>=1.1.
+
+* ``invalidate_cache``
+
+  Invalidates the cache of the selected templates by calling the appropriate
+  cache backend methods.
+
+* ``repopulate_cache``
+
+  Repopulates the cache with selected templates by invalidating it first and
+  filling then after that.
+
+.. _admin actions: http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/

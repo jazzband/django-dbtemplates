@@ -1,15 +1,15 @@
-===================================
-Database template loader for Django
-===================================
+django-dbtemplates
+==================
 
-``dbtemplates`` is a Django app that comes with to parts: It allows you to
-create templates that are saved in your database, and it provides a so called
-`template loader`_, a function that enables Django to find the templates you
-created in the database.
+``dbtemplates`` is a Django app that consists of two parts:
 
-It also includes a extensible caching mechanism and supports version control
-of the templates saved in the database.
+1. It allows you to store templates in your database
+2. It provides `template loader`_ that enables Django to load the
+   templates from the database
 
-Please see ``docs/overview.txt`` for more details.
+It also features optional support for versioned storage and django-admin
+command, integrates with Django's caching system and the admin actions.
+
+Please see http://django-dbtemplates.readthedocs.org/ for more details.
 
 .. _template loader: http://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
