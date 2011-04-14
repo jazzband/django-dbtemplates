@@ -2,10 +2,12 @@ import posixpath
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured
 
-# If we are on Django 1.3 AND using the new CACHES setting...
-cache = getattr(settings, "CACHES", {}).get("dbtemplates",
-        # .. or fall back to the old CACHE_BACKEND setting
-        getattr(settings, "DBTEMPLATES_CACHE_BACKEND", None))
+if "dbtemplates" in getattr(settings, "CACHES", {}):
+    # If we are on Django 1.3 AND using the new CACHES setting..
+    cache = "dbtemplates"
+else:
+    # ..or fall back to the old CACHE_BACKEND setting
+    cache = getattr(settings, "DBTEMPLATES_CACHE_BACKEND", None)
 if not cache:
     raise ImproperlyConfigured("Please specify a dbtemplates "
                                "cache backend in your settings.")
