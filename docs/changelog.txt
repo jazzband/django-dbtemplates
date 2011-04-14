@@ -1,6 +1,11 @@
 Changelog
 =========
 
+1.0.1 (04-14-11)
+----------------
+
+* Minor bugfixes with regard to the new cache handling.
+
 1.0 (04-11-11)
 --------------
 
