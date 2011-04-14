@@ -24,8 +24,8 @@ Setup
              'dbtemplates',
          )
 
-   * Add ``dbtemplates.loader.load_template_source`` to the
-     ``TEMPLATE_LOADERS`` list in the settings.py of your Django project
+   * Add ``dbtemplates.loader.Loader`` to the ``TEMPLATE_LOADERS`` list
+     in the settings.py of your Django project.
 
      It should look something like this::
 
