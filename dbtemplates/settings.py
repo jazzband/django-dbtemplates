@@ -9,7 +9,7 @@ cache = getattr(settings, "CACHES", {}).get("dbtemplates",
 if not cache:
     raise ImproperlyConfigured("Please specify a dbtemplates "
                                "cache backend in your settings.")
-elif cache.startswith("dbtemplates."):
+elif isinstance(cache, basestring) and cache.startswith("dbtemplates."):
     raise ImproperlyConfigured("Please upgrade to one of the supported "
                                "backends as defined in the Django docs.")
 CACHE_BACKEND = cache
