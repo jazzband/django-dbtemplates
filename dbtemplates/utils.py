@@ -9,11 +9,7 @@ from dbtemplates import settings
 
 
 def get_cache_backend():
-    if "://" in settings.CACHE_BACKEND:
-        cache = get_cache(settings.CACHE_BACKEND)
-    else:
-        cache = get_cache(**settings.CACHE_BACKEND)
-    return cache
+    return get_cache(settings.CACHE_BACKEND)
 
 cache = get_cache_backend()
 
