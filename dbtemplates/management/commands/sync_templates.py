@@ -25,13 +25,16 @@ class Command(NoArgsCommand):
                 "files from database templates"),
         make_option("-a", "--app-first", action="store_true", dest="app_first",
             default=False, help="look for templates in applications "
-                                "directories before project templates"))
+                                "directories before project templates"),
+        make_option("-d", "--delete", action="store_true", dest="delete",
+            default=False, help="Delete templates after syncing"))
 
     def handle_noargs(self, **options):
         extension = options.get('ext')
         force = options.get('force')
         overwrite = options.get('overwrite')
         app_first = options.get('app_first')
+        delete = options.get('delete')
 
         if not extension.startswith("."):
             extension = ".%s" % extension
@@ -84,16 +87,23 @@ class Command(NoArgsCommand):
                                            path, t.__repr__()))
                             else:
                                 confirm = overwrite
-                            if confirm == '' or confirm in (
-                                    FILES_TO_DATABASE, DATABASE_TO_FILES):
+                            if confirm in ('', FILES_TO_DATABASE, DATABASE_TO_FILES):
                                 if confirm == FILES_TO_DATABASE:
                                     t.content = codecs.open(path, 'r').read()
                                     t.save()
                                     t.sites.add(site)
+                                    if delete:
+                                        try:
+                                            os.remove(path)
+                                        except OSError:
+                                            raise CommandError(
+                                                u"Couldn't delete %s" % path)
                                 elif confirm == DATABASE_TO_FILES:
                                     try:
                                         f = codecs.open(path, 'w')
                                         f.write(t.content)
                                     finally:
                                         f.close()
+                                    if delete:
+                                        t.delete()
                                 break

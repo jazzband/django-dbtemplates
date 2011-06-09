@@ -1,5 +1,8 @@
 from __future__ import with_statement
+import codecs
 import os
+import shutil
+import tempfile
 
 from django.core.management import call_command
 from django.template import loader, Context
@@ -10,7 +13,8 @@ from django.contrib.sites.models import Site
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
 from dbtemplates.utils.template import get_template_source
-from dbtemplates.management.commands.sync_templates import FILES_TO_DATABASE
+from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
+                                                            DATABASE_TO_FILES)
 
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
@@ -60,13 +64,30 @@ class DbTemplatesTestCase(TestCase):
 
     def test_sync_templates(self):
         old_template_dirs = settings.TEMPLATE_DIRS
+        temp_template_dir = tempfile.mkdtemp('dbtemplates')
+        last_path_part = temp_template_dir.split('/')[-1]
+        temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
+        temp_template = codecs.open(temp_template_path, 'w')
         try:
-            self.assertFalse(Template.objects.filter(name='dbtemplates/tests/test.html').exists())
-            settings.TEMPLATE_DIRS = (
-                os.path.join(os.path.dirname(__file__), 'templates'),
-            )
+            temp_template.write('temp test')
+            settings.TEMPLATE_DIRS = (temp_template_dir,)
+            self.assertFalse(Template.objects.filter(name='temp_test.html').exists())
             call_command('sync_templates',
                 force=True, verbosity=0, overwrite=FILES_TO_DATABASE)
-            self.assertTrue(Template.objects.filter(name='dbtemplates/tests/test.html').exists())
+            self.assertTrue(Template.objects.filter(name='temp_test.html').exists())
+
+            t = Template.objects.get(name='temp_test.html')
+            t.content = 'temp test modified'
+            t.save()
+            call_command('sync_templates',
+                force=True, verbosity=0, overwrite=DATABASE_TO_FILES)
+            self.assertTrue('modified' in codecs.open(temp_template_path).read())
+
+            call_command('sync_templates',
+                force=True, verbosity=0, delete=True, overwrite=DATABASE_TO_FILES)
+            self.assertTrue(os.path.exists(temp_template_path))
+            self.assertFalse(Template.objects.filter(name='temp_test.html').exists())
         finally:
+            temp_template.close()
             settings.TEMPLATE_DIRS = old_template_dirs
+            shutil.rmtree(temp_template_dir)
