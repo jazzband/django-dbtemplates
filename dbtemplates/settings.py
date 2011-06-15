@@ -8,10 +8,7 @@ if "dbtemplates" in getattr(settings, "CACHES", {}):
 else:
     # ..or fall back to the old CACHE_BACKEND setting
     cache = getattr(settings, "DBTEMPLATES_CACHE_BACKEND", None)
-if not cache:
-    raise ImproperlyConfigured("Please specify a dbtemplates "
-                               "cache backend in your settings.")
-elif isinstance(cache, basestring) and cache.startswith("dbtemplates."):
+if isinstance(cache, basestring) and cache.startswith("dbtemplates."):
     raise ImproperlyConfigured("Please upgrade to one of the supported "
                                "backends as defined in the Django docs.")
 CACHE_BACKEND = cache
