@@ -7,7 +7,8 @@ from django.contrib.sites.models import Site
 
 from dbtemplates import settings
 from dbtemplates.loader import load_template_source
-from dbtemplates.models import Template, get_template_source
+from dbtemplates.models import Template
+from dbtemplates.utils import get_template_source
 
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
