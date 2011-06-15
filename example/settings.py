@@ -70,10 +70,10 @@ SECRET_KEY = 'e-%(1e1f8ar2v)_8d!%-75a2ag(w(ht*l%n-wts5$li!5=97)8'
 
 # List of callables that know how to import templates from various sources.
 TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.load_template_source',
-    'django.template.loaders.app_directories.load_template_source',
-    'django.template.loaders.eggs.load_template_source',
-    'dbtemplates.loader.load_template_source',
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+    'django.template.loaders.eggs.Loader',
+    'dbtemplates.loader.Loader',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,9 +98,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.flatpages',
+    'django.contrib.staticfiles',
     'dbtemplates',
     'south',
-    'staticfiles',
     #'reversion',
 )
 
