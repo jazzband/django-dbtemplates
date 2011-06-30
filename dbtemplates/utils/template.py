@@ -34,6 +34,8 @@ def get_template_source(name):
             source, origin = load_template_source(name)
             if source:
                 return source
+        except NotImplementedError:
+            pass
         except TemplateDoesNotExist:
             pass
     if source is None and VERSION[:2] < (1, 2):
