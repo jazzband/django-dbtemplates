@@ -98,7 +98,8 @@ class AppSettings(object):
             if setting == setting.upper():
                 prefixed = "%s_%s" % (prefix.upper(), setting.upper())
                 configured_value = getattr(settings, prefixed, class_value)
-                callback = getattr(self, "configure_%s" % setting.lower(), None)
+                callback_name = "configure_%s" % setting.lower()
+                callback = getattr(self, callback_name, None)
                 if callable(callback):
                     configured_value = callback(configured_value)
                 delattr(self.__class__, setting)

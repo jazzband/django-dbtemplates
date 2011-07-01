@@ -29,8 +29,9 @@ class DbTemplatesSettings(AppSettings):
             else:
                 return "default"
         if isinstance(value, basestring) and value.startswith("dbtemplates."):
-            raise ImproperlyConfigured("Please upgrade to one of the supported "
-                                        "backends as defined in the Django docs.")
+            raise ImproperlyConfigured("Please upgrade to one of the "
+                                       "supported backends as defined "
+                                       "in the Django docs.")
         return value
 
     def configure_use_reversion(self, value):

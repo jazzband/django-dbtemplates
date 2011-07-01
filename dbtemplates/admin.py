@@ -22,8 +22,8 @@ class CodeMirrorTextArea(forms.Textarea):
     content field of the Template model.
     """
     class Media:
-        css = dict(screen=[
-            posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'css/editor.css')])
+        css = dict(screen=[posixpath.join(
+            settings.DBTEMPLATES_MEDIA_PREFIX, 'css/editor.css')])
         js = [posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'js/codemirror.js')]
 
     def render(self, name, value, attrs=None):

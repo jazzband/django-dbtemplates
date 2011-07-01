@@ -14,7 +14,6 @@ from dbtemplates.utils.cache import add_template_to_cache, remove_cached_templat
 from dbtemplates.utils.template import get_template_source
 
 
-
 class Template(models.Model):
     """
     Defines a template model for use with the database template loader.

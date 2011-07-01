@@ -32,12 +32,13 @@ class Loader(BaseLoader):
                 pass
         try:
             template = Template.objects.get(name__exact=template_name)
-            return set_and_return(template.content, display_name)
+            return set_and_return(cache_key, template.content, display_name)
         except (Template.MultipleObjectsReturned, Template.DoesNotExist):
             try:
                 template = Template.objects.get(
                     name__exact=template_name, sites__in=[site.id])
-                return set_and_return(template.content, display_name)
+                return set_and_return(
+                    cache_key, template.content, display_name)
             except Template.DoesNotExist:
                 pass
         raise TemplateDoesNotExist(template_name)
