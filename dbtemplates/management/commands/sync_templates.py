@@ -1,11 +1,11 @@
 import os
 from optparse import make_option
 
-from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.management.base import CommandError, NoArgsCommand
 from django.template.loaders.app_directories import app_template_dirs
 
+from dbtemplates.conf import settings
 from dbtemplates.models import Template
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')

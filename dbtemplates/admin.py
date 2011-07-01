@@ -4,13 +4,13 @@ from django.contrib import admin
 from django.utils.translation import ungettext, ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
-from dbtemplates import settings
+from dbtemplates.conf import settings
 from dbtemplates.models import (Template,
     remove_cached_template, add_template_to_cache)
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
-if settings.USE_REVERSION:
+if settings.DBTEMPLATES_USE_REVERSION:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
 else:
     from django.contrib.admin import ModelAdmin as TemplateModelAdmin
@@ -23,8 +23,8 @@ class CodeMirrorTextArea(forms.Textarea):
     """
     class Media:
         css = dict(screen=[
-            posixpath.join(settings.MEDIA_PREFIX, 'css/editor.css')])
-        js = [posixpath.join(settings.MEDIA_PREFIX, 'js/codemirror.js')]
+            posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'css/editor.css')])
+        js = [posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'js/codemirror.js')]
 
     def render(self, name, value, attrs=None):
         result = []
@@ -43,15 +43,15 @@ class CodeMirrorTextArea(forms.Textarea):
     lineNumbers: true
   });
 </script>
-""" % dict(media_prefix=settings.MEDIA_PREFIX, name=name))
+""" % dict(media_prefix=settings.DBTEMPLATES_MEDIA_PREFIX, name=name))
         return mark_safe(u"".join(result))
 
-if settings.USE_CODEMIRROR:
+if settings.DBTEMPLATES_USE_CODEMIRROR:
     TemplateContentTextArea = CodeMirrorTextArea
 else:
     TemplateContentTextArea = forms.Textarea
 
-if settings.AUTO_POPULATE_CONTENT:
+if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT:
     content_help_text = _("Leaving this empty causes Django to look for a "
         "template with the given name and populate this field with its "
         "content.")

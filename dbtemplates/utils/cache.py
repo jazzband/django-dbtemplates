@@ -16,7 +16,7 @@ def get_cache_key(name):
     return 'dbtemplates::%s::%s' % (name, current_site.pk)
 
 
-def set_and_return(content):
+def set_and_return(content, display_name):
     # Save in cache backend explicitly if manually deleted or invalidated
     if cache:
         cache.set(cache_key, content)

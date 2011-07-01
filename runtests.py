@@ -15,6 +15,11 @@ if not settings.configured:
             'django.contrib.admin',
             'dbtemplates',
         ],
+        TEMPLATE_LOADERS = (
+            'django.template.loaders.filesystem.load_template_source',
+            'django.template.loaders.app_directories.load_template_source',
+            'dbtemplates.loader.Loader',
+        )
     )
 
 from django.test.simple import run_tests
