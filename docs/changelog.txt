@@ -1,6 +1,32 @@
 Changelog
 =========
 
+1.1 (unreleased)
+----------------
+
+* Added South migrations.
+
+.. note::
+
+    If you are using South in your Django project, you can easily enable
+    dbtemplates' migrations, *faking* the first migration by using the
+    ``--fake`` option of South's ``migrate`` management command::
+
+        $ manage.py migrate --fake 0001 dbtemplates
+
+    Then run the rest of the migrations::
+
+        $ manage.py migrate dbtemplates
+
+* Removed uniqueness on the ``name`` field of the ``Template`` model. This is
+  needed because there isn't a ``unique_together`` for M2M fields in Django
+  such as the ``sites`` field in the ``Template`` model.
+
+* Made the ``sites`` field optional to support a way to apply a template to
+  all sites.
+
+* Fixed issue with cache settings handling.
+
 1.0.1 (04-14-11)
 ----------------
 
