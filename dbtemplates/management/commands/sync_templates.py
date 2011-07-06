@@ -61,7 +61,7 @@ class Command(NoArgsCommand):
                           if f.endswith(extension) and not f.startswith(".")]:
                     path = os.path.join(dirpath, f)
                     name = path.split(templatedir)[1]
-                    if name.startswith('/'): 
+                    if name.startswith('/'):
                         name = name[1:]
                     try:
                         t = Template.on_site.get(name__exact=name)
