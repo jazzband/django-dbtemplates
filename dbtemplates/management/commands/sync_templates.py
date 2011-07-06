@@ -24,13 +24,17 @@ class Command(NoArgsCommand):
                 "files from database templates"),
         make_option("-a", "--app-first", action="store_true", dest="app_first",
             default=False, help="look for templates in applications "
-                                "directories before project templates"))
+                                "directories before project templates"),
+        make_option("-w", "--write-out", action="store_true", dest="write_out",
+            default=False, help="Look for templates in the database to write out "
+                                "and then delete from the database"))
 
     def handle_noargs(self, **options):
         extension = options.get('ext')
         force = options.get('force')
         overwrite = options.get('overwrite')
         app_first = options.get('app_first')
+        write_out = options.get('write_out')
 
         if not extension.startswith("."):
             extension = ".%s" % extension
@@ -60,16 +64,17 @@ class Command(NoArgsCommand):
                     try:
                         t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
-                        if not force:
-                            confirm = raw_input(
-                                "\nA '%s' template doesn't exist in the "
-                                "database.\nCreate it with '%s'?"
-                                    " (y/[n]): """ % (name, path))
-                        if force or confirm.lower().startswith('y'):
-                            t = Template(name=name,
-                                content=open(path, "r").read())
-                            t.save()
-                            t.sites.add(site)
+                        if not write_out:
+                            if not force:
+                                confirm = raw_input(
+                                    "\nA '%s' template doesn't exist in the "
+                                    "database.\nCreate it with '%s'?"
+                                        " (y/[n]): """ % (name, path))
+                            if force or confirm.lower().startswith('y'):
+                                t = Template(name=name,
+                                    content=open(path, "r").read())
+                                t.save()
+                                t.sites.add(site)
                     else:
                         while 1:
                             if overwrite == ALWAYS_ASK:
@@ -95,4 +100,6 @@ class Command(NoArgsCommand):
                                         f.write(t.content)
                                     finally:
                                         f.close()
+                                    if write_out:
+                                        t.delete()
                                 break
