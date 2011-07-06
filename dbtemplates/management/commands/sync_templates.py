@@ -1,4 +1,5 @@
 import os
+import codecs
 from optparse import make_option
 
 from django.contrib.sites.models import Site
@@ -53,8 +54,8 @@ class Command(NoArgsCommand):
 
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
-                for f in [f for f in filenames if f.endswith(extension)
-                    and not f.startswith(".")]:
+                for f in [f for f in filenames
+                          if f.endswith(extension) and not f.startswith(".")]:
                     path = os.path.join(dirpath, f)
                     name = path.split(templatedir)[1][1:]
                     try:
@@ -67,7 +68,7 @@ class Command(NoArgsCommand):
                                     " (y/[n]): """ % (name, path))
                         if force or confirm.lower().startswith('y'):
                             t = Template(name=name,
-                                content=open(path, "r").read())
+                                content=codecs.open(path, "r").read())
                             t.save()
                             t.sites.add(site)
                     else:
@@ -86,12 +87,12 @@ class Command(NoArgsCommand):
                             if confirm == '' or confirm in (
                                     FILES_TO_DATABASE, DATABASE_TO_FILES):
                                 if confirm == FILES_TO_DATABASE:
-                                    t.content = open(path, 'r').read()
+                                    t.content = codecs.open(path, 'r').read()
                                     t.save()
                                     t.sites.add(site)
                                 elif confirm == DATABASE_TO_FILES:
                                     try:
-                                        f = open(path, 'w')
+                                        f = codecs.open(path, 'w')
                                         f.write(t.content)
                                     finally:
                                         f.close()

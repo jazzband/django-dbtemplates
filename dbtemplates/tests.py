@@ -1,4 +1,5 @@
 from __future__ import with_statement
+import os
 
 from django.core.management import call_command
 from django.template import loader, Context
@@ -9,7 +10,7 @@ from django.contrib.sites.models import Site
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
 from dbtemplates.utils.template import get_template_source
-
+from dbtemplates.management.commands.sync_templates import FILES_TO_DATABASE
 
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
@@ -50,8 +51,22 @@ class DbTemplatesTestCase(TestCase):
         call_command('create_error_templates', force=True, verbosity=0)
         self.assertEqual(list(Template.objects.filter(sites=self.site1)),
                          list(Template.objects.filter()))
+        self.assertTrue(Template.objects.filter(name='404.html').exists())
 
     def test_automatic_sync(self):
         admin_base_template = get_template_source('admin/base.html')
         template = Template.objects.create(name='admin/base.html')
         self.assertEqual(admin_base_template, template.content)
+
+    def test_sync_templates(self):
+        old_template_dirs = settings.TEMPLATE_DIRS
+        try:
+            self.assertFalse(Template.objects.filter(name='dbtemplates/tests/test.html').exists())
+            settings.TEMPLATE_DIRS = (
+                os.path.join(os.path.dirname(__file__), 'templates'),
+            )
+            call_command('sync_templates',
+                force=True, verbosity=0, overwrite=FILES_TO_DATABASE)
+            self.assertTrue(Template.objects.filter(name='dbtemplates/tests/test.html').exists())
+        finally:
+            settings.TEMPLATE_DIRS = old_template_dirs
