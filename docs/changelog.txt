@@ -1,8 +1,13 @@
 Changelog
 =========
 
-1.1 (unreleased)
-----------------
+1.1 (07-06-11)
+--------------
+
+* **BACKWARDS-INCOMPATIBLE** Requires Django 1.2 or higher.
+  For previous Django versions use an older versions of dbtemplates, e.g.::
+
+      $ pip install django-dbtemplates<1.1
 
 * Added South migrations.
 
@@ -24,6 +29,14 @@ Changelog
 
 * Made the ``sites`` field optional to support a way to apply a template to
   all sites.
+
+* Added ``--delete`` option to ``sync_templates`` managment command to delete
+  the file or database entry after syncing (depending on used ``--overwrite``
+  mode).
+
+* Fixed issue with incorrectly splitting paths in ``sync_templates``.
+
+* Extended tests.
 
 * Fixed issue with cache settings handling.
 
