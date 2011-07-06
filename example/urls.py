@@ -16,9 +16,3 @@ urlpatterns = patterns('',
     # Uncomment the next line to enable the admin:
     (r'^admin/', include(admin.site.urls)),
 )
-
-# the following is used to serve up local media files like images
-if settings.DEBUG:
-    urlpatterns += patterns("",
-        (r"", include("staticfiles.urls")),
-    )

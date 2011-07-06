@@ -1,15 +1,15 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Ville Säävuori <ville@syneus.fi>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: django-dbtemplates\n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: Jaakko Holster <holster@iki.fi>\n"
-"POT-Creation-Date: 2011-01-31 11:10+0100\n"
-"PO-Revision-Date: 2011-01-31 10:08+0000\n"
+"Report-Msgid-Bugs-To: https://github.com/jezdez/django-dbtemplates/issues\n"
+"POT-Creation-Date: 2010-11-07 00:02+0100\n"
+"PO-Revision-Date: 2011-06-19 11:22+0000\n"
+"Last-Translator: Uninen <ville@syneus.fi>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,8 +22,8 @@ msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
 msgstr ""
-"Mikäli kenttä on tyhjä, Django etsii samannimistä sivupohjaa ja täyttää "
-"kentän sen sisällöllä."
+"Jos tämä jätetään tyhjäksi, Django etsiin annetulla nimellä olevan "
+"mallipohjan ja täyttää tähän kenttään sen sisällön."
 
 #: admin.py:77
 msgid "Advanced"
@@ -37,25 +37,25 @@ msgstr "Päiväys/aika"
 #, python-format
 msgid "Cache of one template successfully invalidated."
 msgid_plural "Cache of %(count)d templates successfully invalidated."
-msgstr[0] "Sivupohja poistettu välimuistista."
-msgstr[1] "%(count)d sivupohjaa poistettu välimuistista."
+msgstr[0] "Yhden mallipohjan välimuisti on onnistuneesti tyhjennetty."
+msgstr[1] "%(count)d mallipohjan välimusti on onnistuneesti tyhjennetty."
 
 #: admin.py:102
 msgid "Invalidate cache of selected templates"
-msgstr "Poista valitut sivupohjat välimuistista."
+msgstr "Tyhjennä valittujen mallipohjien välimuisti."
 
 #: admin.py:111
 #, python-format
 msgid "Cache successfully repopulated with one template."
 msgid_plural "Cache successfully repopulated with %(count)d templates."
-msgstr[0] "Sivupohja lisätty välimuistiin."
-msgstr[1] "%(count)d sivupohjaa lisätty välimuistiin."
+msgstr[0] "Yhden mallipohjan välimuisti on täytetty onnistuneesti."
+msgstr[1] "%(count)d mallipohjan välimuisti on täytetty onnistuneesti."
 
 #: admin.py:115
 msgid "Repopulate cache with selected templates"
-msgstr "Lisää valitut sivupohjat välimuistiin."
+msgstr "Täytä valittujen mallipohjien välimuisti."
 
-#: admin.py:119
+#: admin.py:119 models.py:29
 msgid "sites"
 msgstr "sivustot"
 
@@ -65,24 +65,26 @@ msgstr "nimi"
 
 #: models.py:27
 msgid "Example: 'flatpages/default.html'"
-msgstr "Esimerkki: 'flatpages/default.html'"
+msgstr "Esimerkiksi: 'flatpages/default.html'"
 
 #: models.py:28
 msgid "content"
-msgstr "sisältö"
+msgstr "sisätö"
 
 #: models.py:30
 msgid "creation date"
-msgstr "luotu"
+msgstr "luontipäivä"
 
 #: models.py:32
 msgid "last changed"
-msgstr "muokattu"
+msgstr "viimeksi muutettu"
 
 #: models.py:40
 msgid "template"
-msgstr "sivupohja"
+msgstr "mallipohja"
 
 #: models.py:41
 msgid "templates"
-msgstr "sivupohjat"
+msgstr "mallipohjat"
+
+

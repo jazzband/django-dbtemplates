@@ -1,16 +1,16 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
-#
+# 
+# Herson Hersonls <hersonls@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: django-dbtemplates\n"
-"Report-Msgid-Bugs-To: \n"
-"Last-Translator: Diego Búrigo Zacarão <diegobz@fedoraproject.org>\n"
-"Language-Team: Brazilian Portuguese <fedora-trans-pt_br@redhat.com>\n"
-"POT-Creation-Date: 2011-01-31 11:10+0100\n"
-"PO-Revision-Date: 2011-01-31 10:08+0000\n"
+"Report-Msgid-Bugs-To: https://github.com/jezdez/django-dbtemplates/issues\n"
+"POT-Creation-Date: 2010-11-07 00:02+0100\n"
+"PO-Revision-Date: 2011-06-01 18:11+0000\n"
+"Last-Translator: hersonls <hersonls@gmail.com>\n"
+"Language-Team: Portuguese (Brazilian) (http://www.transifex.net/projects/p/django-dbtemplates/team/pt_BR/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -27,7 +27,7 @@ msgstr ""
 
 #: admin.py:77
 msgid "Advanced"
-msgstr ""
+msgstr "Avançado"
 
 #: admin.py:80
 msgid "Date/time"
@@ -86,3 +86,5 @@ msgstr "modelo"
 #: models.py:41
 msgid "templates"
 msgstr "modelos"
+
+
