@@ -32,7 +32,7 @@ msgid "Date/time"
 msgstr "日期/时间"
 
 #: admin.py:98
-#, python-format
+#, fuzzy, python-format
 msgid "Cache of one template successfully invalidated."
 msgid_plural "Cache of %(count)d templates successfully invalidated."
 msgstr[0] "该模板的缓存已经成功撤销。"
@@ -42,7 +42,7 @@ msgid "Invalidate cache of selected templates"
 msgstr "撤销选中模板的缓存"
 
 #: admin.py:111
-#, python-format
+#, fuzzy, python-format
 msgid "Cache successfully repopulated with one template."
 msgid_plural "Cache successfully repopulated with %(count)d templates."
 msgstr[0] "该模板的缓存已经成功启用。"
