@@ -34,6 +34,8 @@ Changelog
   the file or database entry after syncing (depending on used ``--overwrite``
   mode).
 
+* Updated translations.
+
 * Fixed issue with incorrectly splitting paths in ``sync_templates``.
 
 * Extended tests.
