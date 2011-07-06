@@ -1,3 +1,2 @@
-django-staticfiles
 south
 django>=1.3
