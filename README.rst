@@ -12,4 +12,8 @@ command, integrates with Django's caching system and the admin actions.
 
 Please see http://django-dbtemplates.readthedocs.org/ for more details.
 
+The source code and issue tracker can be found on Github:
+
+https://github.com/jezdez/django-dbtemplates
+
 .. _template loader: http://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
