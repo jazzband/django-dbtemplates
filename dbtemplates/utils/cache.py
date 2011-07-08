@@ -6,7 +6,7 @@ from dbtemplates.conf import settings
 
 
 def get_cache_backend():
-    return get_cache(settings.CACHE_BACKEND)
+    return get_cache(settings.DBTEMPLATES_CACHE_BACKEND)
 
 cache = get_cache_backend()
 

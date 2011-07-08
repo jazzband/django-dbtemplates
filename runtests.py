@@ -16,8 +16,8 @@ if not settings.configured:
             'dbtemplates',
         ],
         TEMPLATE_LOADERS = (
-            'django.template.loaders.filesystem.load_template_source',
-            'django.template.loaders.app_directories.load_template_source',
+            'django.template.loaders.filesystem.Loader',
+            'django.template.loaders.app_directories.Loader',
             'dbtemplates.loader.Loader',
         )
     )

@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 
+from django.core.cache.backends.base import BaseCache
 from django.core.management import call_command
 from django.template import loader, Context
 from django.test import TestCase
@@ -12,6 +13,7 @@ from django.contrib.sites.models import Site
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
+from dbtemplates.utils.cache import get_cache_backend
 from dbtemplates.utils.template import get_template_source
 from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
                                                             DATABASE_TO_FILES)
@@ -91,3 +93,6 @@ class DbTemplatesTestCase(TestCase):
             temp_template.close()
             settings.TEMPLATE_DIRS = old_template_dirs
             shutil.rmtree(temp_template_dir)
+
+    def test_get_cache(self):
+        self.assertTrue(isinstance(get_cache_backend(), BaseCache))
