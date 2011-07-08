@@ -1,13 +1,28 @@
 Changelog
 =========
 
+1.1.1 (07-08-11)
+----------------
+
+* Fixed bug in cache loading (again).
+
+* Fixed bugs in the documentation.
+
+.. note::
+
+    Since ``dbtemplates`` removed support for Django lower than 1.2 you
+    have to use the template loader class in the ``TEMPLATE_LOADERS``
+    (``'dbtemplates.loader.Loader'``) and **not** the previosly included
+    function that ended with ``load_template_source``.
+
 1.1 (07-06-11)
 --------------
 
 * **BACKWARDS-INCOMPATIBLE** Requires Django 1.2 or higher.
-  For previous Django versions use an older versions of dbtemplates, e.g.::
+  For previous Django versions use an older versions of ``dbtemplates``,
+  e.g.::
 
-      $ pip install django-dbtemplates<1.1
+        $ pip install "django-dbtemplates<1.1"
 
 * Added South migrations.
 
