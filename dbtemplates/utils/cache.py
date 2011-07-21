@@ -1,3 +1,6 @@
+# Parts of this file are (c) 2011 ANEXIA Internetdienstleistungs GmbH.
+# For further copyrights and licensing information see the LICENSE
+# file that was distributed with this file.
 from django.core.cache import get_cache
 
 from django.contrib.sites.models import Site
@@ -15,6 +18,12 @@ def get_cache_key(name):
     current_site = Site.objects.get_current()
     return 'dbtemplates::%s::%s' % (name, current_site.pk)
 
+def get_cache_notfound_key(name):
+    return get_cache_key(name)+'::notfound'
+
+def remove_notfound_key(instance):
+    # Remove notfound key as soon as we save the template.
+    cache.delete(get_cache_notfound_key(instance.name))
 
 def set_and_return(cache_key, content, display_name):
     # Save in cache backend explicitly if manually deleted or invalidated
@@ -29,6 +38,7 @@ def add_template_to_cache(instance, **kwargs):
     in the database was added or changed.
     """
     remove_cached_template(instance)
+    remove_notfound_key(instance)
     cache.set(get_cache_key(instance.name), instance.content)
 
 
