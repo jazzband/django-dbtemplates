@@ -1,6 +1,3 @@
-# Parts of this file are (c) 2011 ANEXIA Internetdienstleistungs GmbH.
-# For further copyrights and licensing information see the LICENSE
-# file that was distributed with this file.
 from django.contrib.sites.models import Site
 from django.template import TemplateDoesNotExist
 
