@@ -7,6 +7,7 @@ from django.utils.safestring import mark_safe
 from dbtemplates.conf import settings
 from dbtemplates.models import (Template,
     remove_cached_template, add_template_to_cache)
+from dbtemplates.utils.template import check_template_syntax
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
 # as the base admin class if yes
@@ -91,7 +92,7 @@ class TemplateAdmin(TemplateModelAdmin):
     list_filter = ('sites',)
     save_as = True
     search_fields = ('name', 'content')
-    actions = ['invalidate_cache', 'repopulate_cache']
+    actions = ['invalidate_cache', 'repopulate_cache', 'validate_syntax']
 
     def invalidate_cache(self, request, queryset):
         for template in queryset:
@@ -114,6 +115,27 @@ class TemplateAdmin(TemplateModelAdmin):
         self.message_user(request, message % {'count': len(queryset)})
     repopulate_cache.short_description = _("Repopulate cache with "
                                            "selected templates")
+
+    def validate_syntax(self, request, queryset):
+        errors = []
+        for template in queryset:
+            result = check_template_syntax(template)
+            if not result[0]:
+                errors.append('%s: %s' % (template.name, result[1]))
+        if errors:
+            message = ungettext(
+                "Template syntax check FAILED for %(names)s.",
+                "Template syntax check FAILED for %(count)d templates: %(names)s.",
+                len(errors))
+            self.message_user(request, message % {'count': len(errors),
+                'names': '; '.join(errors)})
+        else:
+            message = ungettext(
+                "Template syntax OK.",
+                "Template syntax OK for %(count)d templates.",
+                len(queryset))
+            self.message_user(request, message % {'count': len(queryset)})
+    validate_syntax.short_description = _("Check template syntax")
 
     def site_list(self, template):
         return ", ".join([site.name for site in template.sites.all()])
