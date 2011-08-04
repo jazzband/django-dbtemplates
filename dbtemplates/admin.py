@@ -119,16 +119,16 @@ class TemplateAdmin(TemplateModelAdmin):
     def validate_syntax(self, request, queryset):
         errors = []
         for template in queryset:
-            ok = check_template_syntax(template)
-            if not ok:
-                errors.append(template.name)
+            result = check_template_syntax(template)
+            if not result[0]:
+                errors.append('%s: %s' % (template.name, result[1]))
         if errors:
             message = ungettext(
                 "Template syntax check FAILED for %(names)s.",
                 "Template syntax check FAILED for %(count)d templates: %(names)s.",
                 len(errors))
             self.message_user(request, message % {'count': len(errors),
-                'names': ', '.join(errors)})
+                'names': '; '.join(errors)})
         else:
             message = ungettext(
                 "Template syntax OK.",

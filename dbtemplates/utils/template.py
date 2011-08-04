@@ -52,7 +52,7 @@ def get_template_source(name):
 def check_template_syntax(template):
     try:
         t =  Template(template.content)
-    except TemplateSyntaxError:
-        return False
-    return True
+    except TemplateSyntaxError, e:
+        return (False, e)
+    return (True, None)
     
