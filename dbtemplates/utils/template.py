@@ -1,5 +1,6 @@
 from django import VERSION
-from django.template import TemplateDoesNotExist
+from django.template import (Template, TemplateDoesNotExist,
+    TemplateSyntaxError)
 from django.utils.importlib import import_module
 
 
@@ -48,3 +49,11 @@ def get_template_source(name):
         except (ImportError, TemplateDoesNotExist):
             pass
     return None
+
+
+def check_template_syntax(template):
+    try:
+        Template(template.content)
+    except TemplateSyntaxError, e:
+        return (False, e)
+    return (True, None)

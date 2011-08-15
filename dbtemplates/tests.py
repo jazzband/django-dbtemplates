@@ -14,7 +14,8 @@ from django.contrib.sites.models import Site
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
 from dbtemplates.utils.cache import get_cache_backend
-from dbtemplates.utils.template import get_template_source
+from dbtemplates.utils.template import (get_template_source,
+                                        check_template_syntax)
 from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
                                                             DATABASE_TO_FILES)
 
@@ -96,3 +97,11 @@ class DbTemplatesTestCase(TestCase):
 
     def test_get_cache(self):
         self.assertTrue(isinstance(get_cache_backend(), BaseCache))
+
+    def test_check_template_syntax(self):
+        bad_template, _ = Template.objects.get_or_create(
+            name='bad.html', content='{% if foo %}Bar')
+        good_template, _ = Template.objects.get_or_create(
+            name='good.html', content='{% if foo %}Bar{% endif %}')
+        self.assertFalse(check_template_syntax(bad_template)[0])
+        self.assertTrue(check_template_syntax(good_template)[0])
