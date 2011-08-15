@@ -15,12 +15,15 @@ def get_cache_key(name):
     current_site = Site.objects.get_current()
     return 'dbtemplates::%s::%s' % (name, current_site.pk)
 
+
 def get_cache_notfound_key(name):
-    return get_cache_key(name)+'::notfound'
+    return get_cache_key(name) + '::notfound'
+
 
 def remove_notfound_key(instance):
     # Remove notfound key as soon as we save the template.
     cache.delete(get_cache_notfound_key(instance.name))
+
 
 def set_and_return(cache_key, content, display_name):
     # Save in cache backend explicitly if manually deleted or invalidated

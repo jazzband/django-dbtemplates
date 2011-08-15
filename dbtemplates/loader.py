@@ -23,7 +23,7 @@ class Loader(BaseLoader):
         # The logic should work like this:
         # * Try to find the template in the cache. If found, return it.
         # * Now check the cache if a lookup for the given template
-        #   has failed lately and hand over control to the next template 
+        #   has failed lately and hand over control to the next template
         #   loader waiting in line.
         # * If this still did not fail we first try to find a site-specific
         #   template in the database.
@@ -53,11 +53,11 @@ class Loader(BaseLoader):
                     raise TemplateDoesNotExist(template_name)
             except:
                 raise TemplateDoesNotExist(template_name)
-        
+
         # Not marked as not-found, move on...
 
         try:
-            template = Template.objects.get(name__exact=template_name, 
+            template = Template.objects.get(name__exact=template_name,
                                             sites__in=[site.id])
             return set_and_return(cache_key, template.content, display_name)
         except Template.DoesNotExist:
