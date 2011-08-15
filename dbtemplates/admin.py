@@ -92,7 +92,7 @@ class TemplateAdmin(TemplateModelAdmin):
     list_filter = ('sites',)
     save_as = True
     search_fields = ('name', 'content')
-    actions = ['invalidate_cache', 'repopulate_cache', 'validate_syntax']
+    actions = ['invalidate_cache', 'repopulate_cache', 'check_syntax']
 
     def invalidate_cache(self, request, queryset):
         for template in queryset:
@@ -118,7 +118,7 @@ class TemplateAdmin(TemplateModelAdmin):
     repopulate_cache.short_description = _("Repopulate cache with "
                                            "selected templates")
 
-    def validate_syntax(self, request, queryset):
+    def check_syntax(self, request, queryset):
         errors = []
         for template in queryset:
             valid, error = check_template_syntax(template)
@@ -138,7 +138,7 @@ class TemplateAdmin(TemplateModelAdmin):
                 "Template syntax OK.",
                 "Template syntax OK for %(count)d templates.", count)
             self.message_user(request, message % {'count': count})
-    validate_syntax.short_description = _("Check template syntax")
+    check_syntax.short_description = _("Check template syntax")
 
     def site_list(self, template):
         return ", ".join([site.name for site in template.sites.all()])
