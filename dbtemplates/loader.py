@@ -3,8 +3,8 @@ from django.template import TemplateDoesNotExist
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
-from dbtemplates.utils.cache import cache, get_cache_key, set_and_return
-from dbtemplates.utils.cache import get_cache_notfound_key
+from dbtemplates.utils.cache import (cache, get_cache_key,
+                                     set_and_return, get_cache_notfound_key)
 from django.template.loader import BaseLoader
 
 
@@ -60,12 +60,10 @@ class Loader(BaseLoader):
             template = Template.objects.get(name__exact=template_name,
                                             sites__in=[site.id])
             return set_and_return(cache_key, template.content, display_name)
-        except Template.DoesNotExist:
+        except (Template.MultipleObjectsReturned, Template.DoesNotExist):
             try:
-                template = Template.objects.get(
-                    name__exact=template_name)
-                return set_and_return(
-                    cache_key, template.content, display_name)
+                template = Template.objects.get(name__exact=template_name)
+                return set_and_return(cache_key, template.content, display_name)
             except Template.DoesNotExist:
                 pass
 
