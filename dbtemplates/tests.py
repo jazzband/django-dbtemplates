@@ -103,5 +103,5 @@ class DbTemplatesTestCase(TestCase):
             name='bad.html', content='{% if foo %}Bar')
         good_template, _ = Template.objects.get_or_create(
             name='good.html', content='{% if foo %}Bar{% endif %}')
-        self.assertFalse(check_template_syntax(bad_template))
-        self.assertTrue(check_template_syntax(good_template))
+        self.assertFalse(check_template_syntax(bad_template)[0])
+        self.assertTrue(check_template_syntax(good_template)[0])
