@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.2 (08-15-11)
+--------------
+
+* Refactored the template loader to be even more cache effective.
+
+* Added ``check_template_syntax`` management command and admin action
+  to make sure the saved templates are valid Django templates.
+
 1.1.1 (07-08-11)
 ----------------
 

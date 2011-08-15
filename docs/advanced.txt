@@ -82,6 +82,12 @@ Management commands
   Tries to add the two templates ``404.html`` and ``500.html`` that are used
   by Django when a error occurs.
 
+* ``check_template_syntax``
+
+  .. versionadded:: 1.2
+
+  Checks the saved templates whether they are valid Django templates.
+
 .. _Django management commands: http://docs.djangoproject.com/en/dev/ref/django-admin/
 
 .. _admin_actions:
@@ -100,5 +106,11 @@ Admin actions
 
   Repopulates the cache with selected templates by invalidating it first and
   filling then after that.
+
+* ``check_syntax``
+
+  .. versionadded:: 1.2
+
+  Checks the selected tempaltes for syntax errors.
 
 .. _admin actions: http://docs.djangoproject.com/en/dev/ref/contrib/admin/actions/
