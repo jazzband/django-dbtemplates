@@ -4,7 +4,7 @@ from datetime import datetime
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
-from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ugettext_lazy as _
 
 from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
@@ -22,7 +22,7 @@ class Template(models.Model):
     name = models.CharField(_('name'), max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
-    sites = models.ManyToManyField(Site, verbose_name=_('sites'),
+    sites = models.ManyToManyField(Site, verbose_name=_(u'sites'),
                                    blank=True, null=True)
     creation_date = models.DateTimeField(_('creation date'),
                                          default=datetime.now)
