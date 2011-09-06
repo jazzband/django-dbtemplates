@@ -31,4 +31,5 @@ setup(
         'Framework :: Django',
     ],
     install_requires=['django-appconf >= 0.4'],
+    setup_requires=['versiontools >= 1.5'],
 )
