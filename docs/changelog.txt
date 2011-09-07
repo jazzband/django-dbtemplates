@@ -1,12 +1,14 @@
 Changelog
 =========
 
-v1.2.1 (2011-09-05)
+v1.2.1 (2011-09-07)
 -------------------
 
 * Fixed a wrong use of the non-lazy localization tools.
 
 * Fixed bugs in the documentation.
+
+* Make use of django-appconf and versiontools.
 
 v1.2 (2011-08-15)
 -----------------
