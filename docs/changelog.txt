@@ -1,16 +1,25 @@
 Changelog
 =========
 
-1.2 (08-15-11)
---------------
+v1.2.1 (2011-09-07)
+-------------------
+
+* Fixed a wrong use of the non-lazy localization tools.
+
+* Fixed bugs in the documentation.
+
+* Make use of django-appconf and versiontools.
+
+v1.2 (2011-08-15)
+-----------------
 
 * Refactored the template loader to be even more cache effective.
 
 * Added ``check_template_syntax`` management command and admin action
   to make sure the saved templates are valid Django templates.
 
-1.1.1 (07-08-11)
-----------------
+v1.1.1 (2011-07-08)
+-------------------
 
 * Fixed bug in cache loading (again).
 
@@ -23,8 +32,8 @@ Changelog
     (``'dbtemplates.loader.Loader'``) and **not** the previosly included
     function that ended with ``load_template_source``.
 
-1.1 (07-06-11)
---------------
+v1.1 (2011-07-06)
+-----------------
 
 * **BACKWARDS-INCOMPATIBLE** Requires Django 1.2 or higher.
   For previous Django versions use an older versions of ``dbtemplates``,
@@ -65,13 +74,13 @@ Changelog
 
 * Fixed issue with cache settings handling.
 
-1.0.1 (04-14-11)
-----------------
+v1.0.1 (2011-04-14)
+-------------------
 
 * Minor bugfixes with regard to the new cache handling.
 
-1.0 (04-11-11)
---------------
+v1.0 (2011-04-11)
+-----------------
 
 .. warning::
     This is the first stable release of django-dbtemplates which comes with a
@@ -94,33 +103,33 @@ Changelog
 
 * Use ReadTheDocs for documentation hosting.
 
-0.8.0 (11-07-10)
-----------------
+v0.8.0 (2010-11-07)
+-------------------
 
 * Added Finnish translation (by jholster)
 
 * Added --overwrite and --app-first options to sync_templates command (by Alex Kamedov).
 
-0.7.4 (09-23-10)
-----------------
+v0.7.4 (2010-09-23)
+-------------------
 
 * Fixed tests.
 
-0.7.3 (09-21-10)
-----------------
+v0.7.3 (2010-09-21)
+-------------------
 
 * Added ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` setting to be able to disable
   to auto-populating of template content.
 
 * Fixed cosmetic issue in admin with collapsable fields.
 
-0.7.2 (09-04-10)
-----------------
+v0.7.2 (2010-09-04)
+-------------------
 
 * Moved to Github again. Sigh.
 
-0.7.1 (07-07-10)
-----------------
+v0.7.1 (2010-07-07)
+-------------------
 
 * Fixed problem with the CodeMirror textarea, which wasn't completely
   disabled before.
@@ -132,8 +141,8 @@ Changelog
   and have the CodeMirror textarea enabled, dbtemplates will look in a
   subdirectory of your site's ``MEDIA_ROOT`` for the CodeMirror media files.
 
-0.7.0 (06-24-10)
-----------------
+v0.7.0 (2010-06-24)
+-------------------
 
 * Added CodeMirror_-based syntax highlighting textarea, based on the amaxing
   work_ by `Nic Pottier`_. Set the ``DBTEMPLATES_USE_CODEMIRROR`` setting
@@ -154,14 +163,14 @@ Changelog
 .. _work: https://gist.github.com/368758/86bcafe53c438e2e2a0e3442c3b30f2c6011fbba
 .. _`Nic Pottier`: http://github.com/nicpottier
 
-0.6.1 (10-19-09):
------------------
+v0.6.1 (2009-10-19)
+-------------------
 
 * Fixed issue with default site of a template, added ability to disable
   default site (``DBTEMPLATES_ADD_DEFAULT_SITE``).
 
-0.6.0 (10-09-09):
------------------
+v0.6.0 (2009-10-09)
+-------------------
 
 * Updated and added locales (Danish, Brazilian Portuguese)
 
@@ -171,8 +180,8 @@ Changelog
 
 * Added Sphinx documentation
 
-0.5.7
------
+v0.5.7
+------
 
 * Updates to the docs
 
@@ -186,8 +195,8 @@ Changelog
 
 * fixed bug in ``create_error_template`` command.
 
-0.5.4
------
+v0.5.4
+------
 
 * Made loader and cache backends site-aware.
 
@@ -199,16 +208,16 @@ Changelog
 * Template is now saved explicitly to backend if not existent in cache
   (e.g. if deleted manually or invalidated).
 
-0.5.3
------
+v0.5.3
+------
 
-* Removed automatic creation of 404.html and 500.html templates and added a
+* Removed automatic creation of 404.html and 50v0.html templates and added a
   new management command for those cases called ``create_error_templates``
 
 * Also reverted move to Bitbucket
 
-0.5.2
------
+v0.5.2
+------
 
 * Fixed a problem with ``django.contrib.sites`` when its table hasn't been
   populated yet on initialization of dbtemplates. Thanks for the report,
@@ -216,8 +225,8 @@ Changelog
 
 * Added an example Django project and docs for it
 
-0.5.1
------
+v0.5.1
+------
 
 * Removed unneeded code that registered the model with reversion.
 
@@ -228,8 +237,8 @@ Changelog
 * Removed legacy ``sync_templates.py`` script, use ``django-admin.py
   sync_templates`` from now on.
 
-0.5.0
------
+v0.5.0
+------
 
 * Added support for `django-reversion`_
 
@@ -246,60 +255,60 @@ Changelog
 .. _django-reversion: http://code.google.com/p/django-reversion/
 .. _blog post: http://jannisleidel.com/2008/11/updates-to-django-dbtemplates-and-half-assed-promise/
 
-0.4.7
------
+v0.4.7
+------
 
 * Minor bugfix
 
-0.4.6
------
+v0.4.6
+------
 
 * Minor doc change and PyPI support
 
-0.4.5
------
+v0.4.5
+------
 
 * fixed the --force option of the sync_templates command
 
-0.4.4
------
+v0.4.4
+------
 
 * fixed error in custom model save() after changes in Django `r8670`_.
 
 .. _r8670: http://code.djangoproject.com/changeset/8670
 
-0.4.3
------
+v0.4.3
+------
 
 * removed oldforms code
 
-0.4.2
------
+v0.4.2
+------
 
 * added Hebrew translation (by mkriheli)
 
-0.4.1
------
+v0.4.1
+------
 
 * added French (by Roland Frederic) and German locale
 
-0.4.0
------
+v0.4.0
+------
 
 * adds better support for newforms-admin
 
 * don't forget to load the dbtemplates.admin, e.g. by using
   django.contrib.admin.autodiscover() in you urls.py
 
-0.3.1
------
+v0.3.1
+------
 
 * adds a new management command *sync_templates* for bidirectional syncing
   between filesystem and database (backwards-compatible) and
   FilesystemCaching (thanks, Arne Brodowski!)
 
-0.2.5
------
+v0.2.5
+------
 
 * adds support for newforms-admin
 
