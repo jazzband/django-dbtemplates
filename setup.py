@@ -6,7 +6,7 @@ read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
 
 setup(
     name='django-dbtemplates',
-    version=':versiontools:dbtemplates',
+    version='1.2.1pbs',
     description='Template loader for templates stored in the database',
     long_description=read(path.join(path.dirname(__file__), 'README.rst')),
     author='Jannis Leidel',
