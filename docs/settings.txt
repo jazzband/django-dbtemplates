@@ -4,8 +4,8 @@ Settings
 ``DBTEMPLATES_ADD_DEFAULT_SITE``
 --------------------------------
 
-``dbtemplates`` adds the current site (``settings.SITE_ID``) to the database  
-template when it is created by default. You can disable this feature by   
+``dbtemplates`` adds the current site (``settings.SITE_ID``) to the database
+template when it is created by default. You can disable this feature by
 setting ``DBTEMPLATES_ADD_DEFAULT_SITE`` to ``False``.
 
 ``DBTEMPLATES_AUTO_POPULATE_CONTENT``
