@@ -10,4 +10,4 @@ docs/_build
 *.egg/
 pep8.txt
 coverage.xml
-.coverage
+reports/
