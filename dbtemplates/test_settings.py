@@ -9,10 +9,18 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.admin',
     'dbtemplates',
+    'django_jenkins',
 ]
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'dbtemplates.loader.Loader',
+)
+
+JENKINS_TASKS = (
+    'django_jenkins.tasks.run_pyflakes',
+    'django_jenkins.tasks.run_pep8',
+    'django_jenkins.tasks.with_coverage',
+    'django_jenkins.tasks.django_tests',
 )

@@ -19,8 +19,14 @@ from dbtemplates.utils.template import (get_template_source,
 from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
                                                             DATABASE_TO_FILES)
 
+
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
+        self.old_template_loaders = settings.TEMPLATE_LOADERS
+        if 'dbtemplates.loader.Loader' not in settings.TEMPLATE_LOADERS:
+            settings.TEMPLATE_LOADERS = (list(settings.TEMPLATE_LOADERS) +
+                                         ['dbtemplates.loader.Loader'])
+
         self.site1, created1 = Site.objects.get_or_create(
             domain="example.com", name="example.com")
         self.site2, created2 = Site.objects.get_or_create(
@@ -30,6 +36,9 @@ class DbTemplatesTestCase(TestCase):
         self.t2, _ = Template.objects.get_or_create(
             name='sub.html', content='sub')
         self.t2.sites.add(self.site2)
+
+    def tearDown(self):
+        settings.TEMPLATE_LOADERS = self.old_template_loaders
 
     def test_basiscs(self):
         self.assertEqual(list(self.t1.sites.all()), [self.site1])
@@ -68,28 +77,31 @@ class DbTemplatesTestCase(TestCase):
     def test_sync_templates(self):
         old_template_dirs = settings.TEMPLATE_DIRS
         temp_template_dir = tempfile.mkdtemp('dbtemplates')
-        last_path_part = temp_template_dir.split('/')[-1]
         temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
         temp_template = codecs.open(temp_template_path, 'w')
         try:
             temp_template.write('temp test')
             settings.TEMPLATE_DIRS = (temp_template_dir,)
-            self.assertFalse(Template.objects.filter(name='temp_test.html').exists())
+            self.assertFalse(
+                Template.objects.filter(name='temp_test.html').exists())
             call_command('sync_templates',
                 force=True, verbosity=0, overwrite=FILES_TO_DATABASE)
-            self.assertTrue(Template.objects.filter(name='temp_test.html').exists())
+            self.assertTrue(
+                Template.objects.filter(name='temp_test.html').exists())
 
             t = Template.objects.get(name='temp_test.html')
             t.content = 'temp test modified'
             t.save()
             call_command('sync_templates',
                 force=True, verbosity=0, overwrite=DATABASE_TO_FILES)
-            self.assertTrue('modified' in codecs.open(temp_template_path).read())
+            self.assertTrue(
+                'modified' in codecs.open(temp_template_path).read())
 
-            call_command('sync_templates',
-                force=True, verbosity=0, delete=True, overwrite=DATABASE_TO_FILES)
+            call_command('sync_templates', force=True, verbosity=0,
+                         delete=True, overwrite=DATABASE_TO_FILES)
             self.assertTrue(os.path.exists(temp_template_path))
-            self.assertFalse(Template.objects.filter(name='temp_test.html').exists())
+            self.assertFalse(
+                Template.objects.filter(name='temp_test.html').exists())
         finally:
             temp_template.close()
             settings.TEMPLATE_DIRS = old_template_dirs
