@@ -30,9 +30,9 @@ Setup
      It should look something like this::
 
        TEMPLATE_LOADERS = (
+           'dbtemplates.loader.Loader',
            'django.template.loaders.filesystem.Loader',
            'django.template.loaders.app_directories.Loader',
-           'dbtemplates.loader.Loader',
        )
 
 4. Sync your database ``python manage.py syncdb``
