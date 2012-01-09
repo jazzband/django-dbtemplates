@@ -2,7 +2,7 @@ Setup
 =====
 
 1. Get the source from the `Git repository`_ or install it from the
-   Python Package Index by running ``pip django-dbtemplates``.
+   Python Package Index by running ``pip install django-dbtemplates``.
 2. Follow the instructions in the INSTALL file
 3. Edit the settings.py of your Django site:
 
