@@ -30,10 +30,15 @@ Setup
      It should look something like this::
 
        TEMPLATE_LOADERS = (
-           'dbtemplates.loader.Loader',
            'django.template.loaders.filesystem.Loader',
            'django.template.loaders.app_directories.Loader',
+           'dbtemplates.loader.Loader',
        )
+
+     Order of TEMPLATE_LOADERS is important. In the former example, templates from database
+     will be used as a fallback (ie. when template does not exists in other locations). 
+     If you want template from database to be used to override templates in other locations,
+     put ``dbtemplates.loader.Loader`` at beginning of ``TEMPLATE_LOADERS`` settting.
 
 4. Sync your database ``python manage.py syncdb``
 5. Restart your Django server
