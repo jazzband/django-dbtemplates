@@ -1,6 +1,7 @@
 import posixpath
 from django import forms
 from django.contrib import admin
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ungettext, ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
@@ -58,6 +59,23 @@ if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT:
         "content.")
 else:
     content_help_text = ""
+
+
+class TinyMceTextArea(forms.Textarea):
+    """
+    A custom widget for the Tiny MCE editor to be used with the
+    content field of the Template model.
+    """
+    class Media:
+        js = [posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'tiny_mce/tiny_mce.js'), posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'tiny_mce/init.js')]
+
+if settings.DBTEMPLATES_USE_CODEMIRROR and settings.DBTEMPLATES_USE_TINYMCE:
+	raise ImproperlyConfigured("You may use either CodeMirror or TinyMCE with dbtemplates, not both. Please disable one of them.")
+
+if settings.DBTEMPLATES_USE_TINYMCE:
+	TemplateContentTextArea = TinyMceTextArea
+else:
+    TemplateContentTextArea = forms.Textarea
 
 
 class TemplateAdminForm(forms.ModelForm):

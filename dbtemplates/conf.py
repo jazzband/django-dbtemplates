@@ -8,6 +8,7 @@ from appconf import AppConf
 
 class DbTemplatesConf(AppConf):
     USE_CODEMIRROR = False
+    USE_TINYMCE = False
     USE_REVERSION = False
     ADD_DEFAULT_SITE = True
     AUTO_POPULATE_CONTENT = True

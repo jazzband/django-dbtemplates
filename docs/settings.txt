@@ -26,7 +26,13 @@ The dotted Python path to the cache backend class. See
 ------------------------------
 
 A boolean, if enabled triggers the use of the CodeMirror based editor.
-Set to ``False`` by default.
+Set to ``False`` by default. Cannot be used with ``DBTEMPLATES_USE_TINYMCE``.
+
+``DBTEMPLATES_USE_TINYMCE``
+------------------------------
+
+A boolean, if enabled triggers the use of the TinyMCE WYSIWYG editor.
+Set to ``False`` by default. Cannot be used with ``DBTEMPLATES_USE_CODEMIRROR``.
 
 ``DBTEMPLATES_USE_REVERSION``
 -----------------------------
