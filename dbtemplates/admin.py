@@ -63,8 +63,9 @@ else:
 if settings.DBTEMPLATES_USE_CODEMIRROR and settings.DBTEMPLATES_USE_TINYMCE:
     raise ImproperlyConfigured("You may use either CodeMirror or TinyMCE with dbtemplates, not both. Please disable one of them.")
 
-if settings.DBTEMPLATES_USE_TINYMCE:
-    TemplateContentTextArea = TinyMce
+if settings.DBTEMPLATES_USE_TINYMCE and'tinymce' in settings.INSTALLED_APPS:
+    from tinymce.widgets import AdminTinyMCE
+    TemplateContentTextArea = AdminTinyMCE
 else:
     TemplateContentTextArea = forms.Textarea
 
