@@ -67,8 +67,6 @@ if settings.DBTEMPLATES_USE_CODEMIRROR and settings.DBTEMPLATES_USE_TINYMCE:
 if settings.DBTEMPLATES_USE_TINYMCE:
     from tinymce.widgets import AdminTinyMCE
     TemplateContentTextArea = AdminTinyMCE
-else:
-    TemplateContentTextArea = forms.Textarea
 
 
 class TemplateAdminForm(forms.ModelForm):
