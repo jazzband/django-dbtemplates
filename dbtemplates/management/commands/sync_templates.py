@@ -101,8 +101,8 @@ class Command(NoArgsCommand):
                                             raise CommandError(
                                                 u"Couldn't delete %s" % path)
                                 elif confirm == DATABASE_TO_FILES:
+                                    f = codecs.open(path, 'w', 'utf-8')
                                     try:
-                                        f = codecs.open(path, 'w')
                                         f.write(t.content)
                                     finally:
                                         f.close()
