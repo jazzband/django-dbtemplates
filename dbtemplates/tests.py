@@ -24,6 +24,7 @@ class DbTemplatesTestCase(TestCase):
     def setUp(self):
         self.old_template_loaders = settings.TEMPLATE_LOADERS
         if 'dbtemplates.loader.Loader' not in settings.TEMPLATE_LOADERS:
+            loader.template_source_loaders = None
             settings.TEMPLATE_LOADERS = (list(settings.TEMPLATE_LOADERS) +
                                          ['dbtemplates.loader.Loader'])
 
@@ -38,6 +39,7 @@ class DbTemplatesTestCase(TestCase):
         self.t2.sites.add(self.site2)
 
     def tearDown(self):
+        loader.template_source_loaders = None
         settings.TEMPLATE_LOADERS = self.old_template_loaders
 
     def test_basiscs(self):
