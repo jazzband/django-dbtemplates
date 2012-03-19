@@ -1,6 +1,7 @@
 import posixpath
 from django import forms
 from django.contrib import admin
+from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import ungettext, ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
@@ -58,6 +59,14 @@ if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT:
         "content.")
 else:
     content_help_text = ""
+
+if settings.DBTEMPLATES_USE_CODEMIRROR and settings.DBTEMPLATES_USE_TINYMCE:
+    raise ImproperlyConfigured("You may use either CodeMirror or TinyMCE "
+        "with dbtemplates, not both. Please disable one of them.")
+
+if settings.DBTEMPLATES_USE_TINYMCE:
+    from tinymce.widgets import AdminTinyMCE
+    TemplateContentTextArea = AdminTinyMCE
 
 
 class TemplateAdminForm(forms.ModelForm):
