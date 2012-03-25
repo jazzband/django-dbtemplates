@@ -33,8 +33,15 @@ class Loader(BaseLoader):
         #   in the cache indicating that queries failed, with the current
         #   timestamp.
         site = Site.objects.get_current()
-        display_name = 'dbtemplates:%s:%s:%s' % (settings.DATABASE_ENGINE,
-                                                 template_name, site.domain)
+       
+        if 'DATABASE_ENGINE' in dir(settings):
+            # DATABASE_ENGINE is in django 1.1, but has been deprecated in Django 1.2
+            display_name = 'dbtemplates:%s:%s:%s' % (settings.DATABASE_ENGINE,
+                                                     template_name, site.domain)
+        else:
+            display_name = 'dbtemplates:%s:%s:%s' % (settings.DATABASES['default']['ENGINE'],
+                                                     template_name, site.domain)
+
         cache_key = get_cache_key(template_name)
         if cache:
             try:
