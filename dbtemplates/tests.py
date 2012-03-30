@@ -4,9 +4,10 @@ import os
 import shutil
 import tempfile
 
+from django.conf import settings as django_settings
 from django.core.cache.backends.base import BaseCache
 from django.core.management import call_command
-from django.template import loader, Context
+from django.template import loader, Context, TemplateDoesNotExist
 from django.test import TestCase
 
 from django.contrib.sites.models import Site
@@ -57,6 +58,28 @@ class DbTemplatesTestCase(TestCase):
                 name='footer.html', content='footer')
             self.assertEqual(list(self.t3.sites.all()), [])
         finally:
+            settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
+
+    def test_load_templates_sites(self):
+        old_add_default_site = settings.DBTEMPLATES_ADD_DEFAULT_SITE
+        old_site_id = django_settings.SITE_ID
+        try:
+            settings.DBTEMPLATES_ADD_DEFAULT_SITE = False
+            t_site1 = Template.objects.create(
+                name='copyright.html', content='(c) example.com')
+            t_site1.sites.add(self.site1)
+            t_site2 = Template.objects.create(
+                name='copyright.html', content='(c) example.org')
+            t_site2.sites.add(self.site2)
+
+            django_settings.SITE_ID = Site.objects.create(
+                domain="example.net", name="example.net").id
+            Site.objects.clear_cache()
+
+            with self.assertRaises(TemplateDoesNotExist):
+                loader.get_template("copyright.html")
+        finally:
+            django_settings.SITE_ID = old_site_id
             settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
 
     def test_load_templates(self):
