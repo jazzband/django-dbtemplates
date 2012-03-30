@@ -62,7 +62,8 @@ class Loader(BaseLoader):
             return set_and_return(cache_key, template.content, display_name)
         except (Template.MultipleObjectsReturned, Template.DoesNotExist):
             try:
-                template = Template.objects.get(name__exact=template_name)
+                template = Template.objects.get(name__exact=template_name,
+                        sites__in=[])
                 return set_and_return(cache_key, template.content, display_name)
             except Template.DoesNotExist:
                 pass
