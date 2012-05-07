@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
@@ -12,6 +10,12 @@ from django.contrib.sites.managers import CurrentSiteManager
 from dbtemplates.conf import settings
 from dbtemplates.utils.cache import add_template_to_cache, remove_cached_template
 from dbtemplates.utils.template import get_template_source
+
+try:
+    from django.utils.timezone import now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 
 class Template(models.Model):
@@ -25,9 +29,9 @@ class Template(models.Model):
     sites = models.ManyToManyField(Site, verbose_name=_(u'sites'),
                                    blank=True, null=True)
     creation_date = models.DateTimeField(_('creation date'),
-                                         default=datetime.now)
+                                         default=now)
     last_changed = models.DateTimeField(_('last changed'),
-                                        default=datetime.now)
+                                        default=now)
 
     objects = models.Manager()
     on_site = CurrentSiteManager('sites')
@@ -56,7 +60,7 @@ class Template(models.Model):
             pass
 
     def save(self, *args, **kwargs):
-        self.last_changed = datetime.now()
+        self.last_changed = now()
         # If content is empty look for a template with the given name and
         # populate the template instance with its content.
         if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT and not self.content:
