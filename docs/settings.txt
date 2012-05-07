@@ -4,8 +4,8 @@ Settings
 ``DBTEMPLATES_ADD_DEFAULT_SITE``
 --------------------------------
 
-``dbtemplates`` adds the current site (``settings.SITE_ID``) to the database  
-template when it is created by default. You can disable this feature by   
+``dbtemplates`` adds the current site (``settings.SITE_ID``) to the database
+template when it is created by default. You can disable this feature by
 setting ``DBTEMPLATES_ADD_DEFAULT_SITE`` to ``False``.
 
 ``DBTEMPLATES_AUTO_POPULATE_CONTENT``
@@ -26,6 +26,14 @@ The dotted Python path to the cache backend class. See
 ------------------------------
 
 A boolean, if enabled triggers the use of the CodeMirror based editor.
+Set to ``False`` by default.
+
+``DBTEMPLATES_USE_TINYMCE``
+---------------------------
+
+.. versionadded:: 1.3
+
+A boolean, if enabled triggers the use of the TinyMCE based editor.
 Set to ``False`` by default.
 
 ``DBTEMPLATES_USE_REVERSION``

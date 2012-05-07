@@ -3,6 +3,7 @@ from django.core.management.base import CommandError, NoArgsCommand
 from dbtemplates.models import Template
 from dbtemplates.utils.template import check_template_syntax
 
+
 class Command(NoArgsCommand):
     help = "Ensures templates stored in the database don't have syntax errors."
 

@@ -1,2 +1,2 @@
-# following PEP 386, versiontools will pick it up
-__version__ = (1, 2, 1, "final", 0)
+# following PEP 386
+__version__ = "1.3"

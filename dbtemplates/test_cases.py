@@ -1,26 +1,33 @@
-from __future__ import with_statement
 import codecs
 import os
 import shutil
 import tempfile
 
+from django.conf import settings as django_settings
 from django.core.cache.backends.base import BaseCache
 from django.core.management import call_command
-from django.template import loader, Context
+from django.template import loader, Context, TemplateDoesNotExist
 from django.test import TestCase
 
 from django.contrib.sites.models import Site
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
-from dbtemplates.utils.cache import get_cache_backend
+from dbtemplates.utils.cache import get_cache_backend, get_cache_key
 from dbtemplates.utils.template import (get_template_source,
                                         check_template_syntax)
 from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
                                                             DATABASE_TO_FILES)
 
+
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
+        self.old_template_loaders = settings.TEMPLATE_LOADERS
+        if 'dbtemplates.loader.Loader' not in settings.TEMPLATE_LOADERS:
+            loader.template_source_loaders = None
+            settings.TEMPLATE_LOADERS = (list(settings.TEMPLATE_LOADERS) +
+                                         ['dbtemplates.loader.Loader'])
+
         self.site1, created1 = Site.objects.get_or_create(
             domain="example.com", name="example.com")
         self.site2, created2 = Site.objects.get_or_create(
@@ -30,6 +37,10 @@ class DbTemplatesTestCase(TestCase):
         self.t2, _ = Template.objects.get_or_create(
             name='sub.html', content='sub')
         self.t2.sites.add(self.site2)
+
+    def tearDown(self):
+        loader.template_source_loaders = None
+        settings.TEMPLATE_LOADERS = self.old_template_loaders
 
     def test_basiscs(self):
         self.assertEqual(list(self.t1.sites.all()), [self.site1])
@@ -46,6 +57,28 @@ class DbTemplatesTestCase(TestCase):
                 name='footer.html', content='footer')
             self.assertEqual(list(self.t3.sites.all()), [])
         finally:
+            settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
+
+    def test_load_templates_sites(self):
+        old_add_default_site = settings.DBTEMPLATES_ADD_DEFAULT_SITE
+        old_site_id = django_settings.SITE_ID
+        try:
+            settings.DBTEMPLATES_ADD_DEFAULT_SITE = False
+            t_site1 = Template.objects.create(
+                name='copyright.html', content='(c) example.com')
+            t_site1.sites.add(self.site1)
+            t_site2 = Template.objects.create(
+                name='copyright.html', content='(c) example.org')
+            t_site2.sites.add(self.site2)
+
+            django_settings.SITE_ID = Site.objects.create(
+                domain="example.net", name="example.net").id
+            Site.objects.clear_cache()
+
+            self.assertRaises(TemplateDoesNotExist,
+                              loader.get_template, "copyright.html")
+        finally:
+            django_settings.SITE_ID = old_site_id
             settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
 
     def test_load_templates(self):
@@ -68,28 +101,31 @@ class DbTemplatesTestCase(TestCase):
     def test_sync_templates(self):
         old_template_dirs = settings.TEMPLATE_DIRS
         temp_template_dir = tempfile.mkdtemp('dbtemplates')
-        last_path_part = temp_template_dir.split('/')[-1]
         temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
         temp_template = codecs.open(temp_template_path, 'w')
         try:
             temp_template.write('temp test')
             settings.TEMPLATE_DIRS = (temp_template_dir,)
-            self.assertFalse(Template.objects.filter(name='temp_test.html').exists())
+            self.assertFalse(
+                Template.objects.filter(name='temp_test.html').exists())
             call_command('sync_templates',
                 force=True, verbosity=0, overwrite=FILES_TO_DATABASE)
-            self.assertTrue(Template.objects.filter(name='temp_test.html').exists())
+            self.assertTrue(
+                Template.objects.filter(name='temp_test.html').exists())
 
             t = Template.objects.get(name='temp_test.html')
             t.content = 'temp test modified'
             t.save()
             call_command('sync_templates',
                 force=True, verbosity=0, overwrite=DATABASE_TO_FILES)
-            self.assertTrue('modified' in codecs.open(temp_template_path).read())
+            self.assertTrue(
+                'modified' in codecs.open(temp_template_path).read())
 
-            call_command('sync_templates',
-                force=True, verbosity=0, delete=True, overwrite=DATABASE_TO_FILES)
+            call_command('sync_templates', force=True, verbosity=0,
+                         delete=True, overwrite=DATABASE_TO_FILES)
             self.assertTrue(os.path.exists(temp_template_path))
-            self.assertFalse(Template.objects.filter(name='temp_test.html').exists())
+            self.assertFalse(
+                Template.objects.filter(name='temp_test.html').exists())
         finally:
             temp_template.close()
             settings.TEMPLATE_DIRS = old_template_dirs
@@ -105,3 +141,7 @@ class DbTemplatesTestCase(TestCase):
             name='good.html', content='{% if foo %}Bar{% endif %}')
         self.assertFalse(check_template_syntax(bad_template)[0])
         self.assertTrue(check_template_syntax(good_template)[0])
+
+    def test_get_cache_name(self):
+        self.assertEqual(get_cache_key('name with spaces'),
+                         'dbtemplates::name-with-spaces::1')

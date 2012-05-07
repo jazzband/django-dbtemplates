@@ -1,7 +1,7 @@
 from django.contrib.sites.models import Site
+from django.db import router
 from django.template import TemplateDoesNotExist
 
-from dbtemplates.conf import settings
 from dbtemplates.models import Template
 from dbtemplates.utils.cache import (cache, get_cache_key,
                                      set_and_return, get_cache_notfound_key)
@@ -19,6 +19,12 @@ class Loader(BaseLoader):
     """
     is_usable = True
 
+    def load_and_store_template(self, template_name, cache_key, site, **params):
+        template = Template.objects.get(name__exact=template_name, **params)
+        db = router.db_for_read(Template, instance=template)
+        display_name = 'dbtemplates:%s:%s:%s' % (db, template_name, site.domain)
+        return set_and_return(cache_key, template.content, display_name)
+
     def load_template_source(self, template_name, template_dirs=None):
         # The logic should work like this:
         # * Try to find the template in the cache. If found, return it.
@@ -33,8 +39,6 @@ class Loader(BaseLoader):
         #   in the cache indicating that queries failed, with the current
         #   timestamp.
         site = Site.objects.get_current()
-        display_name = 'dbtemplates:%s:%s:%s' % (settings.DATABASE_ENGINE,
-                                                 template_name, site.domain)
         cache_key = get_cache_key(template_name)
         if cache:
             try:
@@ -57,14 +61,13 @@ class Loader(BaseLoader):
         # Not marked as not-found, move on...
 
         try:
-            template = Template.objects.get(name__exact=template_name,
-                                            sites__in=[site.id])
-            return set_and_return(cache_key, template.content, display_name)
+            return self.load_and_store_template(template_name, cache_key,
+                                                site, sites__in=[site.id])
         except (Template.MultipleObjectsReturned, Template.DoesNotExist):
             try:
-                template = Template.objects.get(name__exact=template_name)
-                return set_and_return(cache_key, template.content, display_name)
-            except Template.DoesNotExist:
+                return self.load_and_store_template(template_name, cache_key,
+                                                    site, sites__in=[])
+            except (Template.MultipleObjectsReturned, Template.DoesNotExist):
                 pass
 
         # Mark as not-found in cache.

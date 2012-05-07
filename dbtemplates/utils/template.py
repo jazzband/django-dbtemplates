@@ -8,13 +8,11 @@ def get_loaders():
     from django.template.loader import template_source_loaders
     if template_source_loaders is None:
         try:
-            from django.template.loader import (
-                find_template as finder_func)
+            from django.template.loader import find_template as finder
         except ImportError:
-            from django.template.loader import (
-                find_template_source as finder_func)
+            from django.template.loader import find_template_source as finder  # noqa
         try:
-            source, name = finder_func('test')
+            source, name = finder('test')
         except TemplateDoesNotExist:
             pass
         from django.template.loader import template_source_loaders
