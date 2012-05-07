@@ -6,7 +6,7 @@ python:
 install:
   - pip install -q -r requirements/default.txt Django==$DJANGO --use-mirrors
 script:
-  - django-admin.py jenkins
+  - DJANGO_SETTINGS_MODULE=dbtemplates.test_settings django-admin.py jenkins
 branches:
   only:
     - develop
