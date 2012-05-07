@@ -143,5 +143,5 @@ class DbTemplatesTestCase(TestCase):
         self.assertTrue(check_template_syntax(good_template)[0])
 
     def test_get_cache_name(self):
-        name = 'name with spaces'
-        self.assertEqual(get_cache_key(name), 'dbtemplates::name-with-spaces::1')
+        self.assertEqual(get_cache_key('name with spaces'),
+                         'dbtemplates::name-with-spaces::1')

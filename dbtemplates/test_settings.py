@@ -21,7 +21,7 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'dbtemplates',
-    'django_jenkins',
+    'django_nose',
 ]
 
 TEMPLATE_LOADERS = (
@@ -30,9 +30,4 @@ TEMPLATE_LOADERS = (
     'dbtemplates.loader.Loader',
 )
 
-JENKINS_TASKS = (
-    'django_jenkins.tasks.run_pyflakes',
-    'django_jenkins.tasks.run_pep8',
-    'django_jenkins.tasks.with_coverage',
-    'django_jenkins.tasks.django_tests',
-)
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'

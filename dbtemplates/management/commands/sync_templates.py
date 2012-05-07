@@ -11,6 +11,7 @@ from dbtemplates.models import Template
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
 
+
 class Command(NoArgsCommand):
     help = "Syncs file system templates with the database bidirectionally."
     option_list = NoArgsCommand.option_list + (
@@ -89,7 +90,8 @@ class Command(NoArgsCommand):
                                            path, t.__repr__()))
                             else:
                                 confirm = overwrite
-                            if confirm in ('', FILES_TO_DATABASE, DATABASE_TO_FILES):
+                            if confirm in ('', FILES_TO_DATABASE,
+                                           DATABASE_TO_FILES):
                                 if confirm == FILES_TO_DATABASE:
                                     t.content = codecs.open(path, 'r').read()
                                     t.save()

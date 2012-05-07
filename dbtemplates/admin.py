@@ -15,7 +15,7 @@ from dbtemplates.utils.template import check_template_syntax
 if settings.DBTEMPLATES_USE_REVERSION:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
 else:
-    from django.contrib.admin import ModelAdmin as TemplateModelAdmin
+    from django.contrib.admin import ModelAdmin as TemplateModelAdmin  # noqa
 
 
 class CodeMirrorTextArea(forms.Textarea):

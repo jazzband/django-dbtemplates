@@ -8,6 +8,4 @@ example/example.db
 docs/_build
 .tox/
 *.egg/
-pep8.txt
-coverage.xml
-reports/
+.coverage
