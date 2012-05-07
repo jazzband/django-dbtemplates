@@ -1,20 +1,33 @@
+import os
+import re
 import codecs
-from os import path
 from setuptools import setup, find_packages
 
-read = lambda filepath: codecs.open(filepath, 'r', 'utf-8').read()
+
+def read(*parts):
+    return codecs.open(os.path.join(os.path.dirname(__file__), *parts)).read()
+
+
+def find_version(*file_paths):
+    version_file = read(*file_paths)
+    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
+                              version_file, re.M)
+    if version_match:
+        return version_match.group(1)
+    raise RuntimeError("Unable to find version string.")
+
 
 setup(
     name='django-dbtemplates',
-    version=':versiontools:dbtemplates:',
+    version=find_version('dbtemplates', '__init__.py'),
     description='Template loader for templates stored in the database',
-    long_description=read(path.join(path.dirname(__file__), 'README.rst')),
+    long_description=read('README.rst'),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
     url='http://django-dbtemplates.readthedocs.org/',
     packages=find_packages(exclude=['example']),
     zip_safe=False,
-    package_data = {
+    package_data={
         'dbtemplates': [
             'locale/*/LC_MESSAGES/*',
             'static/dbtemplates/css/*.css',
@@ -35,5 +48,4 @@ setup(
         'Framework :: Django',
     ],
     install_requires=['django-appconf >= 0.4'],
-    setup_requires=['versiontools >= 1.8.2'],
 )
