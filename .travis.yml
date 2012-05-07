@@ -9,7 +9,7 @@ install:
 before_script:
   - export PIP_USE_MIRRORS=true
   - export DJANGO_SETTINGS_MODULE=dbtemplates.test_settings
-  - flake8 dbtemplates
+  - flake8 dbtemplates --ignore=E501
 script:
   - django-admin.py test dbtemplates
 env:
