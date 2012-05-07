@@ -10,7 +10,7 @@ before_script:
   - export PIP_USE_MIRRORS=true
   - export DJANGO_SETTINGS_MODULE=dbtemplates.test_settings
 script:
-  - django-admin.py jenkins
+  - django-admin.py jenkins dbtemplates
 env:
   - DJANGO=1.2.7
   - DJANGO=1.3.1
