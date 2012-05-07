@@ -1,4 +1,3 @@
-from __future__ import with_statement
 import codecs
 import os
 import shutil
@@ -76,8 +75,8 @@ class DbTemplatesTestCase(TestCase):
                 domain="example.net", name="example.net").id
             Site.objects.clear_cache()
 
-            with self.assertRaises(TemplateDoesNotExist):
-                loader.get_template("copyright.html")
+            self.assertRaises(TemplateDoesNotExist,
+                              loader.get_template, "copyright.html")
         finally:
             django_settings.SITE_ID = old_site_id
             settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
