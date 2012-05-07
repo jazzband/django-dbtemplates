@@ -4,10 +4,11 @@ from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
 
+
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
+
         # Adding model 'Template'
         db.create_table('django_template', (
             ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
@@ -26,15 +27,12 @@ class Migration(SchemaMigration):
         ))
         db.create_unique('django_template_sites', ['template_id', 'site_id'])
 
-
     def backwards(self, orm):
-        
         # Deleting model 'Template'
         db.delete_table('django_template')
 
         # Removing M2M table for field sites on 'Template'
         db.delete_table('django_template_sites')
-
 
     models = {
         'dbtemplates.template': {

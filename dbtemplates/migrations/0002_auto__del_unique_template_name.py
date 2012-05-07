@@ -1,22 +1,17 @@
 # encoding: utf-8
-import datetime
 from south.db import db
 from south.v2 import SchemaMigration
-from django.db import models
+
 
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        
         # Removing unique constraint on 'Template', fields ['name']
         db.delete_unique('django_template', ['name'])
 
-
     def backwards(self, orm):
-        
         # Adding unique constraint on 'Template', fields ['name']
         db.create_unique('django_template', ['name'])
-
 
     models = {
         'dbtemplates.template': {
