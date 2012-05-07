@@ -1,3 +1,5 @@
 pep8
 pyflakes
 django-jenkins
+coverage
+pylint
