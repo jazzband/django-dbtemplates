@@ -6,6 +6,7 @@ SOUTH_TESTS_MIGRATE = False
 
 SITE_ID = 1
 
+SECRET_KEY = 'something-something'
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',

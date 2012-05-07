@@ -12,7 +12,6 @@ before_script:
 script:
   - django-admin.py jenkins dbtemplates
 env:
-  - DJANGO=1.2.7
   - DJANGO=1.3.1
   - DJANGO=1.4
 branches:
