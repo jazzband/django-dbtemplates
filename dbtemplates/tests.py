@@ -13,7 +13,7 @@ from django.contrib.sites.models import Site
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
-from dbtemplates.utils.cache import get_cache_backend
+from dbtemplates.utils.cache import get_cache_backend, get_cache_key
 from dbtemplates.utils.template import (get_template_source,
                                         check_template_syntax)
 from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
@@ -141,3 +141,7 @@ class DbTemplatesTestCase(TestCase):
             name='good.html', content='{% if foo %}Bar{% endif %}')
         self.assertFalse(check_template_syntax(bad_template)[0])
         self.assertTrue(check_template_syntax(good_template)[0])
+
+    def test_get_cache_name(self):
+        name = 'name with spaces'
+        self.assertEqual(get_cache_key(name), 'dbtemplates::name-with-spaces::1')
