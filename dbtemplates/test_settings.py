@@ -11,6 +11,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sites',
     'django.contrib.admin',
+    'django.contrib.auth',
     'dbtemplates',
     'django_jenkins',
 ]
