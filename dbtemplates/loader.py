@@ -66,7 +66,7 @@ class Loader(BaseLoader):
         except (Template.MultipleObjectsReturned, Template.DoesNotExist):
             try:
                 return self.load_and_store_template(template_name, cache_key,
-                                                    site, sites__in=[])
+                                                    site, sites__isnull=True)
             except (Template.MultipleObjectsReturned, Template.DoesNotExist):
                 pass
 
