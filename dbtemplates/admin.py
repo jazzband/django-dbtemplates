@@ -67,6 +67,10 @@ if settings.DBTEMPLATES_USE_CODEMIRROR and settings.DBTEMPLATES_USE_TINYMCE:
 if settings.DBTEMPLATES_USE_TINYMCE:
     from tinymce.widgets import AdminTinyMCE
     TemplateContentTextArea = AdminTinyMCE
+elif settings.DBTEMPLATES_USE_REDACTOR:
+    from redactor.widgets import RedactorEditor
+    TemplateContentTextArea = RedactorEditor
+
 
 
 class TemplateAdminForm(forms.ModelForm):

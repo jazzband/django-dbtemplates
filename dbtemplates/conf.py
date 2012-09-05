@@ -10,6 +10,7 @@ class DbTemplatesConf(AppConf):
     USE_CODEMIRROR = False
     USE_REVERSION = False
     USE_TINYMCE = False
+    USE_REDACTOR = False
     ADD_DEFAULT_SITE = True
     AUTO_POPULATE_CONTENT = True
     MEDIA_PREFIX = None
@@ -45,5 +46,11 @@ class DbTemplatesConf(AppConf):
     def configure_use_tinymce(self, value):
         if value and 'tinymce' not in settings.INSTALLED_APPS:
             raise ImproperlyConfigured("Please add 'tinymce' to your "
+                "INSTALLED_APPS setting to make use of it in dbtemplates.")
+        return value
+
+    def configure_use_redactor(self, value):
+        if value and 'redactor' not in settings.INSTALLED_APPS:
+            raise ImproperlyConfigured("Please add 'redactor' to your "
                 "INSTALLED_APPS setting to make use of it in dbtemplates.")
         return value
