@@ -1,6 +1,10 @@
 django-dbtemplates
 ==================
 
+.. image:: https://secure.travis-ci.org/jezdez/django-dbtemplates.png?branch=develop
+    :alt: Build Status
+    :target: http://travis-ci.org/jezdez/django-dbtemplates
+
 ``dbtemplates`` is a Django app that consists of two parts:
 
 1. It allows you to store templates in your database
