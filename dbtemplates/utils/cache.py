@@ -12,13 +12,14 @@ def get_cache_backend():
 cache = get_cache_backend()
 
 
-def get_cache_key(name):
-    current_site = Site.objects.get_current()
-    return 'dbtemplates::%s::%s' % (slugify(name), current_site.pk)
+def get_cache_key(name, site_pk=None):
+    if site_pk is None:
+        site_pk = Site.objects.get_current().pk
+    return 'dbtemplates::%s::%s' % (slugify(name), site_pk)
 
 
-def get_cache_notfound_key(name):
-    return get_cache_key(name) + '::notfound'
+def get_cache_notfound_key(name, site_pk=None):
+    return get_cache_key(name, site_pk) + '::notfound'
 
 
 def remove_notfound_key(instance):
@@ -41,6 +42,29 @@ def add_template_to_cache(instance, **kwargs):
     remove_cached_template(instance)
     remove_notfound_key(instance)
     cache.set(get_cache_key(instance.name), instance.content)
+
+
+def invalidate_cache_for_sites(sender, instance, action, reverse,
+                               model, pk_set, **kwargs):
+    if action != 'post_add':
+        return
+    if isinstance(instance, Site):
+        # model is dbtemplates.models.Template
+        site = instance
+        for template in model.objects.all():
+            if template.pk in pk_set:
+                cache.delete(get_cache_notfound_key(template.name, site.pk))
+            else:
+                cache.delete(get_cache_key(template.name, site.pk))
+    else:
+        # instance is of type dbtempaltes.models.Template
+        # model is django.contrib.sites.models.Site
+        template = instance
+        for site in model.objects.all():
+            if site.pk in pk_set:
+                cache.delete(get_cache_notfound_key(template.name, site.pk))
+            else:
+                cache.delete(get_cache_key(template.name, site.pk))
 
 
 def remove_cached_template(instance, **kwargs):
