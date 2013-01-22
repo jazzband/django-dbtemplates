@@ -1,6 +1,28 @@
 Changelog
 =========
 
+v1.3 (2012-05-07)
+-----------------
+
+* Dropped support for Django < 1.3 **backwards incompatible**
+
+* Dropped using versiontools in favor of home made solution.
+
+* Added optional support for TinyMCE editor instead of the CodeMirror
+  editor (just enable ``DBTEMPLATES_USE_TINYMCE``).
+
+* Fixed compatibility to Django 1.4's handling of the ``DATABASES``
+  setting. Should also respect database routers now.
+
+* Fixed an issue of the cache key generation in combination with
+  memcache's inability to stomach spaces.
+
+* Moved test runner to use nose_ and a hosted CI project at Travis_:
+  http://travis-ci.org/jezdez/django-dbtemplates
+
+.. _nose: http://nose.rtfd.org/
+.. _Travis: http://travis-ci.org
+
 v1.2.1 (2011-09-07)
 -------------------
 

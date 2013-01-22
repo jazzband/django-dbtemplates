@@ -1,4 +1,3 @@
-include INSTALL
 include LICENSE
 include AUTHORS
 include README.rst

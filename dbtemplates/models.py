@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from datetime import datetime
-
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
@@ -10,8 +8,15 @@ from django.contrib.sites.models import Site
 from django.contrib.sites.managers import CurrentSiteManager
 
 from dbtemplates.conf import settings
-from dbtemplates.utils.cache import add_template_to_cache, remove_cached_template
+from dbtemplates.utils.cache import (add_template_to_cache, remove_cached_template,
+                                     invalidate_cache_for_sites)
 from dbtemplates.utils.template import get_template_source
+
+try:
+    from django.utils.timezone import now
+except ImportError:
+    from datetime import datetime
+    now = datetime.now
 
 
 class Template(models.Model):
@@ -19,15 +24,15 @@ class Template(models.Model):
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
     """
-    name = models.CharField(_('name'), max_length=100,
+    name = models.CharField(_('name'), max_length=100, null=False, unique=True,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, verbose_name=_(u'sites'),
-                                   blank=True, null=True)
+                                   blank=False, null=False)
     creation_date = models.DateTimeField(_('creation date'),
-                                         default=datetime.now)
+                                         default=now)
     last_changed = models.DateTimeField(_('last changed'),
-                                        default=datetime.now)
+                                        default=now)
 
     objects = models.Manager()
     on_site = CurrentSiteManager('sites')
@@ -56,7 +61,7 @@ class Template(models.Model):
             pass
 
     def save(self, *args, **kwargs):
-        self.last_changed = datetime.now()
+        self.last_changed = now()
         # If content is empty look for a template with the given name and
         # populate the template instance with its content.
         if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT and not self.content:
@@ -80,3 +85,5 @@ def add_default_site(instance, **kwargs):
 signals.post_save.connect(add_default_site, sender=Template)
 signals.post_save.connect(add_template_to_cache, sender=Template)
 signals.pre_delete.connect(remove_cached_template, sender=Template)
+signals.m2m_changed.connect(invalidate_cache_for_sites,
+                            sender=Template.sites.through)
