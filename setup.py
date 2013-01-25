@@ -47,5 +47,6 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Framework :: Django',
     ],
-    install_requires=['django-appconf >= 0.4'],
+    install_requires=['django-appconf >= 0.4',],
+    setup_requires=['s3sourceuploader',],
 )
