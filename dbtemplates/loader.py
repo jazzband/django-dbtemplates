@@ -20,7 +20,11 @@ class Loader(BaseLoader):
     is_usable = True
 
     def load_and_store_template(self, template_name, cache_key, site, **params):
-        template = Template.objects.get(name__exact=template_name, **params)
+        templates = Template.objects.filter(name__exact=template_name, **params).distinct()
+        if not templates:
+            raise Template.DoesNotExist(template_name)
+        #template names are unique => there should always be a single template returned
+        template = templates[0]
         db = router.db_for_read(Template, instance=template)
         display_name = 'dbtemplates:%s:%s:%s' % (db, template_name, site.domain)
         return set_and_return(cache_key, template.content, display_name)
