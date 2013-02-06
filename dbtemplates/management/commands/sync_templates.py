@@ -1,5 +1,6 @@
-import os
 import codecs
+import os
+import re
 from optparse import make_option
 
 from django.contrib.sites.models import Site
@@ -9,15 +10,19 @@ from django.template.loaders.app_directories import app_template_dirs
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
 
+
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
 
 
 class Command(NoArgsCommand):
     help = "Syncs file system templates with the database bidirectionally."
     option_list = NoArgsCommand.option_list + (
+        make_option("-r", "--regexp", dest="regexp", action="store",
+            help="matching regexp for paths of the files you want to sync "
+                 "with the database [default: %default]. Use -e OR -r"),
         make_option("-e", "--ext", dest="ext", action="store", default="html",
             help="extension of the files you want to sync with the database "
-                 "[default: %default]"),
+                 "[default: %default]. Use -e OR -r"),
         make_option("-f", "--force", action="store_true", dest="force",
             default=False, help="overwrite existing database templates"),
         make_option("-o", "--overwrite", action="store", dest="overwrite",
@@ -31,6 +36,7 @@ class Command(NoArgsCommand):
             default=False, help="Delete templates after syncing"))
 
     def handle_noargs(self, **options):
+        regexp = options.get('regexp')
         extension = options.get('ext')
         force = options.get('force')
         overwrite = options.get('overwrite')
@@ -58,12 +64,17 @@ class Command(NoArgsCommand):
 
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
-                for f in [f for f in filenames
-                          if f.endswith(extension) and not f.startswith(".")]:
+                for f in [f for f in filenames if not f.startswith(".")]:
                     path = os.path.join(dirpath, f)
                     name = path.split(templatedir)[1]
                     if name.startswith('/'):
                         name = name[1:]
+                    if regexp:  # matching, using -r
+                        if re.search(regexp, name) is None:
+                            continue
+                    else:  # matching, using -e
+                        if not f.endswith(extension):
+                            continue
                     try:
                         t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
@@ -111,3 +122,4 @@ class Command(NoArgsCommand):
                                     if delete:
                                         t.delete()
                                 break
+
