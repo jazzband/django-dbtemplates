@@ -19,7 +19,7 @@ class Command(NoArgsCommand):
     option_list = NoArgsCommand.option_list + (
         make_option("-r", "--regexp", dest="regexp", action="store",
             help="matching regexp for paths of the files you want to sync "
-                 "with the database [default: %default]. Use -e OR -r"),
+                 "with the database. Use -e OR -r"),
         make_option("-e", "--ext", dest="ext", action="store", default="html",
             help="extension of the files you want to sync with the database "
                  "[default: %default]. Use -e OR -r"),
