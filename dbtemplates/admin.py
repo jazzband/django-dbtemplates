@@ -6,8 +6,8 @@ from django.utils.translation import ungettext, ugettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from dbtemplates.conf import settings
-from dbtemplates.models import (Template,
-    remove_cached_template, add_template_to_cache)
+from dbtemplates.models import (Template, remove_cached_template,
+                                add_template_to_cache)
 from dbtemplates.utils.template import check_template_syntax
 
 # Check if django-reversion is installed and use reversions' VersionAdmin
@@ -55,14 +55,15 @@ else:
 
 if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT:
     content_help_text = _("Leaving this empty causes Django to look for a "
-        "template with the given name and populate this field with its "
-        "content.")
+                          "template with the given name and populate this "
+                          "field with its content.")
 else:
     content_help_text = ""
 
 if settings.DBTEMPLATES_USE_CODEMIRROR and settings.DBTEMPLATES_USE_TINYMCE:
     raise ImproperlyConfigured("You may use either CodeMirror or TinyMCE "
-        "with dbtemplates, not both. Please disable one of them.")
+                               "with dbtemplates, not both. Please disable "
+                               "one of them.")
 
 if settings.DBTEMPLATES_USE_TINYMCE:
     from tinymce.widgets import AdminTinyMCE

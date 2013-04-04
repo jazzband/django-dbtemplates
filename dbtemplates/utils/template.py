@@ -1,6 +1,6 @@
 from django import VERSION
 from django.template import (Template, TemplateDoesNotExist,
-    TemplateSyntaxError)
+                             TemplateSyntaxError)
 from django.utils.importlib import import_module
 
 
