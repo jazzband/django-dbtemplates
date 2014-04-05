@@ -1,3 +1,4 @@
+from fnmatch import filter as fnmatch_filter
 import os
 import codecs
 from optparse import make_option
@@ -33,7 +34,14 @@ class Command(NoArgsCommand):
                          "directories before project templates"),
         make_option("-d", "--delete",
                     action="store_true", dest="delete", default=False,
-                    help="Delete templates after syncing"))
+                    help="Delete templates after syncing"),
+        make_option("--exclude",
+                    action="append", dest="exclude", default=[],
+                    help="Directory patterns(`fnmatch`) to be excluded"),
+
+        make_option("--only",
+                    action="append", dest="only", default=[],
+                    help="Directory patterns(`fnmatch`) to be processed"))
 
     def handle_noargs(self, **options):
         extension = options.get('ext')
@@ -41,6 +49,8 @@ class Command(NoArgsCommand):
         overwrite = options.get('overwrite')
         app_first = options.get('app_first')
         delete = options.get('delete')
+        exclude = options.get('exclude')
+        only = options.get('only')
 
         if not extension.startswith("."):
             extension = ".%s" % extension
@@ -59,7 +69,13 @@ class Command(NoArgsCommand):
             tpl_dirs = app_template_dirs + settings.TEMPLATE_DIRS
         else:
             tpl_dirs = settings.TEMPLATE_DIRS + app_template_dirs
-        templatedirs = [d for d in tpl_dirs if os.path.isdir(d)]
+        templatedirs = set([d for d in tpl_dirs if os.path.isdir(d)])
+
+        for pattern in only:
+            templatedirs = fnmatch_filter(templatedirs, pattern)
+
+        for pattern in exclude:
+            templatedirs = templatedirs - set(fnmatch_filter(templatedirs, pattern))
 
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
