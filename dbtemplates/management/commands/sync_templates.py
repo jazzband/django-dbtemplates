@@ -1,4 +1,4 @@
-from fnmatch import filter as fnmatch_filter
+from fnmatch import fnmatch
 import os
 import codecs
 from optparse import make_option
@@ -11,6 +11,14 @@ from dbtemplates.conf import settings
 from dbtemplates.models import Template
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
+
+
+def fnmatch_test(filename, patterns):
+    for pattern in patterns:
+        if fnmatch(filename, pattern):
+            return True
+
+    return False
 
 
 class Command(NoArgsCommand):
@@ -37,11 +45,11 @@ class Command(NoArgsCommand):
                     help="Delete templates after syncing"),
         make_option("--exclude",
                     action="append", dest="exclude", default=[],
-                    help="Directory patterns(`fnmatch`) to be excluded"),
+                    help="Patterns(`fnmatch`) to be excluded"),
 
         make_option("--only",
                     action="append", dest="only", default=[],
-                    help="Directory patterns(`fnmatch`) to be processed"))
+                    help="Patterns(`fnmatch`) to be processed"))
 
     def handle_noargs(self, **options):
         extension = options.get('ext')
@@ -69,63 +77,75 @@ class Command(NoArgsCommand):
             tpl_dirs = app_template_dirs + settings.TEMPLATE_DIRS
         else:
             tpl_dirs = settings.TEMPLATE_DIRS + app_template_dirs
-        templatedirs = set([d for d in tpl_dirs if os.path.isdir(d)])
+        templatedirs = [d for d in tpl_dirs if os.path.isdir(d)]
 
-        for pattern in only:
-            templatedirs = fnmatch_filter(templatedirs, pattern)
-
-        for pattern in exclude:
-            templatedirs = templatedirs - set(fnmatch_filter(templatedirs, pattern))
-
+        # Result list of files which will be processed
+        files = []
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
-                for f in [f for f in filenames
-                          if f.endswith(extension) and not f.startswith(".")]:
+                for f in filenames:
+                    # This is not suitable anyway
+                    if not f.endswith(extension) or f.startswith("."):
+                        continue
+
                     path = os.path.join(dirpath, f)
                     name = path.split(templatedir)[1]
                     if name.startswith('/'):
                         name = name[1:]
-                    try:
-                        t = Template.on_site.get(name__exact=name)
-                    except Template.DoesNotExist:
-                        if not force:
-                            confirm = raw_input(
-                                "\nA '%s' template doesn't exist in the "
-                                "database.\nCreate it with '%s'?"
-                                " (y/[n]): """ % (name, path))
-                        if force or confirm.lower().startswith('y'):
-                            t = Template(name=name,
-                                         content=codecs.open(path, "r").read())
+
+                    # Leave in the result files that exist in `only` or all
+                    is_suitable = True
+                    if only:
+                        is_suitable = fnmatch_test(path, only)
+                    if is_suitable:
+                        files.append((path, name))
+
+        for path, name in files:
+            # Exclude files that not match
+            if fnmatch_test(path, exclude):
+                continue
+
+            try:
+                t = Template.on_site.get(name__exact=name)
+            except Template.DoesNotExist:
+                if not force:
+                    confirm = raw_input(
+                        "\nA '%s' template doesn't exist in the "
+                        "database.\nCreate it with '%s'?"
+                        " (y/[n]): """ % (name, path))
+                if force or confirm.lower().startswith('y'):
+                    t = Template(name=name,
+                                 content=codecs.open(path, "r").read())
+                    t.save()
+                    t.sites.add(site)
+            else:
+                while 1:
+                    if overwrite == ALWAYS_ASK:
+                        confirm = raw_input(
+                            "\n%(template)s exists in the database.\n"
+                            "(1) Overwrite %(template)s with '%(path)s'\n"
+                            "(2) Overwrite '%(path)s' with %(template)s\n"
+                            "Type 1 or 2 or press <Enter> to skip: " %
+                            {'template': t.__repr__(), 'path': path})
+                    else:
+                        confirm = overwrite
+                    if confirm in ('', FILES_TO_DATABASE,
+                                   DATABASE_TO_FILES):
+                        if confirm == FILES_TO_DATABASE:
+                            t.content = codecs.open(path, 'r').read()
                             t.save()
                             t.sites.add(site)
-                    else:
-                        while 1:
-                            if overwrite == ALWAYS_ASK:
-                                confirm = raw_input(
-                                    "\n%(template)s exists in the database.\n"
-                                    "(1) Overwrite %(template)s with '%(path)s'\n"
-                                    "(2) Overwrite '%(path)s' with %(template)s\n"
-                                    "Type 1 or 2 or press <Enter> to skip: " %
-                                    {'template': t.__repr__(), 'path': path})
-                            else:
-                                confirm = overwrite
-                            if confirm in ('', FILES_TO_DATABASE,
-                                           DATABASE_TO_FILES):
-                                if confirm == FILES_TO_DATABASE:
-                                    t.content = codecs.open(path, 'r').read()
-                                    t.save()
-                                    t.sites.add(site)
-                                    if delete:
-                                        try:
-                                            os.remove(path)
-                                        except OSError:
-                                            raise CommandError(u"Couldn't delete %s" % path)
-                                elif confirm == DATABASE_TO_FILES:
-                                    f = codecs.open(path, 'w', 'utf-8')
-                                    try:
-                                        f.write(t.content)
-                                    finally:
-                                        f.close()
-                                    if delete:
-                                        t.delete()
-                                break
+                            if delete:
+                                try:
+                                    os.remove(path)
+                                except OSError:
+                                    raise CommandError(u"Couldn't delete %s" % path)
+                        elif confirm == DATABASE_TO_FILES:
+                            f = codecs.open(path, 'w', 'utf-8')
+                            try:
+                                f.write(t.content)
+                            finally:
+                                f.close()
+                            if delete:
+                                t.delete()
+                        break
