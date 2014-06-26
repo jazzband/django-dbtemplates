@@ -80,7 +80,7 @@ class TemplateAdminForm(forms.ModelForm):
 
     class Meta:
         model = Template
-
+        fields = "__all__"
 
 class TemplateAdmin(TemplateModelAdmin):
     form = TemplateAdminForm
