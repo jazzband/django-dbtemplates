@@ -80,6 +80,7 @@ class TemplateAdminForm(forms.ModelForm):
 
     class Meta:
         model = Template
+        fields = ('name', 'content', 'sites', 'creation_date', 'last_changed')
 
 
 class TemplateAdmin(TemplateModelAdmin):
