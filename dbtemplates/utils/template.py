@@ -21,23 +21,25 @@ def get_loaders():
         from django.template.loader import template_source_loaders
     return template_source_loaders or []
 
+
 def skip_loader(loader, pattern):
-   if loader.__module__.startswith(pattern):
-       return True
-   if hasattr(loader, SUBLOADER_NAME): 
-       subloaders = getattr(loader, SUBLOADER_NAME)
-       if type(subloaders) is not list:
-           subloaders = [subloaders]
-       for subloader in subloaders:
-           return skip_loader(subloader, pattern)
-       return False
-   return False 
+    if loader.__module__.startswith(pattern):
+        return True
+    if hasattr(loader, SUBLOADER_NAME):
+        subloaders = getattr(loader, SUBLOADER_NAME)
+        if type(subloaders) is not list:
+            subloaders = [subloaders]
+        for subloader in subloaders:
+            return skip_loader(subloader, pattern)
+        return False
+    return False
+
 
 def get_template_source(name):
     source = None
     for loader in get_loaders():
         if skip_loader(loader, 'dbtemplates.'):
-            # Don't give a damn about dbtemplates' own loader or loaders 
+            # Don't give a damn about dbtemplates' own loader or loaders
             # that use the dbtemplates loader
             continue
         module = import_module(loader.__module__)
