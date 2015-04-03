@@ -8,3 +8,4 @@ example/example.db
 docs/_build
 .tox/
 *.egg/
+.coverage

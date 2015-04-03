@@ -1,19 +1,23 @@
-#
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# 
+# Jannis Leidel <jannis@leidel.info>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: django-dbtemplates\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-11-07 00:01+0100\n"
-"PO-Revision-Date: 2008-08-19 17:11+0100\n"
-"Last-Translator: Jannis Leidel <jannis@leidel.info>\n"
-"Language-Team: Jannis Leidel <jannis@leidel.info>\n"
+"Report-Msgid-Bugs-To: https://github.com/jezdez/django-dbtemplates/issues\n"
+"POT-Creation-Date: 2011-08-15 13:13+0200\n"
+"PO-Revision-Date: 2011-08-15 11:14+0000\n"
+"Last-Translator: Jannis <jannis@leidel.info>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: admin.py:53
+#: admin.py:56
 msgid ""
 "Leaving this empty causes Django to look for a template with the given name "
 "and populate this field with its content."
@@ -21,66 +25,86 @@ msgstr ""
 "Wenn Sie dieses Feld leer lassen, wird Django versuchen, das Template mit "
 "dem angegebenen Namen zu finden und mit dessen Inhalt das Feld zu füllen."
 
-#: admin.py:77
+#: admin.py:82
 msgid "Advanced"
 msgstr "Erweiterte Einstellungen"
 
-#: admin.py:80
+#: admin.py:85
 msgid "Date/time"
 msgstr "Datum/Uhrzeit"
 
-#: admin.py:98
+#: admin.py:102
 #, python-format
 msgid "Cache of one template successfully invalidated."
 msgid_plural "Cache of %(count)d templates successfully invalidated."
 msgstr[0] "Der Cache eines Templates wurde erfolgreich geleert."
 msgstr[1] "Der Cache von %(count)d Templates wurde erfolgreich geleert."
 
-#: admin.py:102
+#: admin.py:106
 msgid "Invalidate cache of selected templates"
 msgstr "Cache der ausgewählten Templates leeren"
 
-#: admin.py:111
+#: admin.py:114
 #, python-format
 msgid "Cache successfully repopulated with one template."
 msgid_plural "Cache successfully repopulated with %(count)d templates."
-msgstr[0] ""
-"Der Cache eines Templates wurde erfolgreich geleert und neu gefüllt."
+msgstr[0] "Der Cache eines Templates wurde erfolgreich geleert und neu gefüllt."
 msgstr[1] ""
 "Der Cache von %(count)d Templates wurde erfolgreich geleert und neu gefüllt."
 
-#: admin.py:115
+#: admin.py:118
 msgid "Repopulate cache with selected templates"
 msgstr "Cache der ausgewählten Templates neu füllen"
 
-#: admin.py:119 models.py:29
+#: admin.py:130
+#, python-format
+msgid "Template syntax check FAILED for %(names)s."
+msgid_plural ""
+"Template syntax check FAILED for %(count)d templates: %(names)s."
+msgstr[0] "Template-Syntax von %(names)s ist FEHLERHAFT."
+msgstr[1] "Template-Syntax von %(count)d Templates (%(names)s) ist FEHLERHAFT."
+
+#: admin.py:138
+#, python-format
+msgid "Template syntax OK."
+msgid_plural "Template syntax OK for %(count)d templates."
+msgstr[0] "Template-Syntax ist OK."
+msgstr[1] "Template-Syntax von %(count)d Templates ist OK."
+
+#: admin.py:141
+msgid "Check template syntax"
+msgstr "Template-Syntax überprüfen"
+
+#: admin.py:145 models.py:25
 msgid "sites"
 msgstr "Seiten"
 
-#: models.py:26
+#: models.py:22
 msgid "name"
 msgstr "Name"
 
-#: models.py:27
+#: models.py:23
 msgid "Example: 'flatpages/default.html'"
 msgstr "Zum Beispiel: 'flatpages/default.html'"
 
-#: models.py:28
+#: models.py:24
 msgid "content"
 msgstr "Inhalt"
 
-#: models.py:30
+#: models.py:27
 msgid "creation date"
 msgstr "Erstellt"
 
-#: models.py:32
+#: models.py:29
 msgid "last changed"
 msgstr "Geändert"
 
-#: models.py:40
+#: models.py:37
 msgid "template"
 msgstr "Template"
 
-#: models.py:41
+#: models.py:38
 msgid "templates"
 msgstr "Templates"
+
+

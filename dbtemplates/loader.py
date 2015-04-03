@@ -1,14 +1,14 @@
-import warnings
-from django import VERSION
-from django.conf import settings
 from django.contrib.sites.models import Site
+from django.db import router
 from django.template import TemplateDoesNotExist
 
 from dbtemplates.models import Template
-from dbtemplates.utils import cache, get_cache_key
+from dbtemplates.utils.cache import (cache, get_cache_key,
+                                     set_and_return, get_cache_notfound_key)
+from django.template.loader import BaseLoader
 
 
-def load_template_source(template_name, template_dirs=None, annoy=True):
+class Loader(BaseLoader):
     """
     A custom template loader to load templates from the database.
 
@@ -17,43 +17,59 @@ def load_template_source(template_name, template_dirs=None, annoy=True):
     it falls back to query the database field ``name`` with the template path
     and ``sites`` with the current site.
     """
-    if VERSION[:2] >= (1, 2) and annoy:
-        # For backward compatibility
-        warnings.warn(
-            "`dbtemplates.loader.load_template_source` is deprecated; "
-            "use `dbtemplates.loader.Loader` instead.", DeprecationWarning)
-    site = Site.objects.get_current()
-    display_name = 'db:%s:%s:%s' % (settings.DATABASE_ENGINE,
-                                    template_name, site.domain)
-    cache_key = get_cache_key(template_name)
-    if cache:
-        try:
-            backend_template = cache.get(cache_key)
-            if backend_template:
-                return backend_template, template_name
-        except:
-            pass
-    try:
-        template = Template.on_site.get(name__exact=template_name)
-        # Save in cache backend explicitly if manually deleted or invalidated
+    is_usable = True
+
+    def load_and_store_template(self, template_name, cache_key, site, **params):
+        template = Template.objects.get(name__exact=template_name, **params)
+        db = router.db_for_read(Template, instance=template)
+        display_name = 'dbtemplates:%s:%s:%s' % (db, template_name, site.domain)
+        return set_and_return(cache_key, template.content, display_name)
+
+    def load_template_source(self, template_name, template_dirs=None):
+        # The logic should work like this:
+        # * Try to find the template in the cache. If found, return it.
+        # * Now check the cache if a lookup for the given template
+        #   has failed lately and hand over control to the next template
+        #   loader waiting in line.
+        # * If this still did not fail we first try to find a site-specific
+        #   template in the database.
+        # * On a failure from our last attempt we try to load the global
+        #   template from the database.
+        # * If all of the above steps have failed we generate a new key
+        #   in the cache indicating that queries failed, with the current
+        #   timestamp.
+        site = Site.objects.get_current()
+        cache_key = get_cache_key(template_name)
         if cache:
-            cache.set(cache_key, template.content)
-        return (template.content, display_name)
-    except:
-        pass
-    raise TemplateDoesNotExist(template_name)
-load_template_source.is_usable = True
+            try:
+                backend_template = cache.get(cache_key)
+                if backend_template:
+                    return backend_template, template_name
+            except:
+                pass
 
+        # Not found in cache, move on.
+        cache_notfound_key = get_cache_notfound_key(template_name)
+        if cache:
+            try:
+                notfound = cache.get(cache_notfound_key)
+                if notfound:
+                    raise TemplateDoesNotExist(template_name)
+            except:
+                raise TemplateDoesNotExist(template_name)
 
-if VERSION[:2] >= (1, 2):
-    # providing a class based loader for Django >= 1.2, yay!
-    from django.template.loader import BaseLoader
+        # Not marked as not-found, move on...
 
-    class Loader(BaseLoader):
-        __doc__ = load_template_source.__doc__
+        try:
+            return self.load_and_store_template(template_name, cache_key,
+                                                site, sites__in=[site.id])
+        except (Template.MultipleObjectsReturned, Template.DoesNotExist):
+            try:
+                return self.load_and_store_template(template_name, cache_key,
+                                                    site, sites__isnull=True)
+            except (Template.MultipleObjectsReturned, Template.DoesNotExist):
+                pass
 
-        is_usable = True
-
-        def load_template_source(self, template_name, template_dirs=None):
-            return load_template_source(
-                template_name, template_dirs, annoy=False)
+        # Mark as not-found in cache.
+        cache.set(cache_notfound_key, '1')
+        raise TemplateDoesNotExist(template_name)
