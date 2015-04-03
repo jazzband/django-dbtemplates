@@ -14,6 +14,7 @@ class DbTemplatesConf(AppConf):
     AUTO_POPULATE_CONTENT = True
     MEDIA_PREFIX = None
     CACHE_BACKEND = None
+    SUBLOADER_NAME = 'loaders'
 
     def configure_media_prefix(self, value):
         if value is None:

@@ -2,6 +2,9 @@ from django import VERSION
 from django.template import (Template, TemplateDoesNotExist,
                              TemplateSyntaxError)
 from django.utils.importlib import import_module
+from dbtemplates.conf import settings
+
+SUBLOADER_NAME = settings.DBTEMPLATES_SUBLOADER_NAME
 
 
 def get_loaders():
@@ -21,8 +24,11 @@ def get_loaders():
 def skip_loader(loader, pattern):
    if loader.__module__.startswith(pattern):
        return True
-   if hasattr(loader, 'loaders'): 
-       for subloader in loader.loaders:
+   if hasattr(loader, SUBLOADER_NAME): 
+       subloaders = getattr(loader, SUBLOADER_NAME)
+       if type(subloaders) is not list:
+           subloaders = [subloaders]
+       for subloader in subloaders:
            return skip_loader(subloader, pattern)
        return False
    return False 
