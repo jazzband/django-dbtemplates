@@ -14,7 +14,12 @@ class DbTemplatesConf(AppConf):
     AUTO_POPULATE_CONTENT = True
     MEDIA_PREFIX = None
     CACHE_BACKEND = None
-    SUBLOADER_NAME = 'loaders'
+    TEMPLATE_LOADERS = None
+
+    def configure_template_loaders(self, value):
+        if value is None:
+            value = getattr(settings, "TEMPLATE_LOADERS", [])
+        return value
 
     def configure_media_prefix(self, value):
         if value is None:
