@@ -22,6 +22,13 @@ To disable this feature set ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` to
 The dotted Python path to the cache backend class. See
 :ref:`Caching <caching>` for details.
 
+``DBTEMPLATES_TEMPLATE_LOADERS``
+--------------------------------
+
+A tuple of Template loaders that dbtemplates should use when trying to
+autopopulate dbtemplates from the database.  Set to the value of 
+``settings.TEMPLATE_LOADERS`` by default.
+
 ``DBTEMPLATES_USE_CODEMIRROR``
 ------------------------------
 
