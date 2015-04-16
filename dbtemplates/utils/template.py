@@ -1,29 +1,32 @@
 from django import VERSION
 from django.template import (Template, TemplateDoesNotExist,
                              TemplateSyntaxError)
+from django.template.loader import find_template_loader
 from django.utils.importlib import import_module
+from dbtemplates.conf import settings
+
+DBTEMPLATES_TEMPLATE_LOADERS = settings.DBTEMPLATES_TEMPLATE_LOADERS
+loader_cache = None
 
 
 def get_loaders():
-    from django.template.loader import template_source_loaders
-    if template_source_loaders is None:
-        try:
-            from django.template.loader import find_template as finder
-        except ImportError:
-            from django.template.loader import find_template_source as finder  # noqa
-        try:
-            source, name = finder('test')
-        except TemplateDoesNotExist:
-            pass
-        from django.template.loader import template_source_loaders
-    return template_source_loaders or []
+    global loader_cache
+    if loader_cache is not None:
+        return loader_cache
+    loader_cache = []
+    for loader_name in DBTEMPLATES_TEMPLATE_LOADERS:
+        loader = find_template_loader(loader_name)
+        if loader is not None:
+            loader_cache.append(loader)
+    return loader_cache
 
 
 def get_template_source(name):
     source = None
     for loader in get_loaders():
         if loader.__module__.startswith('dbtemplates.'):
-            # Don't give a damn about dbtemplates' own loader.
+            # Don't give a damn about dbtemplates' own loader or loaders
+            # that use the dbtemplates loader
             continue
         module = import_module(loader.__module__)
         load_template_source = getattr(module, 'load_template_source', None)
