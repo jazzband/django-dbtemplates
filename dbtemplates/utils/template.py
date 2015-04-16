@@ -8,6 +8,7 @@ from dbtemplates.conf import settings
 DBTEMPLATES_TEMPLATE_LOADERS = settings.DBTEMPLATES_TEMPLATE_LOADERS
 loader_cache = None
 
+
 def get_loaders():
     global loader_cache
     if loader_cache is not None:
@@ -18,6 +19,7 @@ def get_loaders():
         if loader is not None:
             loader_cache.append(loader)
     return loader_cache
+
 
 def get_template_source(name):
     source = None
