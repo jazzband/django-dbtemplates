@@ -50,7 +50,7 @@ def get_template_source(name):
                 pass
     else:
         from django.template.loader import get_template
-        template = get_template('base/page/adminlte.html')
+        template = get_template(name)
         with open(str(template.origin)) as source_file:
             source = source_file.read()
         return source
