@@ -1,3 +1,6 @@
+
+import django
+
 DBTEMPLATES_CACHE_BACKEND = 'dummy://'
 
 DATABASE_ENGINE = 'sqlite3'
@@ -29,4 +32,5 @@ TEMPLATE_LOADERS = (
     'dbtemplates.loader.Loader',
 )
 
-TEST_RUNNER = 'discover_runner.DiscoverRunner'
+if django.get_version() <= '1.6':
+    TEST_RUNNER = 'discover_runner.DiscoverRunner'

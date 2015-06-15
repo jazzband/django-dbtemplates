@@ -54,5 +54,6 @@ class DbTemplatesConf(AppConf):
     def configure_use_redactor(self, value):
         if value and 'redactor' not in settings.INSTALLED_APPS:
             raise ImproperlyConfigured("Please add 'redactor' to your "
-                "INSTALLED_APPS setting to make use of it in dbtemplates.")
+                                       "INSTALLED_APPS setting to make "
+                                       "use of it in dbtemplates.")
         return value
