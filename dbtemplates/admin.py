@@ -19,6 +19,7 @@ else:
 
 
 class CodeMirrorTextArea(forms.Textarea):
+
     """
     A custom widget for the CodeMirror browser editor to be used with the
     content field of the Template model.
@@ -73,8 +74,8 @@ elif settings.DBTEMPLATES_USE_REDACTOR:
     TemplateContentTextArea = RedactorEditor
 
 
-
 class TemplateAdminForm(forms.ModelForm):
+
     """
     Custom AdminForm to make the content textarea wider.
     """
@@ -85,6 +86,7 @@ class TemplateAdminForm(forms.ModelForm):
     class Meta:
         model = Template
         fields = ('name', 'content', 'sites', 'creation_date', 'last_changed')
+        fields = "__all__"
 
 
 class TemplateAdmin(TemplateModelAdmin):
