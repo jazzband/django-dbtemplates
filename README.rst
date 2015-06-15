@@ -23,7 +23,7 @@ https://github.com/jezdez/django-dbtemplates
 Compatibility Roadmap
 ---------------------
 
-Since 1.3.2 ``dbtemplates`` dropped support for Django < 1.4
-Since 1.4 will be supported only Django >= 1.7, please freeze your requirements on specific version of dbtemplates !
+- 1.3.2 ``dbtemplates`` dropped support for Django < 1.4
+- 1.4 will be supported only Django >= 1.7, please freeze your requirements on specific version of ``dbtemplates`` !
 
 .. _template loader: http://docs.djangoproject.com/en/dev/ref/templates/api/#loader-types
