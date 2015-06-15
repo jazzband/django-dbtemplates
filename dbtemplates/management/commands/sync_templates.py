@@ -1,15 +1,22 @@
 import os
 import codecs
 from optparse import make_option
-
+from django import VERSION
 from django.contrib.sites.models import Site
 from django.core.management.base import CommandError, NoArgsCommand
-from django.template.loaders.app_directories import app_template_dirs
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
+
+
+if VERSION[:2] < (1, 8):
+    from django.template.loaders.app_directories import app_template_dirs
+    DIRS = settings.TEMPLATE_DIRS
+else:
+    from django.template.utils import get_app_template_dirs
+    app_template_dirs = get_app_template_dirs('templates')
 
 
 class Command(NoArgsCommand):
@@ -103,7 +110,8 @@ class Command(NoArgsCommand):
                                         try:
                                             os.remove(path)
                                         except OSError:
-                                            raise CommandError(u"Couldn't delete %s" % path)
+                                            raise CommandError(
+                                                u"Couldn't delete %s" % path)
                                 elif confirm == DATABASE_TO_FILES:
                                     f = codecs.open(path, 'w', 'utf-8')
                                     try:
