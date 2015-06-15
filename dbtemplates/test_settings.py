@@ -29,7 +29,7 @@ INSTALLED_APPS = [
 MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    )
+)
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
