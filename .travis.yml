@@ -21,9 +21,9 @@ env:
 matrix:
   exclude:
     - python: "2.6"
-      env: DJANGO="Django>=1.7,<1.8"
+      env: DJANGO="1.7.8"
     - python: "2.6"
-      env: DJANGO="Django>=1.8,<1.9"
+      env: DJANGO="1.8"
 branches:
   only:
     - develop
