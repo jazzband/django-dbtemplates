@@ -3,8 +3,6 @@ from __future__ import unicode_literals
 
 from django.db import models, migrations
 import django.utils.timezone
-import django.db.models.manager
-import django.contrib.sites.managers
 
 
 class Migration(migrations.Migration):
@@ -30,9 +28,6 @@ class Migration(migrations.Migration):
                 'verbose_name': 'template',
                 'verbose_name_plural': 'templates',
             },
-            managers=[
-                ('objects', django.db.models.manager.Manager()),
-                ('on_site', django.contrib.sites.managers.CurrentSiteManager(b'sites')),
-            ],
+            bases=(models.Model,),
         ),
     ]
