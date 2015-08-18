@@ -52,6 +52,6 @@ def get_template_source(name):
 def check_template_syntax(template):
     try:
         Template(template.content)
-    except TemplateSyntaxError, e:
+    except TemplateSyntaxError as e:
         return (False, e)
     return (True, None)
