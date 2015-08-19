@@ -4,6 +4,10 @@ from optparse import make_option
 from django import VERSION
 from django.contrib.sites.models import Site
 from django.core.management.base import CommandError, NoArgsCommand
+try:
+    from django.utils.six import input as raw_input
+except ImportError:
+    pass
 
 from dbtemplates.conf import settings
 from dbtemplates.models import Template
