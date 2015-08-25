@@ -2,6 +2,7 @@ import posixpath
 
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
+from django.utils.six import string_types
 
 from appconf import AppConf
 
@@ -31,7 +32,7 @@ class DbTemplatesConf(AppConf):
                 return "dbtemplates"
             else:
                 return "default"
-        if isinstance(value, basestring) and value.startswith("dbtemplates."):
+        if isinstance(value, string_types) and value.startswith("dbtemplates."):
             raise ImproperlyConfigured("Please upgrade to one of the "
                                        "supported backends as defined "
                                        "in the Django docs.")
