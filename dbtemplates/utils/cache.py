@@ -1,5 +1,4 @@
-from django.core.cache import get_cache
-
+from django.core import signals
 from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 
@@ -7,7 +6,22 @@ from dbtemplates.conf import settings
 
 
 def get_cache_backend():
-    return get_cache(settings.DBTEMPLATES_CACHE_BACKEND)
+    """
+    Compatibilty wrapper for getting Django's cache backend instance
+    """
+    try:
+        from django.core.cache import _create_cache
+    except ImportError:
+        # Django < 1.7
+        from django.core.cache import get_cache as _get_cache
+        return _get_cache(settings.DBTEMPLATES_CACHE_BACKEND)
+
+    cache = _create_cache(settings.DBTEMPLATES_CACHE_BACKEND)
+    # Some caches -- python-memcached in particular -- need to do a cleanup at the
+    # end of a request cycle. If not implemented in a particular backend
+    # cache.close is a no-op
+    signals.request_finished.connect(cache.close)
+    return cache
 
 cache = get_cache_backend()
 

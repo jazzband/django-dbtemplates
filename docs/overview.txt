@@ -24,21 +24,41 @@ Setup
              'dbtemplates',
          )
 
-   * Add ``dbtemplates.loader.Loader`` to the ``TEMPLATE_LOADERS`` list
+   * Add ``dbtemplates.loader.Loader`` to the ``TEMPLATES.OPTIONS.loaders`` list
      in the settings.py of your Django project.
 
      It should look something like this::
 
-       TEMPLATE_LOADERS = (
-           'django.template.loaders.filesystem.Loader',
-           'django.template.loaders.app_directories.Loader',
-           'dbtemplates.loader.Loader',
-       )
+      TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'DIRS': [ # your template dirs here 
+            ],
+            'APP_DIRS': False, 
+            'OPTIONS': {
+                'context_processors': [
+                    'django.contrib.auth.context_processors.auth',
+                    'django.template.context_processors.debug',
+                    'django.template.context_processors.i18n',
+                    'django.template.context_processors.media',
+                    'django.template.context_processors.static',
+                    'django.template.context_processors.tz',
+                    'django.contrib.messages.context_processors.messages',
+                    'django.template.context_processors.request',
+                ],
+                'loaders': [
+                     'django.template.loaders.filesystem.Loader',
+                     'django.template.loaders.app_directories.Loader',
+                      'dbtemplates.loader.Loader',
+                ],
+            },
+        },
+     ]
 
-     Order of TEMPLATE_LOADERS is important. In the former example, templates from database
+     Order of ``TEMPLATES.OPTIONS.loaders`` is important. In the former example, templates from database
      will be used as a fallback (ie. when template does not exists in other locations). 
      If you want template from database to be used to override templates in other locations,
-     put ``dbtemplates.loader.Loader`` at beginning of ``TEMPLATE_LOADERS`` settting.
+     put ``dbtemplates.loader.Loader`` at beginning of ``loaders``.
 
 4. Sync your database ``python manage.py syncdb``
 5. Restart your Django server

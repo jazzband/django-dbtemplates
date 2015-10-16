@@ -5,18 +5,25 @@ from django.utils.importlib import import_module
 
 
 def get_loaders():
-    from django.template.loader import template_source_loaders
-    if template_source_loaders is None:
-        try:
-            from django.template.loader import find_template as finder
-        except ImportError:
-            from django.template.loader import find_template_source as finder  # noqa
-        try:
-            source, name = finder('test')
-        except TemplateDoesNotExist:
-            pass
+    if VERSION[:2] < (1, 8):
         from django.template.loader import template_source_loaders
-    return template_source_loaders or []
+        if template_source_loaders is None:
+            try:
+                from django.template.loader import find_template as finder
+            except ImportError:
+                from django.template.loader import find_template_source as finder  # noqa
+            try:
+                source, name = finder('test')
+            except TemplateDoesNotExist:
+                pass
+            from django.template.loader import template_source_loaders
+        return template_source_loaders or []
+    else:
+        from django.template.loader import _engine_list
+        loaders = []
+        for engine in _engine_list():
+            loaders.extend(engine.engine.template_loaders)
+        return loaders
 
 
 def get_template_source(name):
@@ -26,7 +33,8 @@ def get_template_source(name):
             # Don't give a damn about dbtemplates' own loader.
             continue
         module = import_module(loader.__module__)
-        load_template_source = getattr(module, 'load_template_source', None)
+        load_template_source = getattr(
+            module, 'load_template_source', None)
         if load_template_source is None:
             load_template_source = loader.load_template_source
         try:
@@ -52,6 +60,6 @@ def get_template_source(name):
 def check_template_syntax(template):
     try:
         Template(template.content)
-    except TemplateSyntaxError, e:
+    except TemplateSyntaxError as e:
         return (False, e)
     return (True, None)
