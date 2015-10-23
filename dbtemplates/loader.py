@@ -7,8 +7,13 @@ from dbtemplates.utils.cache import (cache, get_cache_key,
                                      set_and_return, get_cache_notfound_key)
 from django.template.loader import BaseLoader
 
+# from django.template.base import Loader
+# django.template.loaders.base.Loader
 
-class Loader(BaseLoader):
+from django.template.loaders.base import Loader
+
+
+class Loader(Loader):
     """
     A custom template loader to load templates from the database.
 
