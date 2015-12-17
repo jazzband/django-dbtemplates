@@ -39,11 +39,13 @@ class DbTemplatesConf(AppConf):
     def configure_use_reversion(self, value):
         if value and 'reversion' not in settings.INSTALLED_APPS:
             raise ImproperlyConfigured("Please add 'reversion' to your "
-                "INSTALLED_APPS setting to make use of it in dbtemplates.")
+                                       "INSTALLED_APPS setting to make "
+                                       "use of it in dbtemplates.")
         return value
 
     def configure_use_tinymce(self, value):
         if value and 'tinymce' not in settings.INSTALLED_APPS:
             raise ImproperlyConfigured("Please add 'tinymce' to your "
-                "INSTALLED_APPS setting to make use of it in dbtemplates.")
+                                       "INSTALLED_APPS setting to make "
+                                       "use of it in dbtemplates.")
         return value

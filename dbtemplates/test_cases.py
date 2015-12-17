@@ -108,16 +108,16 @@ class DbTemplatesTestCase(TestCase):
             settings.TEMPLATE_DIRS = (temp_template_dir,)
             self.assertFalse(
                 Template.objects.filter(name='temp_test.html').exists())
-            call_command('sync_templates',
-                force=True, verbosity=0, overwrite=FILES_TO_DATABASE)
+            call_command('sync_templates', force=True,
+                         verbosity=0, overwrite=FILES_TO_DATABASE)
             self.assertTrue(
                 Template.objects.filter(name='temp_test.html').exists())
 
             t = Template.objects.get(name='temp_test.html')
             t.content = 'temp test modified'
             t.save()
-            call_command('sync_templates',
-                force=True, verbosity=0, overwrite=DATABASE_TO_FILES)
+            call_command('sync_templates', force=True,
+                         verbosity=0, overwrite=DATABASE_TO_FILES)
             self.assertTrue(
                 'modified' in codecs.open(temp_template_path).read())
 

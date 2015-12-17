@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v1.3.1 (2012-05-23)
+-------------------
+
+* Minor release to move away from nose again and use own
+  `django-discover-runner`_.
+
+.. _`django-discover-runner`: http://pypi.python.org/pypi/django-discover-runner
+
 v1.3 (2012-05-07)
 -----------------
 
