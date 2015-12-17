@@ -63,7 +63,7 @@ Setup
 4. Sync your database ``python manage.py syncdb``
 5. Restart your Django server
 
-.. _Git repository: http://github.com/jezdez/django-dbtemplates/
+.. _Git repository: http://github.com/jazzband/django-dbtemplates/
 
 Usage
 =====

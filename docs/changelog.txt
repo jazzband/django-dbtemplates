@@ -1,6 +1,11 @@
 Changelog
 =========
 
+v1.4 (unreleased)
+-----------------
+
+* Moved to Jazzband: https://github.com/jazzband/django-dbtemplates
+
 v1.3.2 (2015-06-15)
 -------------------
 
@@ -34,7 +39,7 @@ v1.3 (2012-05-07)
   memcache's inability to stomach spaces.
 
 * Moved test runner to use nose_ and a hosted CI project at Travis_:
-  http://travis-ci.org/jezdez/django-dbtemplates
+  http://travis-ci.org/jazzband/django-dbtemplates
 
 .. _nose: http://nose.rtfd.org/
 .. _Travis: http://travis-ci.org
@@ -355,4 +360,4 @@ Support
 
 Please leave your questions and messages on the designated site:
 
-http://github.com/jezdez/django-dbtemplates/issues/
+http://github.com/jazzband/django-dbtemplates/issues/

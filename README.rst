@@ -1,9 +1,13 @@
 django-dbtemplates
 ==================
 
-.. image:: https://secure.travis-ci.org/jezdez/django-dbtemplates.png?branch=develop
+.. image:: https://secure.travis-ci.org/jazzband/django-dbtemplates.png
     :alt: Build Status
-    :target: http://travis-ci.org/jezdez/django-dbtemplates
+    :target: http://travis-ci.org/jazzband/django-dbtemplates
+
+.. image:: https://jazzband.co/static/img/badge.svg
+   :alt: Jazzband
+   :target: https://jazzband.co/
 
 ``dbtemplates`` is a Django app that consists of two parts:
 
@@ -18,7 +22,7 @@ Please see http://django-dbtemplates.readthedocs.org/ for more details.
 
 The source code and issue tracker can be found on Github:
 
-https://github.com/jezdez/django-dbtemplates
+https://github.com/jazzband/django-dbtemplates
 
 Compatibility Roadmap
 ---------------------
