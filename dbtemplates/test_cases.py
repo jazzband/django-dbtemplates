@@ -106,6 +106,11 @@ class DbTemplatesTestCase(TestCase):
         try:
             temp_template.write('temp test')
             settings.TEMPLATE_DIRS = (temp_template_dir,)
+            # these works well if is not settings patched at runtime
+            # for supporting django < 1.7 tests we must patch dirs in runtime
+            from dbtemplates.management.commands import sync_templates
+            sync_templates.DIRS = settings.TEMPLATE_DIRS
+
             self.assertFalse(
                 Template.objects.filter(name='temp_test.html').exists())
             call_command('sync_templates', force=True,

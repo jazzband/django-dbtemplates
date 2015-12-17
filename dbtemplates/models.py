@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
+from dbtemplates.conf import settings
+from dbtemplates.utils.cache import (add_template_to_cache,
+                                     remove_cached_template)
+from dbtemplates.utils.template import get_template_source
+from django.contrib.sites.managers import CurrentSiteManager
+from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
-
-from django.contrib.sites.models import Site
-from django.contrib.sites.managers import CurrentSiteManager
-
-from dbtemplates.conf import settings
-from dbtemplates.utils.cache import add_template_to_cache, remove_cached_template
-from dbtemplates.utils.template import get_template_source
 
 try:
     from django.utils.timezone import now
@@ -27,7 +26,7 @@ class Template(models.Model):
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, verbose_name=_(u'sites'),
-                                   blank=True, null=True)
+                                   blank=True)
     creation_date = models.DateTimeField(_('creation date'),
                                          default=now)
     last_changed = models.DateTimeField(_('last changed'),

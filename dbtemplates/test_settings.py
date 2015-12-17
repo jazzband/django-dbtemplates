@@ -1,3 +1,6 @@
+
+import django
+
 DBTEMPLATES_CACHE_BACKEND = 'dummy://'
 
 DATABASE_ENGINE = 'sqlite3'
@@ -23,10 +26,16 @@ INSTALLED_APPS = [
     'dbtemplates',
 ]
 
+MIDDLEWARE_CLASSES = (
+    'django.contrib.messages.middleware.MessageMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+)
+
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
     'dbtemplates.loader.Loader',
 )
 
-TEST_RUNNER = 'discover_runner.DiscoverRunner'
+if django.get_version() <= '1.6':
+    TEST_RUNNER = 'discover_runner.DiscoverRunner'

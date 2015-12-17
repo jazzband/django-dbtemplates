@@ -1,3 +1,4 @@
+import django
 from django.contrib.sites.models import Site
 from django.db import router
 from django.template import TemplateDoesNotExist
@@ -5,10 +6,14 @@ from django.template import TemplateDoesNotExist
 from dbtemplates.models import Template
 from dbtemplates.utils.cache import (cache, get_cache_key,
                                      set_and_return, get_cache_notfound_key)
-from django.template.loader import BaseLoader
+
+if django.get_version() >= '1.8':
+    from django.template.loaders.base import Loader as tLoaderCls
+else:
+    from django.template.loader import BaseLoader as tLoaderCls  # noqa
 
 
-class Loader(BaseLoader):
+class Loader(tLoaderCls):
     """
     A custom template loader to load templates from the database.
 
