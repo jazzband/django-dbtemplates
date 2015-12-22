@@ -1,7 +1,10 @@
 from django import VERSION
 from django.template import (Template, TemplateDoesNotExist,
                              TemplateSyntaxError)
-from django.utils.importlib import import_module
+try:
+    from importlib import import_module
+except ImportError:
+    from django.utils.importlib import import_module
 
 
 def get_loaders():
