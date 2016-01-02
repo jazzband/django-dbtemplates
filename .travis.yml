@@ -13,8 +13,8 @@ script:
 - coverage run --branch --source=dbtemplates `which django-admin.py` test dbtemplates
 - coverage report --omit="dbtemplates/test*,dbtemplates/migrations*"
 env:
-- DJANGO=1.4.5
-- DJANGO=1.5.1
+- DJANGO="1.4.5 importlib"
+- DJANGO="1.5.1 importlib"
 - DJANGO=1.7.8
 - DJANGO=1.8
 matrix:
