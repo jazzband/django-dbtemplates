@@ -62,7 +62,7 @@ Short installation howto
 4. Set ``DBTEMPLATES_USE_REVERSION`` setting to ``True``
 
 .. _django-reversion: https://github.com/etianen/django-reversion
-.. _django-reversion's documentation: http://django-reversion.readthedocs.org/en/latest/
+.. _django-reversion's documentation: https://django-reversion.readthedocs.io/en/latest/
 
 .. _commands:
 

@@ -26,7 +26,7 @@ setup(
     long_description=read('README.rst'),
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
-    url='http://django-dbtemplates.readthedocs.org/',
+    url='https://django-dbtemplates.readthedocs.io/',
     packages=find_packages(exclude=['example']),
     zip_safe=False,
     package_data={

@@ -18,7 +18,7 @@ django-dbtemplates
 It also features optional support for versioned storage and django-admin
 command, integrates with Django's caching system and the admin actions.
 
-Please see http://django-dbtemplates.readthedocs.org/ for more details.
+Please see https://django-dbtemplates.readthedocs.io/ for more details.
 
 The source code and issue tracker can be found on Github:
 
