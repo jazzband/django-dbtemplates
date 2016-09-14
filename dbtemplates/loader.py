@@ -3,11 +3,13 @@ from django.contrib.sites.models import Site
 from django.db import router
 from django.template import TemplateDoesNotExist
 
+from distutils.version import StrictVersion
+
 from dbtemplates.models import Template
 from dbtemplates.utils.cache import (cache, get_cache_key,
                                      set_and_return, get_cache_notfound_key)
 
-if django.get_version() >= '1.8':
+if StrictVersion(django.get_version()) >= StrictVersion('1.8'):
     from django.template.loaders.base import Loader as tLoaderCls
 else:
     from django.template.loader import BaseLoader as tLoaderCls  # noqa
