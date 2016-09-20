@@ -1,1 +1,3 @@
 __version__ = "2.0"
+
+default_app_config = 'dbtemplates.apps.DBTemplatesConfig'
