@@ -104,7 +104,7 @@ class DbTemplatesTestCase(TestCase):
         temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
         temp_template = io.open(temp_template_path, 'w', encoding='utf-8')
         try:
-            temp_template.write('temp test')
+            temp_template.write(u'temp test')
             settings.TEMPLATES[0]['DIRS'] = (temp_template_dir,)
             # these works well if is not settings patched at runtime
             # for supporting django < 1.7 tests we must patch dirs in runtime
@@ -119,7 +119,7 @@ class DbTemplatesTestCase(TestCase):
                 Template.objects.filter(name='temp_test.html').exists())
 
             t = Template.objects.get(name='temp_test.html')
-            t.content = 'temp test modified'
+            t.content = u'temp test modified'
             t.save()
             call_command('sync_templates', force=True,
                          verbosity=0, overwrite=DATABASE_TO_FILES)
