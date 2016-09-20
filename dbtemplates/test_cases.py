@@ -6,7 +6,7 @@ import tempfile
 from django.conf import settings as django_settings
 from django.core.cache.backends.base import BaseCache
 from django.core.management import call_command
-from django.template import loader, Context, TemplateDoesNotExist
+from django.template import loader, TemplateDoesNotExist
 from django.test import TestCase
 
 from django.contrib.sites.models import Site
@@ -82,9 +82,9 @@ class DbTemplatesTestCase(TestCase):
             settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
 
     def test_load_templates(self):
-        result = loader.get_template("base.html").render(Context({}))
+        result = loader.get_template("base.html").render()
         self.assertEqual(result, 'base')
-        result2 = loader.get_template("sub.html").render(Context({}))
+        result2 = loader.get_template("sub.html").render()
         self.assertEqual(result2, 'sub')
 
     def test_error_templates_creation(self):
