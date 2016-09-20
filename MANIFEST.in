@@ -1,7 +1,4 @@
-include LICENSE
-include AUTHORS
-include README.rst
-include MANIFEST.in
+include LICENSE AUTHORS README.rst MANIFEST.in tox.ini .coveragerc
 recursive-include docs *.txt
 recursive-include dbtemplates/locale *
 recursive-include dbtemplates/static/dbtemplates *.css *.js
