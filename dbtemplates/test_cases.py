@@ -1,4 +1,4 @@
-import codecs
+import io
 import os
 import shutil
 import tempfile
@@ -6,7 +6,7 @@ import tempfile
 from django.conf import settings as django_settings
 from django.core.cache.backends.base import BaseCache
 from django.core.management import call_command
-from django.template import loader, Context, TemplateDoesNotExist
+from django.template import loader, TemplateDoesNotExist
 from django.test import TestCase
 
 from django.contrib.sites.models import Site
@@ -82,9 +82,9 @@ class DbTemplatesTestCase(TestCase):
             settings.DBTEMPLATES_ADD_DEFAULT_SITE = old_add_default_site
 
     def test_load_templates(self):
-        result = loader.get_template("base.html").render(Context({}))
+        result = loader.get_template("base.html").render()
         self.assertEqual(result, 'base')
-        result2 = loader.get_template("sub.html").render(Context({}))
+        result2 = loader.get_template("sub.html").render()
         self.assertEqual(result2, 'sub')
 
     def test_error_templates_creation(self):
@@ -99,17 +99,17 @@ class DbTemplatesTestCase(TestCase):
         self.assertEqual(admin_base_template, template.content)
 
     def test_sync_templates(self):
-        old_template_dirs = settings.TEMPLATE_DIRS
+        old_template_dirs = settings.TEMPLATES[0].get('DIRS', [])
         temp_template_dir = tempfile.mkdtemp('dbtemplates')
         temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
-        temp_template = codecs.open(temp_template_path, 'w')
+        temp_template = io.open(temp_template_path, 'w', encoding='utf-8')
         try:
-            temp_template.write('temp test')
-            settings.TEMPLATE_DIRS = (temp_template_dir,)
+            temp_template.write(u'temp test')
+            settings.TEMPLATES[0]['DIRS'] = (temp_template_dir,)
             # these works well if is not settings patched at runtime
             # for supporting django < 1.7 tests we must patch dirs in runtime
             from dbtemplates.management.commands import sync_templates
-            sync_templates.DIRS = settings.TEMPLATE_DIRS
+            sync_templates.DIRS = settings.TEMPLATES[0]['DIRS']
 
             self.assertFalse(
                 Template.objects.filter(name='temp_test.html').exists())
@@ -119,12 +119,13 @@ class DbTemplatesTestCase(TestCase):
                 Template.objects.filter(name='temp_test.html').exists())
 
             t = Template.objects.get(name='temp_test.html')
-            t.content = 'temp test modified'
+            t.content = u'temp test modified'
             t.save()
             call_command('sync_templates', force=True,
                          verbosity=0, overwrite=DATABASE_TO_FILES)
-            self.assertTrue(
-                'modified' in codecs.open(temp_template_path).read())
+            self.assertEqual(u'temp test modified',
+                             io.open(temp_template_path,
+                                     encoding='utf-8').read())
 
             call_command('sync_templates', force=True, verbosity=0,
                          delete=True, overwrite=DATABASE_TO_FILES)
@@ -133,7 +134,7 @@ class DbTemplatesTestCase(TestCase):
                 Template.objects.filter(name='temp_test.html').exists())
         finally:
             temp_template.close()
-            settings.TEMPLATE_DIRS = old_template_dirs
+            settings.TEMPLATES[0]['DIRS'] = old_template_dirs
             shutil.rmtree(temp_template_dir)
 
     def test_get_cache(self):

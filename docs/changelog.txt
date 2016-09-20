@@ -1,10 +1,20 @@
 Changelog
 =========
 
-v1.4 (unreleased)
+v2.0 (unreleased)
 -----------------
 
 * Moved to Jazzband: https://github.com/jazzband/django-dbtemplates
+
+* Dropped support for Python 2.6
+
+* Added support for Python 3.4 and 3.5
+
+* Dropped support for Django < 1.8
+
+* Removed South migrations. Please use Django's native migration system instead
+
+* Removed the example project since it's out-of-date quickly
 
 v1.3.2 (2015-06-15)
 -------------------
@@ -179,7 +189,7 @@ v0.7.1 (2010-07-07)
 
 * Fixed problem with the ``DBTEMPLATES_MEDIA_PREFIX`` setting, which defaults
   now to ``os.path.join(settings.MEDIA_ROOT, 'dbtemplates')`` now.
-  
+
   In other words, if you don't specify a ``DBTEMPLATES_MEDIA_PREFIX`` setting
   and have the CodeMirror textarea enabled, dbtemplates will look in a
   subdirectory of your site's ``MEDIA_ROOT`` for the CodeMirror media files.
@@ -289,10 +299,10 @@ v0.5.0
   empty by using Django's other template loaders
 
 * added caching backend system with two default backends:
-  
+
   * ``FileSystemBackend``
   * ``DjangoCacheBackend``
-  
+
   More about it in the `blog post`_ and in the docs.
 
 .. _django-reversion: http://code.google.com/p/django-reversion/

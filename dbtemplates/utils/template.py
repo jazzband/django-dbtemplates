@@ -1,29 +1,14 @@
-from django import VERSION
 from django.template import (Template, TemplateDoesNotExist,
                              TemplateSyntaxError)
 from importlib import import_module
 
 
 def get_loaders():
-    if VERSION[:2] < (1, 8):
-        from django.template.loader import template_source_loaders
-        if template_source_loaders is None:
-            try:
-                from django.template.loader import find_template as finder
-            except ImportError:
-                from django.template.loader import find_template_source as finder  # noqa
-            try:
-                source, name = finder('test')
-            except TemplateDoesNotExist:
-                pass
-            from django.template.loader import template_source_loaders
-        return template_source_loaders or []
-    else:
-        from django.template.loader import _engine_list
-        loaders = []
-        for engine in _engine_list():
-            loaders.extend(engine.engine.template_loaders)
-        return loaders
+    from django.template.loader import _engine_list
+    loaders = []
+    for engine in _engine_list():
+        loaders.extend(engine.engine.template_loaders)
+    return loaders
 
 
 def get_template_source(name):
@@ -44,15 +29,6 @@ def get_template_source(name):
         except NotImplementedError:
             pass
         except TemplateDoesNotExist:
-            pass
-    if source is None and VERSION[:2] < (1, 2):
-        # Django supported template source extraction still :/
-        try:
-            from django.template.loader import find_template_source
-            template, origin = find_template_source(name, None)
-            if not hasattr(template, 'render'):
-                return template
-        except (ImportError, TemplateDoesNotExist):
             pass
     return None
 

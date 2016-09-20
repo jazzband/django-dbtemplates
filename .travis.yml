@@ -1,34 +1,32 @@
+language: python
+python: 3.5
 sudo: false
 cache: pip
-language: python
-python:
-- 2.6
-- 2.7
-install:
-- pip install -e .
-- pip install -r requirements/tests.txt Django==$DJANGO
-before_script:
-- flake8 dbtemplates --ignore=E501 --exclude=migrations
-script:
-- coverage run --branch --source=dbtemplates `which django-admin.py` test dbtemplates
-- coverage report --omit="dbtemplates/test*,dbtemplates/migrations*"
 env:
-  global:
-    - DJANGO_SETTINGS_MODULE=dbtemplates.test_settings
-  matrix:
-    - DJANGO="1.4.5 importlib"
-    - DJANGO="1.5.1 importlib"
-    - DJANGO=1.7.8
-    - DJANGO=1.8.11
-    - DJANGO=1.9.4
-matrix:
-  exclude:
-  - python: 2.6
-    env: DJANGO=1.7.8
-  - python: 2.6
-    env: DJANGO=1.8.11
-  - python: 2.6
-    env: DJANGO=1.9.4
+  - TOXENV=flake8-py27
+  - TOXENV=flake8-py35
+  - TOXENV=readme-py27
+  - TOXENV=py27-dj18
+  - TOXENV=py27-dj19
+  - TOXENV=py27-dj110
+  - TOXENV=py27-djmaster
+  - TOXENV=py34-dj18
+  - TOXENV=py34-dj19
+  - TOXENV=py34-dj110
+  - TOXENV=py34-djmaster
+  - TOXENV=py35-dj18
+  - TOXENV=py35-dj19
+  - TOXENV=py35-dj110
+  - TOXENV=py35-djmaster
+  - TOXENV=pypy-dj18
+  - TOXENV=pypy-dj19
+  - TOXENV=pypy-dj110
+  - TOXENV=pypy-djmaster
+install:
+  - pip install tox codecov
+script: tox -v
+after_success:
+  - codecov
 deploy:
   provider: pypi
   user: jazzband
@@ -39,4 +37,4 @@ deploy:
     tags: true
     repo: jazzband/django-dbtemplates
     python: "2.7"
-    condition: "$DJANGO = 1.8.11"
+    condition: "$TOXENV = py27-dj110"

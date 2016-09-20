@@ -20,7 +20,7 @@ To enable one of them you need to specify a setting called
 .. note::
     Starting in version 1.0 ``dbtemplates`` allows you also to set the new
     dict-based ``CACHES`` setting, which was introduced in Django 1.3.
-    
+
     All you have to do is to provide a new entry in the ``CACHES`` dict
     named ``'dbtemplates'``, e.g.::
 

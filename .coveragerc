@@ -1,0 +1,6 @@
+[run]
+source = dbtemplates
+branch = 1
+
+[report]
+omit = *tests*,*migrations*
