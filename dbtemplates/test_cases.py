@@ -123,9 +123,9 @@ class DbTemplatesTestCase(TestCase):
             t.save()
             call_command('sync_templates', force=True,
                          verbosity=0, overwrite=DATABASE_TO_FILES)
-            self.assertTrue(
-                'modified' in io.open(temp_template_path,
-                                      encoding='utf-8').read().decode('utf-8'))
+            self.assertEqual(u'temp test modified',
+                             io.open(temp_template_path,
+                                     encoding='utf-8').read())
 
             call_command('sync_templates', force=True, verbosity=0,
                          delete=True, overwrite=DATABASE_TO_FILES)
