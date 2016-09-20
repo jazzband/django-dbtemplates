@@ -124,7 +124,7 @@ class DbTemplatesTestCase(TestCase):
             call_command('sync_templates', force=True,
                          verbosity=0, overwrite=DATABASE_TO_FILES)
             self.assertTrue(
-                'modified' in codecs.open(temp_template_path).read())
+                'modified' in codecs.open(temp_template_path, 'utf-8').read().decode('utf-8'))
 
             call_command('sync_templates', force=True, verbosity=0,
                          delete=True, overwrite=DATABASE_TO_FILES)
