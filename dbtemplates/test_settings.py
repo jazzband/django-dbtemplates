@@ -37,5 +37,5 @@ TEMPLATE_LOADERS = (
     'dbtemplates.loader.Loader',
 )
 
-if django.get_version() <= '1.6':
+if django.VERSION[:2] <= (1, 6):
     TEST_RUNNER = 'discover_runner.DiscoverRunner'

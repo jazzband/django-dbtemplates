@@ -12,7 +12,7 @@ class Migration(migrations.Migration):
         ('sites', '0001_initial'),
     ]
 
-    if django.get_version() >= '1.8':
+    if django.VERSION[:2] >= (1, 8):
         operations = [
             migrations.CreateModel(
                 name='Template',
