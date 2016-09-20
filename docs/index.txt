@@ -11,7 +11,7 @@ It also features optional support for :ref:`versioned storage <versioned>`
 and :ref:`django-admin command <commands>`, integrates with Django's
 :ref:`caching system <caching>` and the :ref:`admin actions <admin_actions>`.
 
-Please see http://django-dbtemplates.readthedocs.org/ for more details.
+Please see https://django-dbtemplates.readthedocs.io/ for more details.
 
 The source code and issue tracker can be found on Github: https://github.com/jazzband/django-dbtemplates
 

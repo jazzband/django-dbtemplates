@@ -41,7 +41,7 @@ v1.3 (2012-05-07)
 * Moved test runner to use nose_ and a hosted CI project at Travis_:
   http://travis-ci.org/jazzband/django-dbtemplates
 
-.. _nose: http://nose.rtfd.org/
+.. _nose: https://nose.readthedocs.io/
 .. _Travis: http://travis-ci.org
 
 v1.2.1 (2011-09-07)
