@@ -9,12 +9,7 @@ from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
-
-try:
-    from django.utils.timezone import now
-except ImportError:
-    from datetime import datetime
-    now = datetime.now
+from django.utils.timezone import now
 
 
 class Template(models.Model):

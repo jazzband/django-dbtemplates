@@ -1,7 +1,16 @@
+import ast
 import os
-import re
 import codecs
 from setuptools import setup, find_packages
+
+
+class VersionFinder(ast.NodeVisitor):
+    def __init__(self):
+        self.version = None
+
+    def visit_Assign(self, node):
+        if node.targets[0].id == '__version__':
+            self.version = node.value.s
 
 
 def read(*parts):
@@ -10,13 +19,10 @@ def read(*parts):
         return fp.read()
 
 
-def find_version(*file_paths):
-    version_file = read(*file_paths)
-    version_match = re.search(r"^__version__ = ['\"]([^'\"]*)['\"]",
-                              version_file, re.M)
-    if version_match:
-        return version_match.group(1)
-    raise RuntimeError("Unable to find version string.")
+def find_version(*parts):
+    finder = VersionFinder()
+    finder.visit(ast.parse(read(*parts)))
+    return finder.version
 
 
 setup(
@@ -27,7 +33,7 @@ setup(
     author='Jannis Leidel',
     author_email='jannis@leidel.info',
     url='https://django-dbtemplates.readthedocs.io/',
-    packages=find_packages(exclude=['example']),
+    packages=find_packages(),
     zip_safe=False,
     package_data={
         'dbtemplates': [
@@ -44,9 +50,10 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.5',
-        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
+        'Programming Language :: Python :: 3.5',
         'Framework :: Django',
     ],
     install_requires=['django-appconf >= 0.4'],

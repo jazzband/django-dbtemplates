@@ -36,7 +36,7 @@ class Migration(migrations.Migration):
                     'verbose_name_plural': 'templates',
                 },
                 bases=(models.Model,),
-                managers = [
+                managers=[
                     ('objects', django.db.models.manager.Manager()),
                     ('on_site', django.contrib.sites.managers.CurrentSiteManager(
                         b'sites')),

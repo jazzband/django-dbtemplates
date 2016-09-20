@@ -1,7 +1,5 @@
 import sys
-from optparse import make_option
-
-from django.core.management.base import CommandError, NoArgsCommand
+from django.core.management.base import CommandError, BaseCommand
 from django.contrib.sites.models import Site
 
 from dbtemplates.models import Template
@@ -26,14 +24,15 @@ TEMPLATES = {
 }
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = "Creates the default error templates as database template objects."
-    option_list = NoArgsCommand.option_list + (
-        make_option("-f", "--force", action="store_true", dest="force",
-                    default=False,
-                    help="overwrite existing database templates"),)
 
-    def handle_noargs(self, **options):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "-f", "--force", action="store_true", dest="force",
+            default=False, help="overwrite existing database templates")
+
+    def handle(self, **options):
         force = options.get('force')
         try:
             site = Site.objects.get_current()

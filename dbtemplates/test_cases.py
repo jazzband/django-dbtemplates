@@ -99,17 +99,17 @@ class DbTemplatesTestCase(TestCase):
         self.assertEqual(admin_base_template, template.content)
 
     def test_sync_templates(self):
-        old_template_dirs = settings.TEMPLATE_DIRS
+        old_template_dirs = settings.TEMPLATES[0].get('DIRS', [])
         temp_template_dir = tempfile.mkdtemp('dbtemplates')
         temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
         temp_template = codecs.open(temp_template_path, 'w')
         try:
             temp_template.write('temp test')
-            settings.TEMPLATE_DIRS = (temp_template_dir,)
+            settings.TEMPLATES[0]['DIRS'] = (temp_template_dir,)
             # these works well if is not settings patched at runtime
             # for supporting django < 1.7 tests we must patch dirs in runtime
             from dbtemplates.management.commands import sync_templates
-            sync_templates.DIRS = settings.TEMPLATE_DIRS
+            sync_templates.DIRS = settings.TEMPLATES[0]['DIRS']
 
             self.assertFalse(
                 Template.objects.filter(name='temp_test.html').exists())
@@ -133,7 +133,7 @@ class DbTemplatesTestCase(TestCase):
                 Template.objects.filter(name='temp_test.html').exists())
         finally:
             temp_template.close()
-            settings.TEMPLATE_DIRS = old_template_dirs
+            settings.TEMPLATES[0]['DIRS'] = old_template_dirs
             shutil.rmtree(temp_template_dir)
 
     def test_get_cache(self):

@@ -1,56 +1,54 @@
 import os
 import codecs
-from optparse import make_option
-from django import VERSION
 from django.contrib.sites.models import Site
-from django.core.management.base import CommandError, NoArgsCommand
+from django.core.management.base import CommandError, BaseCommand
+from django.template.utils import get_app_template_dirs
+from django.template.loader import _engine_list
 try:
     from django.utils.six import input as raw_input
 except ImportError:
     pass
 
-from dbtemplates.conf import settings
 from dbtemplates.models import Template
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
 
 DIRS = []
-
-if VERSION[:2] < (1, 8):
-    from django.template.loaders.app_directories import app_template_dirs
-    DIRS = settings.TEMPLATE_DIRS
-else:
-    from django.template.utils import get_app_template_dirs
-    from django.template.loader import _engine_list
-    for engine in _engine_list():
-        DIRS.extend(engine.dirs)
-    app_template_dirs = get_app_template_dirs('templates')
+for engine in _engine_list():
+    DIRS.extend(engine.dirs)
+app_template_dirs = get_app_template_dirs('templates')
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = "Syncs file system templates with the database bidirectionally."
-    option_list = NoArgsCommand.option_list + (
-        make_option("-e", "--ext",
-                    dest="ext", action="store", default="html",
-                    help="extension of the files you want to "
-                         "sync with the database [default: %default]"),
-        make_option("-f", "--force",
-                    action="store_true", dest="force", default=False,
-                    help="overwrite existing database templates"),
-        make_option("-o", "--overwrite",
-                    action="store", dest="overwrite", default='0',
-                    help="'0' - ask always, '1' - overwrite database "
-                         "templates from template files, '2' - overwrite "
-                         "template files from database templates"),
-        make_option("-a", "--app-first",
-                    action="store_true", dest="app_first", default=False,
-                    help="look for templates in applications "
-                         "directories before project templates"),
-        make_option("-d", "--delete",
-                    action="store_true", dest="delete", default=False,
-                    help="Delete templates after syncing"))
 
-    def handle_noargs(self, **options):
+    def add_arguments(self, parser):
+        parser.add_argument(
+            "-e", "--ext",
+            dest="ext", action="store", default="html",
+            help="extension of the files you want to "
+                 "sync with the database [default: %default]")
+        parser.add_argument(
+            "-f", "--force",
+            action="store_true", dest="force", default=False,
+            help="overwrite existing database templates")
+        parser.add_argument(
+            "-o", "--overwrite",
+            action="store", dest="overwrite", default='0',
+            help="'0' - ask always, '1' - overwrite database "
+                 "templates from template files, '2' - overwrite "
+                 "template files from database templates")
+        parser.add_argument(
+            "-a", "--app-first",
+            action="store_true", dest="app_first", default=False,
+            help="look for templates in applications "
+                 "directories before project templates")
+        parser.add_argument(
+            "-d", "--delete",
+            action="store_true", dest="delete", default=False,
+            help="Delete templates after syncing")
+
+    def handle(self, **options):
         extension = options.get('ext')
         force = options.get('force')
         overwrite = options.get('overwrite')
@@ -65,10 +63,6 @@ class Command(NoArgsCommand):
         except:
             raise CommandError("Please make sure to have the sites contrib "
                                "app installed and setup with a site object")
-
-        if not type(settings.TEMPLATE_DIRS) in (tuple, list):
-            raise CommandError("Please make sure settings.TEMPLATE_DIRS is a "
-                               "list or tuple.")
 
         if app_first:
             tpl_dirs = app_template_dirs + DIRS

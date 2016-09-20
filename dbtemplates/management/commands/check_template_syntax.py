@@ -1,13 +1,13 @@
-from django.core.management.base import CommandError, NoArgsCommand
+from django.core.management.base import CommandError, BaseCommand
 
 from dbtemplates.models import Template
 from dbtemplates.utils.template import check_template_syntax
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
     help = "Ensures templates stored in the database don't have syntax errors."
 
-    def handle_noargs(self, **options):
+    def handle(self, **options):
         errors = []
         for template in Template.objects.all():
             valid, error = check_template_syntax(template)
@@ -16,6 +16,4 @@ class Command(NoArgsCommand):
         if errors:
             raise CommandError(
                 'Some templates contained errors\n%s' % '\n'.join(errors))
-        # NOTE: printing instead of using self.stdout.write to maintain
-        # Django 1.2 compatibility
-        print('OK')
+        self.stdout.write('OK')
