@@ -1,5 +1,5 @@
+import io
 import os
-import codecs
 from django.contrib.sites.models import Site
 from django.core.management.base import CommandError, BaseCommand
 from django.template.utils import get_app_template_dirs
@@ -87,8 +87,8 @@ class Command(BaseCommand):
                                 "database.\nCreate it with '%s'?"
                                 " (y/[n]): """ % (name, path))
                         if force or confirm.lower().startswith('y'):
-                            t = Template(name=name,
-                                         content=codecs.open(path, "r").read())
+                            with io.open(path, encoding='utf-8') as f:
+                                t = Template(name=name, content=f.read())
                             t.save()
                             t.sites.add(site)
                     else:
@@ -105,9 +105,10 @@ class Command(BaseCommand):
                             if confirm in ('', FILES_TO_DATABASE,
                                            DATABASE_TO_FILES):
                                 if confirm == FILES_TO_DATABASE:
-                                    t.content = codecs.open(path, 'r').read()
-                                    t.save()
-                                    t.sites.add(site)
+                                    with io.open(path, encoding='utf-8') as f:
+                                        t.content = f.read()
+                                        t.save()
+                                        t.sites.add(site)
                                     if delete:
                                         try:
                                             os.remove(path)
@@ -115,11 +116,8 @@ class Command(BaseCommand):
                                             raise CommandError(
                                                 u"Couldn't delete %s" % path)
                                 elif confirm == DATABASE_TO_FILES:
-                                    f = codecs.open(path, 'w', 'utf-8')
-                                    try:
+                                    with io.open(path, 'w', encoding='utf-8') as f:
                                         f.write(t.content)
-                                    finally:
-                                        f.close()
                                     if delete:
                                         t.delete()
                                 break

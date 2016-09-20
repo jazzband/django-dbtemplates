@@ -1,4 +1,4 @@
-import codecs
+import io
 import os
 import shutil
 import tempfile
@@ -102,7 +102,7 @@ class DbTemplatesTestCase(TestCase):
         old_template_dirs = settings.TEMPLATES[0].get('DIRS', [])
         temp_template_dir = tempfile.mkdtemp('dbtemplates')
         temp_template_path = os.path.join(temp_template_dir, 'temp_test.html')
-        temp_template = codecs.open(temp_template_path, 'w')
+        temp_template = io.open(temp_template_path, 'w', encoding='utf-8')
         try:
             temp_template.write('temp test')
             settings.TEMPLATES[0]['DIRS'] = (temp_template_dir,)
@@ -124,7 +124,8 @@ class DbTemplatesTestCase(TestCase):
             call_command('sync_templates', force=True,
                          verbosity=0, overwrite=DATABASE_TO_FILES)
             self.assertTrue(
-                'modified' in codecs.open(temp_template_path, 'utf-8').read().decode('utf-8'))
+                'modified' in io.open(temp_template_path,
+                                      encoding='utf-8').read().decode('utf-8'))
 
             call_command('sync_templates', force=True, verbosity=0,
                          delete=True, overwrite=DATABASE_TO_FILES)

@@ -1,6 +1,6 @@
 import ast
 import os
-import codecs
+import io
 from setuptools import setup, find_packages
 
 
@@ -15,7 +15,7 @@ class VersionFinder(ast.NodeVisitor):
 
 def read(*parts):
     filename = os.path.join(os.path.dirname(__file__), *parts)
-    with codecs.open(filename, encoding='utf-8') as fp:
+    with io.open(filename, encoding='utf-8') as fp:
         return fp.read()
 
 
