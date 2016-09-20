@@ -1,10 +1,14 @@
 Changelog
 =========
 
-v2.0 (unreleased)
+v2.0 (2016-09-29)
 -----------------
 
-* Moved to Jazzband: https://github.com/jazzband/django-dbtemplates
+.. warning::
+
+  This is a backwards-incompatible release!
+
+* Moved maintenance to the `Jazzband <https://jazzband.co/>`_
 
 * Dropped support for Python 2.6
 

@@ -32,9 +32,9 @@ Setup
       TEMPLATES = [
         {
             'BACKEND': 'django.template.backends.django.DjangoTemplates',
-            'DIRS': [ # your template dirs here 
+            'DIRS': [ # your template dirs here
             ],
-            'APP_DIRS': False, 
+            'APP_DIRS': False,
             'OPTIONS': {
                 'context_processors': [
                     'django.contrib.auth.context_processors.auth',
@@ -47,30 +47,31 @@ Setup
                     'django.template.context_processors.request',
                 ],
                 'loaders': [
-                     'django.template.loaders.filesystem.Loader',
-                     'django.template.loaders.app_directories.Loader',
-                      'dbtemplates.loader.Loader',
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                    'dbtemplates.loader.Loader',
                 ],
             },
         },
      ]
 
-     Order of ``TEMPLATES.OPTIONS.loaders`` is important. In the former example, templates from database
-     will be used as a fallback (ie. when template does not exists in other locations). 
-     If you want template from database to be used to override templates in other locations,
-     put ``dbtemplates.loader.Loader`` at beginning of ``loaders``.
+     The order of ``TEMPLATES.OPTIONS.loaders`` is important. In the former
+     example, templates from the database will be used as a fallback (ie. when
+     the template does not exists in other locations). If you want the template
+     from the database to be used to override templates in other locations,
+     put ``dbtemplates.loader.Loader`` at the beginning of ``loaders``.
 
-4. Sync your database ``python manage.py syncdb``
+4. Sync your database ``python manage.py migrate``
 5. Restart your Django server
 
-.. _Git repository: http://github.com/jazzband/django-dbtemplates/
+.. _Git repository: https://github.com/jazzband/django-dbtemplates/
 
 Usage
 =====
 
 Creating database templates is pretty simple: Just open the admin interface
 of your Django-based site in your browser and click on "Templates" in the
-"Dbtemplates" section.
+"Database templates" section.
 
 There you only need to fill in the ``name`` field with the identifier, Django
 is supposed to use while searching for templates, e.g.
@@ -84,44 +85,3 @@ other template loaders. For example, if you have a template called
 contents in the database, you just need to leave the content field empty to
 automatically populate it. That's especially useful if you don't want to
 copy and paste its content manually to the textarea.
-
-Example
-=======
-
-``dbtemplates`` comes with an example Django project that let's you try it 
-out. The example uses Django's own `flatpages app`_ to enable you to create
-a simple page using ``dbtemplates``. Flat pages are a perfect fit to
-dbtemplates since they come prepackaged and are simple to use.
-
-Here is how it works:
-
-1. Open your command line and change to the ``example`` directory in the
-   directory with the extracted source distribution.
-2. Run ``python manage.py syncdb`` and follow the instructions.
-3. Run ``python manage.py runserver`` and open your favorite browser with the
-   address http://127.0.0.1:8000/admin/.
-4. Next add a new `Template` object in the ``dbtemplates`` section and use
-   ``flatpages/default.html`` as the value for the ``name`` field. For the
-   ``content`` field use this example::
-
-        <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
-            "http://www.w3.org/TR/REC-html40/loose.dtd">
-        <html>
-        <head>
-        <title>{{ flatpage.title }}</title>
-        </head>
-        <body>
-        {{ flatpage.content }}
-        </body>
-        </html>
-
-5. Return to the home screen of the admin interface and add a new flat page.
-   Use ``/`` (yep, just a forward slash) and whatever ``title`` and 
-   ``content`` you prefer. Please make sure you select the default site
-   ``example.com`` before you save the flat page.
-6. Visit http://127.0.0.1:8000/ and see the flat page you just created 
-   rendered with the ``flatpages/default.html`` template provided by  
-   ``dbtemplates``.
-
-.. _flatpages app: http://docs.djangoproject.com/en/dev/ref/contrib/flatpages/
-
