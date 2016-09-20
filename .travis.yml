@@ -1,28 +1,34 @@
+sudo: false
+cache: pip
 language: python
 python:
 - 2.6
 - 2.7
-before_install:
-- export DJANGO_SETTINGS_MODULE=dbtemplates.test_settings
 install:
 - pip install -e .
 - pip install -r requirements/tests.txt Django==$DJANGO
 before_script:
-- flake8 dbtemplates --ignore=E501
+- flake8 dbtemplates --ignore=E501 --exclude=migrations
 script:
 - coverage run --branch --source=dbtemplates `which django-admin.py` test dbtemplates
 - coverage report --omit="dbtemplates/test*,dbtemplates/migrations*"
 env:
-- DJANGO="1.4.5 importlib"
-- DJANGO="1.5.1 importlib"
-- DJANGO=1.7.8
-- DJANGO=1.8
+  global:
+    - DJANGO_SETTINGS_MODULE=dbtemplates.test_settings
+  matrix:
+    - DJANGO="1.4.5 importlib"
+    - DJANGO="1.5.1 importlib"
+    - DJANGO=1.7.8
+    - DJANGO=1.8.11
+    - DJANGO=1.9.4
 matrix:
   exclude:
   - python: 2.6
     env: DJANGO=1.7.8
   - python: 2.6
-    env: DJANGO=1.8
+    env: DJANGO=1.8.11
+  - python: 2.6
+    env: DJANGO=1.9.4
 deploy:
   provider: pypi
   user: jazzband
@@ -33,4 +39,4 @@ deploy:
     tags: true
     repo: jazzband/django-dbtemplates
     python: "2.7"
-    condition: "$DJANGO = 1.8"
+    condition: "$DJANGO = 1.8.11"
