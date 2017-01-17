@@ -80,7 +80,7 @@ class TemplateAdminForm(forms.ModelForm):
     Custom AdminForm to make the content textarea wider.
     """
     content = forms.CharField(
-        widget=TemplateContentTextArea({'rows': '24'}),
+        widget=TemplateContentTextArea(attrs={'rows': '24'}),
         help_text=content_help_text, required=False)
 
     class Meta:
