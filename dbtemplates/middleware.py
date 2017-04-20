@@ -14,4 +14,6 @@ class RecordRequestMiddleware(MiddlewareMixin):
 
 
 def get_request():
-    return _request[0]
+    if _request:
+        return _request[0]
+    return None
