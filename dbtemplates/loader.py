@@ -6,6 +6,7 @@ from django.template.loaders.base import Loader as BaseLoader
 from dbtemplates.models import Template
 from dbtemplates.utils.cache import (cache, get_cache_key,
                                      set_and_return, get_cache_notfound_key)
+from .middleware import get_request
 
 
 class Loader(BaseLoader):
@@ -38,7 +39,7 @@ class Loader(BaseLoader):
         # * If all of the above steps have failed we generate a new key
         #   in the cache indicating that queries failed, with the current
         #   timestamp.
-        site = Site.objects.get_current()
+        site = Site.objects.get_current(get_request())
         cache_key = get_cache_key(template_name)
         if cache:
             try:
