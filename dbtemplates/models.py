@@ -10,6 +10,7 @@ from django.db.models import signals
 from django.template import TemplateDoesNotExist
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
+from .middleware import get_request
 
 
 class Template(models.Model):
@@ -70,7 +71,7 @@ def add_default_site(instance, **kwargs):
     """
     if not settings.DBTEMPLATES_ADD_DEFAULT_SITE:
         return
-    current_site = Site.objects.get_current()
+    current_site = Site.objects.get_current(get_request())
     if current_site not in instance.sites.all():
         instance.sites.add(current_site)
 

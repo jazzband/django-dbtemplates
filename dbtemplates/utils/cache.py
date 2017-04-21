@@ -3,6 +3,7 @@ from django.contrib.sites.models import Site
 from django.template.defaultfilters import slugify
 
 from dbtemplates.conf import settings
+from ..middleware import get_request
 
 
 def get_cache_backend():
@@ -17,11 +18,12 @@ def get_cache_backend():
     signals.request_finished.connect(cache.close)
     return cache
 
+
 cache = get_cache_backend()
 
 
 def get_cache_key(name):
-    current_site = Site.objects.get_current()
+    current_site = Site.objects.get_current(get_request())
     return 'dbtemplates::%s::%s' % (slugify(name), current_site.pk)
 
 
