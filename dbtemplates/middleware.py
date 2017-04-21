@@ -1,15 +1,18 @@
-from django.utils.deprecation import MiddlewareMixin
+try:
+    from django.utils.deprecation import MiddlewareMixin
+except ImportError:
+    class MiddlewareMixin(object):
+        pass
 
-_request = []
+_request = [None]
 
 
 class RecordRequestMiddleware(MiddlewareMixin):
     def process_request(self, request):
-         _request.append(request)
-
+        _request[0] = request
 
     def process_response(self, request, response):
-        _request.pop()
+        _request[0] = None
         return response
 
 

@@ -12,6 +12,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 from .middleware import get_request
 
+
 class Template(models.Model):
     """
     Defines a template model for use with the database template loader.

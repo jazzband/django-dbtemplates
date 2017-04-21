@@ -5,6 +5,7 @@ from django.template.defaultfilters import slugify
 from dbtemplates.conf import settings
 from ..middleware import get_request
 
+
 def get_cache_backend():
     """
     Compatibilty wrapper for getting Django's cache backend instance
@@ -16,6 +17,7 @@ def get_cache_backend():
     # cache.close is a no-op
     signals.request_finished.connect(cache.close)
     return cache
+
 
 cache = get_cache_backend()
 
