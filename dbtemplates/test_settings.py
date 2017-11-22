@@ -39,6 +39,9 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'OPTIONS': {
             'loaders': TEMPLATE_LOADERS,
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+            ]
         }
     },
 ]
