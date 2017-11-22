@@ -49,6 +49,7 @@ class CodeMirrorTextArea(forms.Textarea):
 """ % dict(media_prefix=settings.DBTEMPLATES_MEDIA_PREFIX, name=name))
         return mark_safe(u"".join(result))
 
+
 if settings.DBTEMPLATES_USE_CODEMIRROR:
     TemplateContentTextArea = CodeMirrorTextArea
 else:
@@ -160,5 +161,6 @@ class TemplateAdmin(TemplateModelAdmin):
     def site_list(self, template):
         return ", ".join([site.name for site in template.sites.all()])
     site_list.short_description = _('sites')
+
 
 admin.site.register(Template, TemplateAdmin)

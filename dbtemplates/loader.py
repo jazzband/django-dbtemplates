@@ -45,7 +45,7 @@ class Loader(BaseLoader):
                 backend_template = cache.get(cache_key)
                 if backend_template:
                     return backend_template, template_name
-            except:
+            except Exception:
                 pass
 
         # Not found in cache, move on.
@@ -55,7 +55,7 @@ class Loader(BaseLoader):
                 notfound = cache.get(cache_notfound_key)
                 if notfound:
                     raise TemplateDoesNotExist(template_name)
-            except:
+            except Exception:
                 raise TemplateDoesNotExist(template_name)
 
         # Not marked as not-found, move on...

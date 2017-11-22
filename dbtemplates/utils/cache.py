@@ -17,6 +17,7 @@ def get_cache_backend():
     signals.request_finished.connect(cache.close)
     return cache
 
+
 cache = get_cache_backend()
 
 

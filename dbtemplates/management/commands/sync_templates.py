@@ -60,7 +60,7 @@ class Command(BaseCommand):
 
         try:
             site = Site.objects.get_current()
-        except:
+        except Exception:
             raise CommandError("Please make sure to have the sites contrib "
                                "app installed and setup with a site object")
 
