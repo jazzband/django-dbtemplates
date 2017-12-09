@@ -42,7 +42,7 @@ class DbTemplatesTestCase(TestCase):
         loader.template_source_loaders = None
         settings.TEMPLATE_LOADERS = self.old_template_loaders
 
-    def test_basiscs(self):
+    def test_basics(self):
         self.assertEqual(list(self.t1.sites.all()), [self.site1])
         self.assertTrue("base" in self.t1.content)
         self.assertEqual(list(Template.objects.filter(sites=self.site1)),
