@@ -37,8 +37,7 @@ class Migration(migrations.Migration):
             bases=(models.Model,),
             managers=[
                 ('objects', django.db.models.manager.Manager()),
-                ('on_site', django.contrib.sites.managers.CurrentSiteManager(
-                    b'sites')),
+                ('on_site', django.contrib.sites.managers.CurrentSiteManager('sites')),
             ],
         ),
     ]
