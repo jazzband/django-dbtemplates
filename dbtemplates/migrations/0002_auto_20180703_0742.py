@@ -19,7 +19,7 @@ class Migration(migrations.Migration):
                     'The category for this template, useful '
                     'if you want to organize your templates.'
                 ),
-                max_length=50, verbose_name='category', default=b'', blank=True
+                max_length=50, verbose_name='category', default='', blank=True
             ),
         ),
         migrations.AddField(
@@ -27,7 +27,7 @@ class Migration(migrations.Migration):
             name='title',
             field=models.CharField(
                 help_text='The title of this template, used for display only.',
-                max_length=100, verbose_name='title', default=b'', blank=True
+                max_length=100, verbose_name='title', default='', blank=True
             ),
         ),
     ]
