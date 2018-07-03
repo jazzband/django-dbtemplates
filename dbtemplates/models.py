@@ -48,7 +48,7 @@ class Template(models.Model):
         ordering = ('name',)
 
     def __unicode__(self):
-        return self.name
+        return self.title or self.name
 
     def populate(self, name=None):
         """
