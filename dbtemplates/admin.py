@@ -29,7 +29,7 @@ class CodeMirrorTextArea(forms.Textarea):
             settings.DBTEMPLATES_MEDIA_PREFIX, 'css/editor.css')])
         js = [posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'js/codemirror.js')]
 
-    def render(self, name, value, attrs=None):
+    def render(self, name, value, attrs=None, renderer=None):
         result = []
         result.append(
             super(CodeMirrorTextArea, self).render(name, value, attrs))
