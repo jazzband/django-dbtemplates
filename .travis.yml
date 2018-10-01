@@ -21,6 +21,7 @@ after_success:
 deploy:
   provider: pypi
   user: jazzband
+  server: https://jazzband.co/projects/django-dbtemplates/upload
   distributions: "sdist bdist_wheel"
   password:
     secure: B7imNYNndd2HEr79+3/jXLjFo/MdzzHUkH1NJ7G+YFtYjEkRFEaVuPXhuX1LYO9/qzYDcqHVrnsg65ZUXCftAg0/zFZ7zhEn/WEYZA2nkPosoSrYNV+s3XH/DMmpXdG6mKRN4D0mLQXaCwGeuQ2wHFOg7HCsz+tojFwYnEyN9ag=
