@@ -25,8 +25,9 @@ class DbTemplatesTestCase(TestCase):
         self.old_template_loaders = settings.TEMPLATE_LOADERS
         if 'dbtemplates.loader.Loader' not in settings.TEMPLATE_LOADERS:
             loader.template_source_loaders = None
-            settings.TEMPLATE_LOADERS = (list(settings.TEMPLATE_LOADERS) +
-                                         ['dbtemplates.loader.Loader'])
+            settings.TEMPLATE_LOADERS = list(settings.TEMPLATE_LOADERS) + [
+                'dbtemplates.loader.Loader'
+            ]
 
         self.site1, created1 = Site.objects.get_or_create(
             domain="example.com", name="example.com")
