@@ -1,6 +1,27 @@
 Changelog
 =========
 
+v3.0 (2018-01-27)
+-----------------
+
+.. warning::
+
+  This is a backwards-incompatible release!
+
+* Dropped support for Django < 1.11.
+
+* Added support for Django 2.0 and 2.1.
+
+* Added support for Python 3.7.
+
+* Recompiled Russian locale.
+
+* Fixed byte string in migration file that caused the migration
+  system to falsely think that there are new changes.
+
+* Fixed string representation of template model, e.g. to improve
+  readability in choice fields.
+
 v2.0 (2016-09-29)
 -----------------
 
