@@ -10,7 +10,7 @@ from dbtemplates.models import Template
 
 # (propably obsolete) backwards compatability as django already threw out six
 if sys.version_info[0] == 2:
-    input = raw_input
+    input = raw_input  # noqa: F821
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
 
