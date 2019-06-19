@@ -61,8 +61,17 @@ Short installation howto
 3. Sync your database with ``python manage.py syncdb``
 4. Set ``DBTEMPLATES_USE_REVERSION`` setting to ``True``
 
+History compare view
+--------------------
+
+You can also use ``dbtemplates`` together with `django-reversion-compare`_ which
+provides a history compare view to compare two versions of a model which is under
+reversion.
+
 .. _django-reversion: https://github.com/etianen/django-reversion
 .. _django-reversion's documentation: https://django-reversion.readthedocs.io/en/latest/
+.. _django-reversion-compare: https://github.com/jedie/django-reversion-compare
+
 
 .. _commands:
 

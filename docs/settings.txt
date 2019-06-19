@@ -41,6 +41,11 @@ Set to ``False`` by default.
 
 A boolean, if enabled triggers the use of ``django-reversion``.
 
+``DBTEMPLATES_USE_REVERSION_COMPARE``
+-----------------------------
+
+A boolean, if enabled triggers the use of ``django-reversion-compare``.
+
 ``DBTEMPLATES_MEDIA_PREFIX``
 ----------------------------
 
