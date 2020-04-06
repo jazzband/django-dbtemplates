@@ -22,10 +22,10 @@ from dbtemplates.management.commands.sync_templates import (FILES_TO_DATABASE,
 
 class DbTemplatesTestCase(TestCase):
     def setUp(self):
-        self.old_template_loaders = settings.TEMPLATE_LOADERS
-        if 'dbtemplates.loader.Loader' not in settings.TEMPLATE_LOADERS:
+        self.old_TEMPLATES = settings.TEMPLATES
+        if 'dbtemplates.loader.Loader' not in settings.TEMPLATES:
             loader.template_source_loaders = None
-            settings.TEMPLATE_LOADERS = list(settings.TEMPLATE_LOADERS) + [
+            settings.TEMPLATES = list(settings.TEMPLATES) + [
                 'dbtemplates.loader.Loader'
             ]
 
@@ -41,7 +41,7 @@ class DbTemplatesTestCase(TestCase):
 
     def tearDown(self):
         loader.template_source_loaders = None
-        settings.TEMPLATE_LOADERS = self.old_template_loaders
+        settings.TEMPLATES = self.old_TEMPLATES
 
     def test_basics(self):
         self.assertEqual(list(self.t1.sites.all()), [self.site1])

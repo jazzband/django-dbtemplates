@@ -2,7 +2,7 @@ import posixpath
 
 from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
-from django.utils.six import string_types
+from six import string_types
 
 from appconf import AppConf
 
