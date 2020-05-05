@@ -1,15 +1,16 @@
 import io
 import os
+import sys
 from django.contrib.sites.models import Site
 from django.core.management.base import CommandError, BaseCommand
 from django.template.utils import get_app_template_dirs
 from django.template.loader import _engine_list
-try:
-    from django.utils.six import input as raw_input
-except ImportError:
-    pass
 
 from dbtemplates.models import Template
+
+# (propably obsolete) backwards compatability as django already threw out six
+if sys.version_info[0] == 2:
+    input = raw_input  # noqa: F821
 
 ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
 
@@ -83,7 +84,7 @@ class Command(BaseCommand):
                         t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
                         if not force:
-                            confirm = raw_input(
+                            confirm = input(
                                 "\nA '%s' template doesn't exist in the "
                                 "database.\nCreate it with '%s'?"
                                 " (y/[n]): """ % (name, path))
@@ -95,7 +96,7 @@ class Command(BaseCommand):
                     else:
                         while 1:
                             if overwrite == ALWAYS_ASK:
-                                confirm = raw_input(
+                                confirm = input(
                                     "\n%(template)s exists in the database.\n"
                                     "(1) Overwrite %(template)s with '%(path)s'\n"
                                     "(2) Overwrite '%(path)s' with %(template)s\n"
