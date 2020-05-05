@@ -29,7 +29,7 @@ class Command(BaseCommand):
             "-e", "--ext",
             dest="ext", action="store", default="html",
             help="extension of the files you want to "
-                 "sync with the database [default: %default]")
+                 "sync with the database [default: %(default)s]")
         parser.add_argument(
             "-f", "--force",
             action="store_true", dest="force", default=False,
