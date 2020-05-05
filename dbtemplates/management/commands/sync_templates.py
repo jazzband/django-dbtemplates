@@ -16,6 +16,7 @@ ALWAYS_ASK, FILES_TO_DATABASE, DATABASE_TO_FILES = ('0', '1', '2')
 DIRS = []
 for engine in _engine_list():
     DIRS.extend(engine.dirs)
+DIRS = tuple(DIRS)
 app_template_dirs = get_app_template_dirs('templates')
 
 
