@@ -18,12 +18,15 @@ DATABASES = {
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sites',
+    'django.contrib.sessions',
+    'django.contrib.messages',
     'django.contrib.admin',
     'django.contrib.auth',
     'dbtemplates',
 ]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = (
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
 )
@@ -41,6 +44,7 @@ TEMPLATES = [
             'loaders': TEMPLATE_LOADERS,
             'context_processors': [
                 'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ]
         }
     },
