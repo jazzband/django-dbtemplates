@@ -1,16 +1,6 @@
-import ast
 import os
 import io
 from setuptools import setup, find_packages
-
-
-class VersionFinder(ast.NodeVisitor):
-    def __init__(self):
-        self.version = None
-
-    def visit_Assign(self, node):
-        if node.targets[0].id == '__version__':
-            self.version = node.value.s
 
 
 def read(*parts):
@@ -19,15 +9,10 @@ def read(*parts):
         return fp.read()
 
 
-def find_version(*parts):
-    finder = VersionFinder()
-    finder.visit(ast.parse(read(*parts)))
-    return finder.version
-
-
 setup(
     name='django-dbtemplates',
-    version=find_version('dbtemplates', '__init__.py'),
+    use_scm_version={"version_scheme": "post-release"},
+    setup_requires=["setuptools_scm"],
     description='Template loader for templates stored in the database',
     long_description=read('README.rst'),
     author='Jannis Leidel',
@@ -58,5 +43,5 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Framework :: Django',
     ],
-    install_requires=['django-appconf >= 0.4', 'six'],
+    install_requires=['django-appconf >= 0.4'],
 )

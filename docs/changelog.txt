@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v4.0 (unreleased)
+-----------------
+
+* Moved test runner to GitHub Actions:
+
+  http://github.com/jazzband/django-dbtemplates/actions
+
+
 v3.0 (2019-01-27)
 -----------------
 
