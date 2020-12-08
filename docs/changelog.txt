@@ -4,10 +4,17 @@ Changelog
 v4.0 (unreleased)
 -----------------
 
+.. warning::
+
+  This is a backwards-incompatible release!
+
+* Dropped support for Python 2.7.
+
+* Added support for Python 3.8.
+
 * Moved test runner to GitHub Actions:
 
   http://github.com/jazzband/django-dbtemplates/actions
-
 
 v3.0 (2019-01-27)
 -----------------
