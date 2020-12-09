@@ -8,12 +8,10 @@ from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
-from six import python_2_unicode_compatible
 from django.utils.translation import ugettext_lazy as _
 from django.utils.timezone import now
 
 
-@python_2_unicode_compatible
 class Template(models.Model):
     """
     Defines a template model for use with the database template loader.

@@ -5,9 +5,9 @@ django-dbtemplates
    :alt: Jazzband
    :target: https://jazzband.co/
 
-.. image:: https://travis-ci.org/jazzband/django-dbtemplates.svg?branch=master
-    :alt: Build Status
-    :target: http://travis-ci.org/jazzband/django-dbtemplates
+.. image:: https://github.com/jazzband/django-dbtemplates/workflows/Test/badge.svg
+   :target: https://github.com/jazzband/django-dbtemplates/actions
+   :alt: GitHub Actions
 
 .. image:: https://codecov.io/github/jazzband/django-dbtemplates/coverage.svg?branch=master
    :alt: Codecov
