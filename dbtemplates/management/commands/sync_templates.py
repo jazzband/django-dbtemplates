@@ -72,7 +72,7 @@ class Command(BaseCommand):
                 for f in [f for f in filenames
                           if f.endswith(extension) and not f.startswith(".")]:
                     path = os.path.join(dirpath, f)
-                    name = path.split(templatedir)[1]
+                    name = path.split(str(templatedir))[1]
                     if name.startswith('/'):
                         name = name[1:]
                     try:
