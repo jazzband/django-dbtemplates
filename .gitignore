@@ -1,3 +1,6 @@
+.*
+!.gitignore
+!.coveragerc
 *.pyc
 .*.swp
 MANIFEST
