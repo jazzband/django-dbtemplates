@@ -65,7 +65,7 @@ class Command(BaseCommand):
             tpl_dirs = app_template_dirs + DIRS
         else:
             tpl_dirs = DIRS + app_template_dirs
-        templatedirs = [d for d in tpl_dirs if os.path.isdir(d)]
+        templatedirs = [str(d) for d in tpl_dirs if os.path.isdir(d)]
 
         for templatedir in templatedirs:
             for dirpath, subdirs, filenames in os.walk(templatedir):
