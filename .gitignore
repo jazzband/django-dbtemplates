@@ -8,3 +8,5 @@ docs/_build
 .tox/
 *.egg/
 .coverage
+.env
+codebuild_build.sh

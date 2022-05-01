@@ -1,0 +1,4 @@
+**/*.sqlite3
+docker
+buildspec.yml
+.mypy_cache

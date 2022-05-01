@@ -1,0 +1,30 @@
+version: 0.2
+env:
+  shell: bash
+phases:
+  pre_build:
+    on-failure: ABORT
+    commands:
+      - echo "pre_build"
+    finally:
+      - echo "CODEBUILD_BUILD_SUCCEEDING is $CODEBUILD_BUILD_SUCCEEDING"
+  build:
+    on-failure: ABORT
+    commands:
+      - echo "do some testing. ${BUILD_DOCKER}"
+      - BUILD_DOCKER=true
+
+  post_build:
+    on-failure: ABORT
+    commands:
+      - |
+        if [ "${BUILD_DOCKER}" = "true" ]; then
+          SRC_IMAGES=($APPBASE_IMAGE $BUILDBASE_IMAGE)
+          for SRC_IMAGE in "${SRC_IMAGES[@]}"; do
+            ECR=$(aws ecr describe-repositories --repository-names $SRC_IMAGE | jq -r ".repositories[0].repositoryUri")
+            aws ecr get-login-password --region $AWS_REGION | docker login --username AWS --password-stdin $ECR
+            docker build -t $SRC_IMAGE --platform $PLATFORM --build-arg BASE_IMAGE=$ECR --build-arg TAG=$TAG --no-cache -f docker/Dockerfile .
+            docker tag ${SRC_IMAGE}:${TAG} ${ECR}:${TAG}
+            docker push ${ECR}:${TAG}
+          done
+        fi
