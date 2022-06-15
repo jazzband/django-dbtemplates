@@ -10,7 +10,7 @@ def get_cache_backend():
     """
     Compatibilty wrapper for getting Django's cache backend instance
     """
-    if django.VERSION[0] >= 3 and django.VERSION[1] >= 2:
+    if (django.VERSION[0] >= 3 and django.VERSION[1] >= 2) or django.VERSION[0] >= 4:
         from django.core.cache import caches
         cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
     else:

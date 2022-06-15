@@ -2,7 +2,10 @@ import posixpath
 from django import forms
 from django.contrib import admin
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.translation import ungettext, ugettext_lazy as _
+try:
+    from django.utils.translation import ungettext, ugettext_lazy as _
+except ImportError:
+    from django.utils.translation import ngettext, gettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from dbtemplates.conf import settings
