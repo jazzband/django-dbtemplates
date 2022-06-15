@@ -5,7 +5,7 @@ from setuptools import setup, find_packages
 
 def read(*parts):
     filename = os.path.join(os.path.dirname(__file__), *parts)
-    with io.open(filename, encoding="utf-8") as fp:
+    with open(filename, encoding="utf-8") as fp:
         return fp.read()
 
 
