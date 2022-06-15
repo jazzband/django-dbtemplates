@@ -52,7 +52,7 @@ class Command(BaseCommand):
         delete = options.get('delete')
 
         if not extension.startswith("."):
-            extension = ".%s" % extension
+            extension = f".{extension}"
 
         try:
             site = Site.objects.get_current()
@@ -110,7 +110,7 @@ class Command(BaseCommand):
                                             os.remove(path)
                                         except OSError:
                                             raise CommandError(
-                                                "Couldn't delete %s" % path)
+                                                f"Couldn't delete {path}")
                                 elif confirm == DATABASE_TO_FILES:
                                     with open(path, 'w', encoding='utf-8') as f:
                                         f.write(t.content)

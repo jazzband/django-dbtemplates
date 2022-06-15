@@ -43,7 +43,7 @@ class Command(BaseCommand):
         verbosity = int(options.get('verbosity', 1))
         for error_code in (404, 500):
             template, created = Template.objects.get_or_create(
-                name="%s.html" % error_code)
+                name=f"{error_code}.html")
             if created or (not created and force):
                 template.content = TEMPLATES.get(error_code, '')
                 template.save()

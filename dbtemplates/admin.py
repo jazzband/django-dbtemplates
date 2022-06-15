@@ -144,7 +144,7 @@ class TemplateAdmin(TemplateModelAdmin):
         for template in queryset:
             valid, error = check_template_syntax(template)
             if not valid:
-                errors.append('{}: {}'.format(template.name, error))
+                errors.append(f'{template.name}: {error}')
         if errors:
             count = len(errors)
             message = ungettext(
