@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 #
 # django-dbtemplates documentation build configuration file, created by
 # sphinx-quickstart on Fri Oct  9 14:52:11 2009.
@@ -37,8 +36,8 @@ source_suffix = '.txt'
 master_doc = 'index'
 
 # General information about the project.
-project = u'django-dbtemplates'
-copyright = u'2007-2019, Jannis Leidel and contributors'
+project = 'django-dbtemplates'
+copyright = '2007-2019, Jannis Leidel and contributors'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -177,8 +176,8 @@ htmlhelp_basename = 'django-dbtemplatesdoc'
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-  ('index', 'django-dbtemplates.tex', u'django-dbtemplates Documentation',
-   u'Jannis Leidel and contributors', 'manual'),
+  ('index', 'django-dbtemplates.tex', 'django-dbtemplates Documentation',
+   'Jannis Leidel and contributors', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of

@@ -1,4 +1,3 @@
-import io
 import os
 from django.contrib.sites.models import Site
 from django.core.management.base import CommandError, BaseCommand
@@ -53,7 +52,7 @@ class Command(BaseCommand):
         delete = options.get('delete')
 
         if not extension.startswith("."):
-            extension = ".%s" % extension
+            extension = f".{extension}"
 
         try:
             site = Site.objects.get_current()
@@ -84,7 +83,7 @@ class Command(BaseCommand):
                                 "database.\nCreate it with '%s'?"
                                 " (y/[n]): """ % (name, path))
                         if force or confirm.lower().startswith('y'):
-                            with io.open(path, encoding='utf-8') as f:
+                            with open(path, encoding='utf-8') as f:
                                 t = Template(name=name, content=f.read())
                             t.save()
                             t.sites.add(site)
@@ -102,7 +101,7 @@ class Command(BaseCommand):
                             if confirm in ('', FILES_TO_DATABASE,
                                            DATABASE_TO_FILES):
                                 if confirm == FILES_TO_DATABASE:
-                                    with io.open(path, encoding='utf-8') as f:
+                                    with open(path, encoding='utf-8') as f:
                                         t.content = f.read()
                                         t.save()
                                         t.sites.add(site)
@@ -111,9 +110,9 @@ class Command(BaseCommand):
                                             os.remove(path)
                                         except OSError:
                                             raise CommandError(
-                                                u"Couldn't delete %s" % path)
+                                                f"Couldn't delete {path}")
                                 elif confirm == DATABASE_TO_FILES:
-                                    with io.open(path, 'w', encoding='utf-8') as f:
+                                    with open(path, 'w', encoding='utf-8') as f:
                                         f.write(t.content)
                                     if delete:
                                         t.delete()

@@ -41,8 +41,8 @@ class CodeMirrorTextArea(forms.Textarea):
     def render(self, name, value, attrs=None, renderer=None):
         result = []
         result.append(
-            super(CodeMirrorTextArea, self).render(name, value, attrs))
-        result.append(u"""
+            super().render(name, value, attrs))
+        result.append("""
 <script type="text/javascript">
   var editor = CodeMirror.fromTextArea('id_%(name)s', {
     path: "%(media_prefix)sjs/",
@@ -56,7 +56,7 @@ class CodeMirrorTextArea(forms.Textarea):
   });
 </script>
 """ % dict(media_prefix=settings.DBTEMPLATES_MEDIA_PREFIX, name=name))
-        return mark_safe(u"".join(result))
+        return mark_safe("".join(result))
 
 
 if settings.DBTEMPLATES_USE_CODEMIRROR:
@@ -150,7 +150,7 @@ class TemplateAdmin(TemplateModelAdmin):
         for template in queryset:
             valid, error = check_template_syntax(template)
             if not valid:
-                errors.append('%s: %s' % (template.name, error))
+                errors.append(f'{template.name}: {error}')
         if errors:
             count = len(errors)
             message = ungettext(
