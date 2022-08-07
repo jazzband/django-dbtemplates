@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 from dbtemplates.conf import settings
 from dbtemplates.utils.cache import (add_template_to_cache,
                                      remove_cached_template)
@@ -24,7 +23,7 @@ class Template(models.Model):
     name = models.CharField(_('name'), max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
-    sites = models.ManyToManyField(Site, verbose_name=_(u'sites'),
+    sites = models.ManyToManyField(Site, verbose_name=_('sites'),
                                    blank=True)
     creation_date = models.DateTimeField(_('creation date'),
                                          default=now)
@@ -63,7 +62,7 @@ class Template(models.Model):
         # populate the template instance with its content.
         if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT and not self.content:
             self.populate()
-        super(Template, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
 
 def add_default_site(instance, **kwargs):
