@@ -5,7 +5,8 @@ from django.core.exceptions import ImproperlyConfigured
 try:
     from django.utils.translation import ungettext, ugettext_lazy as _
 except ImportError:
-    from django.utils.translation import ngettext, gettext_lazy as _
+    from django.utils.translation import ngettext as ungettext, \
+        gettext_lazy as _
 from django.utils.safestring import mark_safe
 
 from dbtemplates.conf import settings
@@ -17,7 +18,8 @@ from dbtemplates.utils.template import check_template_syntax
 # use reversion_compare's CompareVersionAdmin or reversion's VersionAdmin as
 # the base admin class if yes
 if settings.DBTEMPLATES_USE_REVERSION_COMPARE:
-    from reversion_compare.admin import CompareVersionAdmin as TemplateModelAdmin
+    from reversion_compare.admin import CompareVersionAdmin \
+        as TemplateModelAdmin
 elif settings.DBTEMPLATES_USE_REVERSION:
     from reversion.admin import VersionAdmin as TemplateModelAdmin
 else:
@@ -33,7 +35,8 @@ class CodeMirrorTextArea(forms.Textarea):
     class Media:
         css = dict(screen=[posixpath.join(
             settings.DBTEMPLATES_MEDIA_PREFIX, 'css/editor.css')])
-        js = [posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX, 'js/codemirror.js')]
+        js = [posixpath.join(settings.DBTEMPLATES_MEDIA_PREFIX,
+                             'js/codemirror.js')]
 
     def render(self, name, value, attrs=None, renderer=None):
         result = []
@@ -152,7 +155,8 @@ class TemplateAdmin(TemplateModelAdmin):
             count = len(errors)
             message = ungettext(
                 "Template syntax check FAILED for %(names)s.",
-                "Template syntax check FAILED for %(count)d templates: %(names)s.",
+                "Template syntax check FAILED for "
+                "%(count)d templates: %(names)s.",
                 count)
             self.message_user(request, message %
                               {'count': count, 'names': ', '.join(errors)})

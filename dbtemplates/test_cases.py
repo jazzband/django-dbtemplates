@@ -125,7 +125,7 @@ class DbTemplatesTestCase(TestCase):
                          verbosity=0, overwrite=DATABASE_TO_FILES)
             self.assertEqual('temp test modified',
                              open(temp_template_path,
-                                     encoding='utf-8').read())
+                                  encoding='utf-8').read())
 
             call_command('sync_templates', force=True, verbosity=0,
                          delete=True, overwrite=DATABASE_TO_FILES)

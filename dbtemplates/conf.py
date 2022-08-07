@@ -47,8 +47,8 @@ class DbTemplatesConf(AppConf):
 
     def configure_use_reversion_compare(self, value):
         if value and 'reversion_compare' not in settings.INSTALLED_APPS:
-            raise ImproperlyConfigured("Please add 'reversion_compare' to your "
-                                       "INSTALLED_APPS setting to make "
+            raise ImproperlyConfigured("Please add 'reversion_compare' to your"
+                                       " INSTALLED_APPS setting to make "
                                        "use of it in dbtemplates.")
         return value
 

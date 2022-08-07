@@ -30,7 +30,8 @@ class Loader(BaseLoader):
         content, _ = self._load_template_source(origin.template_name)
         return content
 
-    def _load_and_store_template(self, template_name, cache_key, site, **params):
+    def _load_and_store_template(self, template_name, cache_key, site,
+                                 **params):
         template = Template.objects.get(name__exact=template_name, **params)
         db = router.db_for_read(Template, instance=template)
         display_name = f'dbtemplates:{db}:{template_name}:{site.domain}'
@@ -73,11 +74,11 @@ class Loader(BaseLoader):
 
         try:
             return self._load_and_store_template(template_name, cache_key,
-                                                site, sites__in=[site.id])
+                                                 site, sites__in=[site.id])
         except (Template.MultipleObjectsReturned, Template.DoesNotExist):
             try:
                 return self._load_and_store_template(template_name, cache_key,
-                                                    site, sites__isnull=True)
+                                                     site, sites__isnull=True)
             except (Template.MultipleObjectsReturned, Template.DoesNotExist):
                 pass
 
