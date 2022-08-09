@@ -8,7 +8,7 @@ from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
 try:
-    # Django >= 4.0 
+    # Django >= 4.0
     from django.utils.translation import gettext_lazy as _
 except ImportError:
     # Django 3.2
