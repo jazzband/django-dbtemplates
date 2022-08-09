@@ -1,13 +1,6 @@
 Changelog
 =========
 
-v4.1 (2022-06-15, iplweb)
-
-* Python 3.9, 3.10 support
-
-* Django 4.x support
-
-
 v4.0 (unreleased)
 -----------------
 
@@ -17,11 +10,13 @@ v4.0 (unreleased)
 
 * Dropped support for Python 2.7.
 
-* Added support for Python 3.8.
+* Added support for Python 3.8, 3.9, 3.10.
 
 * Moved test runner to GitHub Actions:
 
   http://github.com/jazzband/django-dbtemplates/actions
+
+* Django 4.x support
 
 v3.0 (2019-01-27)
 -----------------
