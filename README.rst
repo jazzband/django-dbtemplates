@@ -5,9 +5,8 @@ django-dbtemplates
    :alt: Jazzband
    :target: https://jazzband.co/
 
-.. image:: https://github.com/mpasternak/django-dbtemplates-iplweb/workflows/Test/badge.svg
-   :target: https://github.com/mpasternak/django-dbtemplates-iplweb/actions
-   :alt: GitHub Actions
+.. image:: https://github.com/jazzband/django-dbtemplates/workflows/Test/badge.svg
+    :target: https://github.com/jazzband/django-dbtemplates/actions
 
 .. image:: https://codecov.io/github/jazzband/django-dbtemplates/coverage.svg?branch=master
    :alt: Codecov
