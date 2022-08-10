@@ -9,16 +9,9 @@ def get_cache_backend():
     """
     Compatibilty wrapper for getting Django's cache backend instance
     """
-    if (django.VERSION[0] >= 3 and django.VERSION[1] >= 2) or django.VERSION[
-        0
-    ] >= 4:  # noqa
-        from django.core.cache import caches
-
-        cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
-    else:
-        from django.core.cache import _create_cache
-
-        cache = _create_cache(settings.DBTEMPLATES_CACHE_BACKEND)
+    from django.core.cache import caches
+    cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
+    
     # Some caches -- python-memcached in particular -- need to do a cleanup at
     # the end of a request cycle. If not implemented in a particular backend
     # cache.close is a no-op
