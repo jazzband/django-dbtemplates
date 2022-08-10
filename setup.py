@@ -10,7 +10,7 @@ def read(*parts):
 
 
 setup(
-    name="django-dbtemplates-iplweb",
+    name="django-dbtemplates",
     use_scm_version={"version_scheme": "post-release"},
     setup_requires=["setuptools_scm"],
     description="Template loader for templates stored in the database",
