@@ -6,8 +6,7 @@ django-dbtemplates
    :target: https://jazzband.co/
 
 .. image:: https://github.com/jazzband/django-dbtemplates/workflows/Test/badge.svg
-   :target: https://github.com/jazzband/django-dbtemplates/actions
-   :alt: GitHub Actions
+    :target: https://github.com/jazzband/django-dbtemplates/actions
 
 .. image:: https://codecov.io/github/jazzband/django-dbtemplates/coverage.svg?branch=master
    :alt: Codecov

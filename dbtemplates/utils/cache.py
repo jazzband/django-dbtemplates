@@ -1,21 +1,16 @@
-import django
-from django.core import signals
-from django.contrib.sites.models import Site
-from django.template.defaultfilters import slugify
-
 from dbtemplates.conf import settings
+from django.contrib.sites.models import Site
+from django.core import signals
+from django.template.defaultfilters import slugify
 
 
 def get_cache_backend():
     """
     Compatibilty wrapper for getting Django's cache backend instance
     """
-    if django.VERSION[0] >= 3 and django.VERSION[1] >= 2:
-        from django.core.cache import caches
-        cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
-    else:
-        from django.core.cache import _create_cache
-        cache = _create_cache(settings.DBTEMPLATES_CACHE_BACKEND)
+    from django.core.cache import caches
+    cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
+
     # Some caches -- python-memcached in particular -- need to do a cleanup at
     # the end of a request cycle. If not implemented in a particular backend
     # cache.close is a no-op
@@ -28,11 +23,11 @@ cache = get_cache_backend()
 
 def get_cache_key(name):
     current_site = Site.objects.get_current()
-    return f'dbtemplates::{slugify(name)}::{current_site.pk}'
+    return f"dbtemplates::{slugify(name)}::{current_site.pk}"
 
 
 def get_cache_notfound_key(name):
-    return get_cache_key(name) + '::notfound'
+    return get_cache_key(name) + "::notfound"
 
 
 def remove_notfound_key(instance):

@@ -27,7 +27,6 @@ setup(
             "static/dbtemplates/js/*.js",
         ],
     },
-    python_requires=">=3.7",
     classifiers=[
         "Development Status :: 5 - Production/Stable",
         "Environment :: Web Environment",
@@ -43,5 +42,7 @@ setup(
         "Programming Language :: Python :: 3.10",
         "Framework :: Django",
     ],
+    python_requires=">=3.7",
     install_requires=["django-appconf >= 0.4"],
 )
+
