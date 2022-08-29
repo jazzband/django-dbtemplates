@@ -1,7 +1,7 @@
 Changelog
 =========
 
-v4.0 (unreleased)
+v4.0 (2022-08-29)
 -----------------
 
 .. warning::
