@@ -1,6 +1,7 @@
 import os
 import shutil
 import tempfile
+from unittest import mock
 
 from django.conf import settings as django_settings
 from django.core.cache.backends.base import BaseCache
@@ -151,3 +152,27 @@ class DbTemplatesTestCase(TestCase):
     def test_get_cache_name(self):
         self.assertEqual(get_cache_key('name with spaces'),
                          'dbtemplates::name-with-spaces::1')
+
+    def test_cache_invalidation(self):
+        # Add t1 into the cache of site2
+        self.t1.sites.add(self.site2)
+        with mock.patch('django.contrib.sites.models.SiteManager.get_current',
+                        return_value=self.site2):
+            result = loader.get_template("base.html").render()
+            self.assertEqual(result, 'base')
+
+        # Update content
+        self.t1.content = 'new content'
+        self.t1.save()
+        result = loader.get_template("base.html").render()
+        self.assertEqual(result, 'new content')
+
+        # Cache invalidation should work across sites.
+        # Site2 should see the new content.
+        with mock.patch('django.contrib.sites.models.SiteManager.get_current',
+                        return_value=self.site2):
+            result = loader.get_template("base.html").render()
+            self.assertEqual(result, 'new content')
+
+
+
