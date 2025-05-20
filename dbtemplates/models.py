@@ -11,7 +11,6 @@ from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
 from django.utils.translation import gettext_lazy as _
-from django.utils.timezone import now
 
 
 class Template(models.Model):
@@ -24,10 +23,8 @@ class Template(models.Model):
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, verbose_name=_('sites'),
                                    blank=True)
-    creation_date = models.DateTimeField(_('creation date'),
-                                         default=now)
-    last_changed = models.DateTimeField(_('last changed'),
-                                        default=now)
+    creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
+    last_changed = models.DateTimeField(_('last changed'), auto_now=True)
 
     objects = models.Manager()
     on_site = CurrentSiteManager('sites')
@@ -56,7 +53,6 @@ class Template(models.Model):
             pass
 
     def save(self, *args, **kwargs):
-        self.last_changed = now()
         # If content is empty look for a template with the given name and
         # populate the template instance with its content.
         if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT and not self.content:
