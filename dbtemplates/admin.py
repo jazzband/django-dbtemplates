@@ -97,6 +97,7 @@ class TemplateAdminForm(forms.ModelForm):
 
 class TemplateAdmin(TemplateModelAdmin):
     form = TemplateAdminForm
+    readonly_fields = ['creation_date', 'last_changed']
     fieldsets = (
         (None, {
             'fields': ('name', 'content'),
