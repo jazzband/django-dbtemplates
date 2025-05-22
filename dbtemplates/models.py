@@ -19,6 +19,8 @@ class Template(models.Model):
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
     """
+    id = models.AutoField(primary_key=True, verbose_name=_('ID'),
+                          serialize=False, auto_created=True)
     name = models.CharField(_('name'), max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
