@@ -3,8 +3,7 @@ Setup
 
 1. Get the source from the `Git repository`_ or install it from the
    Python Package Index by running ``pip install django-dbtemplates``.
-2. Follow the instructions in the INSTALL file
-3. Edit the settings.py of your Django site:
+2. Edit the settings.py of your Django site:
 
    * Add ``dbtemplates`` to the ``INSTALLED_APPS`` setting
 
@@ -61,8 +60,8 @@ Setup
      from the database to be used to override templates in other locations,
      put ``dbtemplates.loader.Loader`` at the beginning of ``loaders``.
 
-4. Sync your database ``python manage.py migrate``
-5. Restart your Django server
+3. Sync your database ``python manage.py migrate``
+4. Restart your Django server
 
 .. _Git repository: https://github.com/jazzband/django-dbtemplates/
 
