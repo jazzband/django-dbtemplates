@@ -36,6 +36,9 @@ class AbstractTemplateMixin(models.Model):
         verbose_name = _('template')
         verbose_name_plural = _('templates')
         ordering = ('name',)
+        indexes = [
+            models.Index(fields=["name"], name="template_name_idx"),
+        ]
 
     def __str__(self):
         return self.name
