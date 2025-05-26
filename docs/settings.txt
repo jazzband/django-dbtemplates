@@ -22,6 +22,18 @@ To disable this feature set ``DBTEMPLATES_AUTO_POPULATE_CONTENT`` to
 The dotted Python path to the cache backend class. See
 :ref:`Caching <caching>` for details.
 
+``DBTEMPLATES_UNIQUE``
+----------------------
+
+A boolean specifying whether or not template names should be checked for
+uniqueness on a per-site basis when a template is added to a site or vice
+versa. If a duplicate template name (for a site shared in common between the two
+templates) is detected, and ``IntegrityError` is raised.
+
+Even with this set to ``True``, template names can be non-unique on a global
+basis as long as long as they are not added to the same site. This checks only
+that a site has two templates that have the same name.
+
 ``DBTEMPLATES_USE_CODEMIRROR``
 ------------------------------
 
