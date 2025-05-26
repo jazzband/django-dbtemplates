@@ -13,7 +13,7 @@ from django.template import TemplateDoesNotExist
 from django.utils.translation import gettext_lazy as _
 
 
-class Template(models.Model):
+class AbstractTemplateMixin(models.Model):
     """
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
@@ -32,7 +32,7 @@ class Template(models.Model):
     on_site = CurrentSiteManager('sites')
 
     class Meta:
-        db_table = 'django_template'
+        abstract = True
         verbose_name = _('template')
         verbose_name_plural = _('templates')
         ordering = ('name',)
@@ -60,6 +60,13 @@ class Template(models.Model):
         if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT and not self.content:
             self.populate()
         super().save(*args, **kwargs)
+
+
+class Template(AbstractTemplateMixin, models.Model):
+    class Meta(AbstractTemplateMixin.Meta):
+        db_table = 'django_template'
+        verbose_name = _('template')
+        verbose_name_plural = _('templates')
 
 
 def add_default_site(instance, **kwargs):
