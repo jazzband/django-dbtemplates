@@ -5,6 +5,7 @@ import tempfile
 from django.conf import settings as django_settings
 from django.core.cache.backends.base import BaseCache
 from django.core.management import call_command
+from django.db.utils import IntegrityError
 from django.template import loader, TemplateDoesNotExist
 from django.test import TestCase
 
@@ -151,3 +152,15 @@ class DbTemplatesTestCase(TestCase):
     def test_get_cache_name(self):
         self.assertEqual(get_cache_key('name with spaces'),
                          'dbtemplates::name-with-spaces::1')
+
+    def test_template_name_uniqueness(self):
+        t1 = Template.objects.create(
+            name="test name",
+            content="test content",
+        )
+
+        with self.assertRaises(IntegrityError):
+            t2 = Template.objects.create(
+                name="test name",
+                content="second test content",
+            )

@@ -20,7 +20,7 @@ class AbstractTemplateMixin(models.Model):
     """
     id = models.AutoField(primary_key=True, verbose_name=_('ID'),
                           serialize=False, auto_created=True)
-    name = models.CharField(_('name'), max_length=100,
+    name = models.CharField(_('name'), unique=True, max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, verbose_name=_('sites'),
