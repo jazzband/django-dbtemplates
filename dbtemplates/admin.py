@@ -2,15 +2,8 @@ import posixpath
 from django import forms
 from django.contrib import admin
 from django.core.exceptions import ImproperlyConfigured
-try:
-    # Django 4.0
-    from django.utils.translation import gettext_lazy as _
-    from django.utils.translation import ngettext
-except ImportError:
-    # Before Django 4.0
-    from django.utils.translation import ugettext_lazy as _
-    from django.utils.translation import ungettext as ngettext
-
+from django.utils.translation import gettext_lazy as _
+from django.utils.translation import ngettext
 from django.utils.safestring import mark_safe
 
 from dbtemplates.conf import settings
@@ -104,6 +97,7 @@ class TemplateAdminForm(forms.ModelForm):
 
 class TemplateAdmin(TemplateModelAdmin):
     form = TemplateAdminForm
+    readonly_fields = ['creation_date', 'last_changed']
     fieldsets = (
         (None, {
             'fields': ('name', 'content'),

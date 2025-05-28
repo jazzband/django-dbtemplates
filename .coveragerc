@@ -3,4 +3,4 @@ source = dbtemplates
 branch = 1
 
 [report]
-omit = *tests*,*migrations*
+omit = *tests*,*/migrations/*,test_*
