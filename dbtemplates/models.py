@@ -9,8 +9,34 @@ from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import signals
+from django.db.models.constraints import UniqueConstraint
 from django.template import TemplateDoesNotExist
 from django.utils.translation import gettext_lazy as _
+
+
+class TemplateSite(models.Model):
+    """
+    Defines an explicit through model between Template and Site models.
+    This explicit model allows us to add a unique_together index between
+    Site and Template.name
+    """
+    template = models.ForeignKey('Template', on_delete=models.CASCADE)
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = 'django_template_sites'
+        constraints = [
+            UniqueConstraint(
+                # Preserve backwards compatibility so we don't have to drop the
+                # old unique index and recreate this index from scratch
+                name='django_template_sites_template_id_site_id_d00c11a4_uniq',
+                fields=['template', 'site'],
+            ),
+            UniqueConstraint(
+                name='template_name_site_uniq',
+                fields=['template__name', 'site'],
+            ),
+        ]
 
 
 class Template(models.Model):
@@ -24,7 +50,7 @@ class Template(models.Model):
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, verbose_name=_('sites'),
-                                   blank=True)
+                                   blank=True, through=TemplateSite)
     creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
     last_changed = models.DateTimeField(_('last changed'), auto_now=True)
 
