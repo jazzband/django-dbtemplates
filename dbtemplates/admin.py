@@ -1,13 +1,14 @@
 import posixpath
 from django import forms
 from django.contrib import admin
+from django.contrib.admin.widgets import FilteredSelectMultiple
 from django.core.exceptions import ImproperlyConfigured
 from django.utils.translation import gettext_lazy as _
 from django.utils.translation import ngettext
 from django.utils.safestring import mark_safe
 
 from dbtemplates.conf import settings
-from dbtemplates.models import Template, add_template_to_cache, remove_cached_template
+from dbtemplates.models import Template, TemplateSite, add_template_to_cache, remove_cached_template
 from dbtemplates.utils.template import check_template_syntax
 
 # Check if either django-reversion-compare or django-reversion is installed and
@@ -80,6 +81,10 @@ elif settings.DBTEMPLATES_USE_REDACTOR:
     TemplateContentTextArea = RedactorEditor
 
 
+class TemplateSiteInlineAdmin(admin.TabularInline):
+    model = TemplateSite
+
+
 class TemplateAdminForm(forms.ModelForm):
 
     """
@@ -89,10 +94,36 @@ class TemplateAdminForm(forms.ModelForm):
         widget=TemplateContentTextArea(attrs={'rows': '24'}),
         help_text=content_help_text, required=False)
 
+    # https://stackoverflow.com/a/11658199
+    sites = forms.ModelMultipleChoiceField(
+        queryset=TemplateSite.objects.all(),
+        required=False,
+        widget=FilteredSelectMultiple(
+            verbose_name=_("sites"),
+            is_stacked=False,
+        ),
+    )
+
     class Meta:
         model = Template
         fields = ('name', 'content', 'sites', 'creation_date', 'last_changed')
         fields = "__all__"
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if self.instance.pk:
+            self.fields['sites'].initial = self.instance.sites.all()
+
+    def save(self, commit=True, **kwargs):
+        template = super().save(commit=False, **kwargs)
+        if commit:
+            template.save()
+
+        if template.pk:
+            template.sites = self.cleaned_data['sites']
+            self.save_m2m()
+
+        return template
 
 
 class TemplateAdmin(TemplateModelAdmin):
@@ -103,17 +134,13 @@ class TemplateAdmin(TemplateModelAdmin):
             'fields': ('name', 'content'),
             'classes': ('monospace',),
         }),
-        (_('Advanced'), {
-            'fields': (('sites'),),
-        }),
         (_('Date/time'), {
             'fields': (('creation_date', 'last_changed'),),
             'classes': ('collapse',),
         }),
     )
-    filter_horizontal = ('sites',)
+    inlines = [TemplateSiteInlineAdmin]
     list_display = ('name', 'creation_date', 'last_changed', 'site_list')
-    list_filter = ('sites',)
     save_as = True
     search_fields = ('name', 'content')
     actions = ['invalidate_cache', 'repopulate_cache', 'check_syntax']
