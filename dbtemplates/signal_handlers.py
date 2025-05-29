@@ -12,7 +12,7 @@ def verify_template_name_uniqueness_across_all_selected_sites(sender, **kwargs):
             template_ids = kwargs.get('pk_set', None)
 
             template_names = Template.objects.filter(id__in=template_ids).values_list('name')
-            if template := site.template_set.filter(name__in=Subquery(template_names.values_list('name'))).first():
+            if template := site.template_set.filter(name__in=Subquery(template_names)).first():
                 raise IntegrityError(
                     f"Template with name '{template.name}' already exists for site '{site.name}'"
                 )
