@@ -51,7 +51,8 @@ class Migration(migrations.Migration):
                 (
                     "sites",
                     models.ManyToManyField(
-                        to="sites.Site", verbose_name="sites", blank=True
+                        to="sites.Site", verbose_name="sites", blank=True,
+                        related_name='%(class)s_set', related_query_name='%(class)s',
                     ),
                 ),
             ],

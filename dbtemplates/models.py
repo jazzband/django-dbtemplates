@@ -23,8 +23,10 @@ class AbstractTemplateMixin(models.Model):
     name = models.CharField(_('name'), max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
-    sites = models.ManyToManyField(Site, verbose_name=_('sites'),
-                                   blank=True)
+    sites = models.ManyToManyField(
+        Site, verbose_name=_('sites'), blank=True,
+        related_name='%(class)s_set', related_query_name='%(class)s',
+    )
     creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
     last_changed = models.DateTimeField(_('last changed'), auto_now=True)
 
