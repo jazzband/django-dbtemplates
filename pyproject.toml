@@ -32,7 +32,9 @@ dependencies = ["django-appconf >= 0.4"]
 dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://django-dbtemplates.readthedocs.io/"
+Documentation = "https://django-dbtemplates.readthedocs.io/"
+Changelog = "https://django-dbtemplates.readthedocs.io/en/latest/changelog.html"
+Source = "https://github.com/jazzband/django-dbtemplates"
 
 [tool.setuptools]
 zip-safe = false
