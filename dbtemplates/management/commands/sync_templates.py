@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 
 from dbtemplates.models import Template
@@ -89,13 +90,15 @@ class Command(BaseCommand):
         templatedirs = [Path(d) for d in tpl_dirs if Path(d).is_dir()]
 
         for templatedir in templatedirs:
-            for dirpath, subdirs, filenames in templatedir.walk(follow_symlinks=True):
+            # TODO: Replace os.walk(templatedir) with templatedir.walk(follow_symlinks=True)
+            #       once we only support Python 3.12+
+            for dirpath, subdirs, filenames in os.walk(templatedir):
                 for f in [
                     f
                     for f in filenames
                     if f.endswith(extension) and not f.startswith(".")
                 ]:
-                    path = dirpath / f
+                    path = Path(dirpath) / f
                     name = path.relative_to(templatedir)
                     try:
                         t = Template.on_site.get(name__exact=name)
