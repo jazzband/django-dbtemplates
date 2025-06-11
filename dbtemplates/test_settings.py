@@ -1,5 +1,3 @@
-DBTEMPLATES_CACHE_BACKEND = 'dummy://'
-
 DATABASE_ENGINE = 'sqlite3'
 # SQLite does not support removing unique constraints (see #28)
 SOUTH_TESTS_MIGRATE = False
@@ -7,6 +5,12 @@ SOUTH_TESTS_MIGRATE = False
 SITE_ID = 1
 
 SECRET_KEY = 'something-something'
+
+CACHES = {
+    "default": {
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache",
+    },
+}
 
 DATABASES = {
     'default': {

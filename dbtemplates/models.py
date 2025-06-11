@@ -49,10 +49,10 @@ class Template(models.Model):
             name = self.name
         try:
             source = get_template_source(name)
-            if source:
-                self.content = source
         except TemplateDoesNotExist:
             pass
+        else:
+            self.content = source
 
 
 def add_default_site(instance, **kwargs):

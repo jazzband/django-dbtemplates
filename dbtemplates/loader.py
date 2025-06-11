@@ -52,23 +52,24 @@ class Loader(BaseLoader):
         #   timestamp.
         site = Site.objects.get_current()
         cache_key = get_cache_key(template_name)
-        if cache:
-            try:
-                backend_template = cache.get(cache_key)
-                if backend_template:
-                    return backend_template, template_name
-            except Exception:
-                pass
-
         # Not found in cache, move on.
         cache_notfound_key = get_cache_notfound_key(template_name)
         if cache:
             try:
+                backend_template = cache.get(cache_key)
+            except Exception:
+                pass
+            else:
+                if backend_template:
+                    return (backend_template, template_name)
+
+            try:
                 notfound = cache.get(cache_notfound_key)
-                if notfound:
-                    raise TemplateDoesNotExist(template_name)
             except Exception:
                 raise TemplateDoesNotExist(template_name)
+            else:
+                if notfound:
+                    raise TemplateDoesNotExist(template_name)
 
         # Not marked as not-found, move on...
 
