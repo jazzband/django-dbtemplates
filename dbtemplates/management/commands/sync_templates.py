@@ -1,4 +1,4 @@
-import os
+from pathlib import Path
 
 from dbtemplates.models import Template
 from django.contrib.sites.models import Site
@@ -86,19 +86,17 @@ class Command(BaseCommand):
             tpl_dirs = app_template_dirs + DIRS
         else:
             tpl_dirs = DIRS + app_template_dirs
-        templatedirs = [str(d) for d in tpl_dirs if os.path.isdir(d)]
+        templatedirs = [Path(d) for d in tpl_dirs if Path(d).is_dir()]
 
         for templatedir in templatedirs:
-            for dirpath, subdirs, filenames in os.walk(templatedir):
+            for dirpath, subdirs, filenames in templatedir.walk(follow_symlinks=True):
                 for f in [
                     f
                     for f in filenames
                     if f.endswith(extension) and not f.startswith(".")
                 ]:
-                    path = os.path.join(dirpath, f)
-                    name = path.split(str(templatedir))[1]
-                    if name.startswith("/"):
-                        name = name[1:]
+                    path = dirpath / f
+                    name = path.relative_to(templatedir)
                     try:
                         t = Template.on_site.get(name__exact=name)
                     except Template.DoesNotExist:
@@ -110,9 +108,7 @@ class Command(BaseCommand):
                                 "" % (name, path)
                             )
                         if force or confirm.lower().startswith("y"):
-                            with open(path, encoding="utf-8") as f:
-                                t = Template(name=name, content=f.read())
-                            t.save()
+                            t = Template.objects.create(name=name, content=path.read_text(encoding="utf-8"))
                             t.sites.add(site)
                     else:
                         while True:
@@ -134,20 +130,18 @@ class Command(BaseCommand):
                                 DATABASE_TO_FILES,
                             ):
                                 if confirm == FILES_TO_DATABASE:
-                                    with open(path, encoding="utf-8") as f:
-                                        t.content = f.read()
-                                        t.save()
-                                        t.sites.add(site)
+                                    t.content = path.read_text(encoding="utf-8")
+                                    t.save()
+                                    t.sites.add(site)
                                     if delete:
                                         try:
-                                            os.remove(path)
+                                            path.unlink(missing_ok=True)
                                         except OSError:
                                             raise CommandError(
                                                 f"Couldn't delete {path}"
                                             )
                                 elif confirm == DATABASE_TO_FILES:
-                                    with open(path, "w", encoding="utf-8") as f:  # noqa
-                                        f.write(t.content)
+                                    path.write_text(t.content, encoding="utf-8")
                                     if delete:
                                         t.delete()
                                 break

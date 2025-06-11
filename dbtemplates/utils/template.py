@@ -12,6 +12,7 @@ def get_loaders():
 
 def get_template_source(name):
     source = None
+    not_found = []
     for loader in get_loaders():
         if loader.__module__.startswith('dbtemplates.'):
             # Don't give a damn about dbtemplates' own loader.
@@ -19,10 +20,13 @@ def get_template_source(name):
         for origin in loader.get_template_sources(name):
             try:
                 source = loader.get_contents(origin)
-            except (NotImplementedError, TemplateDoesNotExist):
+            except (NotImplementedError, TemplateDoesNotExist) as exc:
+                if exc.args[0] not in not_found:
+                    not_found.append(exc.args[0])
                 continue
-            if source:
+            else:
                 return source
+    raise TemplateDoesNotExist(name, chain=not_found)
 
 
 def check_template_syntax(template):
