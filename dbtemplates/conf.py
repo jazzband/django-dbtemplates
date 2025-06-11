@@ -33,35 +33,45 @@ class DbTemplatesConf(AppConf):
             else:
                 return "default"
         if isinstance(value, str) and value.startswith("dbtemplates."):
-            raise ImproperlyConfigured("Please upgrade to one of the "
-                                       "supported backends as defined "
-                                       "in the Django docs.")
+            raise ImproperlyConfigured(
+                "Please upgrade to one of the "
+                "supported backends as defined "
+                "in the Django docs."
+            )
         return value
 
     def configure_use_reversion(self, value):
-        if value and 'reversion' not in settings.INSTALLED_APPS:
-            raise ImproperlyConfigured("Please add 'reversion' to your "
-                                       "INSTALLED_APPS setting to make "
-                                       "use of it in dbtemplates.")
+        if value and "reversion" not in settings.INSTALLED_APPS:
+            raise ImproperlyConfigured(
+                "Please add 'reversion' to your "
+                "INSTALLED_APPS setting to make "
+                "use of it in dbtemplates."
+            )
         return value
 
     def configure_use_reversion_compare(self, value):
-        if value and 'reversion_compare' not in settings.INSTALLED_APPS:
-            raise ImproperlyConfigured("Please add 'reversion_compare' to your"
-                                       " INSTALLED_APPS setting to make "
-                                       "use of it in dbtemplates.")
+        if value and "reversion_compare" not in settings.INSTALLED_APPS:
+            raise ImproperlyConfigured(
+                "Please add 'reversion_compare' to your"
+                " INSTALLED_APPS setting to make "
+                "use of it in dbtemplates."
+            )
         return value
 
     def configure_use_tinymce(self, value):
-        if value and 'tinymce' not in settings.INSTALLED_APPS:
-            raise ImproperlyConfigured("Please add 'tinymce' to your "
-                                       "INSTALLED_APPS setting to make "
-                                       "use of it in dbtemplates.")
+        if value and "tinymce" not in settings.INSTALLED_APPS:
+            raise ImproperlyConfigured(
+                "Please add 'tinymce' to your "
+                "INSTALLED_APPS setting to make "
+                "use of it in dbtemplates."
+            )
         return value
 
     def configure_use_redactor(self, value):
-        if value and 'redactor' not in settings.INSTALLED_APPS:
-            raise ImproperlyConfigured("Please add 'redactor' to your "
-                                       "INSTALLED_APPS setting to make "
-                                       "use of it in dbtemplates.")
+        if value and "redactor" not in settings.INSTALLED_APPS:
+            raise ImproperlyConfigured(
+                "Please add 'redactor' to your "
+                "INSTALLED_APPS setting to make "
+                "use of it in dbtemplates."
+            )
         return value

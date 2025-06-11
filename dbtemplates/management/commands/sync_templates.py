@@ -108,7 +108,9 @@ class Command(BaseCommand):
                                 "" % (name, path)
                             )
                         if force or confirm.lower().startswith("y"):
-                            t = Template.objects.create(name=name, content=path.read_text(encoding="utf-8"))
+                            t = Template.objects.create(
+                                name=name, content=path.read_text(encoding="utf-8")
+                            )
                             t.sites.add(site)
                     else:
                         while True:
