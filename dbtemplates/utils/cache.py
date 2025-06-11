@@ -9,6 +9,7 @@ def get_cache_backend():
     Compatibilty wrapper for getting Django's cache backend instance
     """
     from django.core.cache import caches
+
     cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
 
     # Some caches -- python-memcached in particular -- need to do a cleanup at

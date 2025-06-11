@@ -3,7 +3,7 @@ from django.utils.translation import gettext_lazy as _
 
 
 class DBTemplatesConfig(AppConfig):
-    name = 'dbtemplates'
-    verbose_name = _('Database templates')
+    name = "dbtemplates"
+    verbose_name = _("Database templates")
 
-    default_auto_field = 'django.db.models.AutoField'
+    default_auto_field = "django.db.models.AutoField"
