@@ -55,9 +55,9 @@ class Loader(BaseLoader):
         #   in the cache indicating that queries failed, with the current
         #   timestamp.
         site = Site.objects.get_current()
-        cache_key = get_cache_key(template_name)
+        cache_key = get_cache_key(template_name, current_site=site)
         # Not found in cache, move on.
-        cache_notfound_key = get_cache_notfound_key(template_name)
+        cache_notfound_key = get_cache_notfound_key(template_name, current_site=site)
         if cache:
             try:
                 backend_template = cache.get(cache_key)
