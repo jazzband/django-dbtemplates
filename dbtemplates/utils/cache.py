@@ -21,9 +21,10 @@ def get_cache_backend():
 cache = get_cache_backend()
 
 
-def get_cache_key(name):
-    current_site = Site.objects.get_current()
-    return f"dbtemplates::{slugify(name)}::{current_site.pk}"
+def get_cache_key(name, site=None):
+    if site is None:
+        site = Site.objects.get_current()
+    return f"dbtemplates::{slugify(name)}::{site.pk}"
 
 
 def get_cache_notfound_key(name):
@@ -57,4 +58,5 @@ def remove_cached_template(instance, **kwargs):
     Called via Django's signals to remove cached templates, if the template
     in the database was changed or deleted.
     """
-    cache.delete(get_cache_key(instance.name))
+    for site in instance.sites.all():
+        cache.delete(get_cache_key(instance.name, site=site))
