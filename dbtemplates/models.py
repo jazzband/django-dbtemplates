@@ -1,20 +1,16 @@
 from dbtemplates.conf import settings
-from dbtemplates.utils.cache import (add_template_to_cache,
-                                     remove_cached_template)
+from dbtemplates.utils.cache import (
+    add_template_to_cache,
+    remove_cached_template,
+)
 from dbtemplates.utils.template import get_template_source
+
 from django.contrib.sites.managers import CurrentSiteManager
 from django.contrib.sites.models import Site
 from django.db import models
 from django.db.models import signals
 from django.template import TemplateDoesNotExist
-try:
-    # Django >= 4.0
-    from django.utils.translation import gettext_lazy as _
-except ImportError:
-    # Django 3.2
-    from django.utils.translation import ugettext_lazy as _
-
-from django.utils.timezone import now
+from django.utils.translation import gettext_lazy as _
 
 
 class Template(models.Model):
@@ -22,15 +18,15 @@ class Template(models.Model):
     Defines a template model for use with the database template loader.
     The field ``name`` is the equivalent to the filename of a static template.
     """
+    id = models.AutoField(primary_key=True, verbose_name=_('ID'),
+                          serialize=False, auto_created=True)
     name = models.CharField(_('name'), max_length=100,
                             help_text=_("Example: 'flatpages/default.html'"))
     content = models.TextField(_('content'), blank=True)
     sites = models.ManyToManyField(Site, verbose_name=_('sites'),
                                    blank=True)
-    creation_date = models.DateTimeField(_('creation date'),
-                                         default=now)
-    last_changed = models.DateTimeField(_('last changed'),
-                                        default=now)
+    creation_date = models.DateTimeField(_('creation date'), auto_now_add=True)
+    last_changed = models.DateTimeField(_('last changed'), auto_now=True)
 
     objects = models.Manager()
     on_site = CurrentSiteManager('sites')
@@ -59,7 +55,6 @@ class Template(models.Model):
             pass
 
     def save(self, *args, **kwargs):
-        self.last_changed = now()
         # If content is empty look for a template with the given name and
         # populate the template instance with its content.
         if settings.DBTEMPLATES_AUTO_POPULATE_CONTENT and not self.content:

@@ -1,0 +1,51 @@
+[build-system]
+requires = [
+    "setuptools>=61.2",
+    "setuptools_scm",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "django-dbtemplates"
+authors = [{name = "Jannis Leidel", email = "jannis@leidel.info"}]
+description = "Template loader for templates stored in the database"
+readme = "README.rst"
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Framework :: Django",
+]
+requires-python = ">=3.8"
+dependencies = ["django-appconf >= 0.4"]
+dynamic = ["version"]
+
+[project.urls]
+Documentation = "https://django-dbtemplates.readthedocs.io/"
+Changelog = "https://django-dbtemplates.readthedocs.io/en/latest/changelog.html"
+Source = "https://github.com/jazzband/django-dbtemplates"
+
+[tool.setuptools]
+zip-safe = false
+include-package-data = false
+
+[tool.setuptools.packages]
+find = {namespaces = false}
+
+[tool.setuptools.package-data]
+dbtemplates = [
+    "locale/*/LC_MESSAGES/*",
+    "static/dbtemplates/css/*.css",
+    "static/dbtemplates/js/*.js",
+]
