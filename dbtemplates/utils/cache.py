@@ -9,6 +9,7 @@ def get_cache_backend():
     Compatibilty wrapper for getting Django's cache backend instance
     """
     from django.core.cache import caches
+
     cache = caches.create_connection(settings.DBTEMPLATES_CACHE_BACKEND)
 
     # Some caches -- python-memcached in particular -- need to do a cleanup at
@@ -21,14 +22,13 @@ def get_cache_backend():
 cache = get_cache_backend()
 
 
-def get_cache_key(name, site=None):
-    if site is None:
-        site = Site.objects.get_current()
-    return f"dbtemplates::{slugify(name)}::{site.pk}"
+def get_cache_key(name, current_site=None):
+    current_site = current_site or Site.objects.get_current()
+    return f"dbtemplates::{slugify(name)}::{current_site.pk}"
 
 
-def get_cache_notfound_key(name):
-    return get_cache_key(name) + "::notfound"
+def get_cache_notfound_key(name, current_site=None):
+    return get_cache_key(name, current_site=current_site) + "::notfound"
 
 
 def remove_notfound_key(instance):
@@ -59,4 +59,4 @@ def remove_cached_template(instance, **kwargs):
     in the database was changed or deleted.
     """
     for site in instance.sites.all():
-        cache.delete(get_cache_key(instance.name, site=site))
+        cache.delete(get_cache_key(instance.name, current_site=site))
