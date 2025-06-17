@@ -173,6 +173,3 @@ class DbTemplatesTestCase(TestCase):
                         return_value=self.site2):
             result = loader.get_template("base.html").render()
             self.assertEqual(result, 'new content')
-
-
-
