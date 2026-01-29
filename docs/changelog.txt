@@ -10,9 +10,9 @@ v5.0 (unreleased)
 
 * Dropped support for Python 3.7 and Django < 4.2.
 
-* Added support for Python 3.11, 3.12, 3.13.
+* Added support for Python 3.11, 3.12, 3.13, 3.14.
 
-* Django 5.x support
+* Django 5.x and 6.0 support
 
 v4.0 (2022-09-3)
 -----------------
