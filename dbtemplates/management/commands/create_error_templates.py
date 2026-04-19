@@ -29,29 +29,39 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "-f", "--force", action="store_true", dest="force",
-            default=False, help="overwrite existing database templates")
+            "-f",
+            "--force",
+            action="store_true",
+            dest="force",
+            default=False,
+            help="overwrite existing database templates",
+        )
 
     def handle(self, **options):
-        force = options.get('force')
+        force = options.get("force")
         try:
             site = Site.objects.get_current()
         except Site.DoesNotExist:
-            raise CommandError("Please make sure to have the sites contrib "
-                               "app installed and setup with a site object")
+            raise CommandError(
+                "Please make sure to have the sites contrib "
+                "app installed and setup with a site object"
+            )
 
-        verbosity = int(options.get('verbosity', 1))
+        verbosity = int(options.get("verbosity", 1))
         for error_code in (404, 500):
             template, created = Template.objects.get_or_create(
-                name=f"{error_code}.html")
+                name=f"{error_code}.html"
+            )
             if created or (not created and force):
-                template.content = TEMPLATES.get(error_code, '')
+                template.content = TEMPLATES.get(error_code, "")
                 template.save()
                 template.sites.add(site)
                 if verbosity >= 1:
-                    sys.stdout.write("Created database template "
-                                     "for %s errors.\n" % error_code)
+                    sys.stdout.write(
+                        "Created database template for %s errors.\n" % error_code
+                    )
             else:
                 if verbosity >= 1:
-                    sys.stderr.write("A template for %s errors "
-                                     "already exists.\n" % error_code)
+                    sys.stderr.write(
+                        "A template for %s errors already exists.\n" % error_code
+                    )

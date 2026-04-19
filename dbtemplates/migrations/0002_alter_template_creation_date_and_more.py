@@ -4,20 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('dbtemplates', '0001_initial'),
+        ("dbtemplates", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='template',
-            name='creation_date',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='creation date'),
+            model_name="template",
+            name="creation_date",
+            field=models.DateTimeField(auto_now_add=True, verbose_name="creation date"),
         ),
         migrations.AlterField(
-            model_name='template',
-            name='last_changed',
-            field=models.DateTimeField(auto_now=True, verbose_name='last changed'),
+            model_name="template",
+            name="last_changed",
+            field=models.DateTimeField(auto_now=True, verbose_name="last changed"),
         ),
     ]
