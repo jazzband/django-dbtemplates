@@ -17,3 +17,6 @@
   color: #999;
 }
 
+.CodeMirror-wrapping {
+  width: 85%;
+}
